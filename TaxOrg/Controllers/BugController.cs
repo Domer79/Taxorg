@@ -1,0 +1,84 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Web;
+using System.Web.Helpers;
+using System.Web.Mvc;
+using TaxOrg.Infrastructure;
+using TaxOrg.Tools;
+using TaxorgRepository.Exceptions;
+using TaxorgRepository.Models;
+using TaxorgRepository.Repositories;
+using WebTools;
+using Organization = TaxOrg.Tools.Organization;
+
+namespace TaxOrg.Controllers
+{
+    public class BugController : Controller
+    {
+        private readonly Repository<Bug> _repository = new Repository<Bug>();
+        // GET: Bug
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        public JsonResult GetData(GridSettings grid)
+        {
+            return Json(ControllerHelper.GetData(grid, _repository));
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Bug bug)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return new HttpStatusCodeResult(HttpStatusCode.Conflict, ModelState.Values.Aggregate(
+                            (state, current) =>
+                            {
+                                if (current.Errors.Count > 0)
+                                {
+                                    state.Errors.Add(current.Errors.Aggregate((error, eCurrent) =>
+                                    {
+                                        return new ModelError(error.ErrorMessage + @". " + eCurrent.ErrorMessage);
+                                    }));
+                                }
+                                return state;
+                            }).Errors.Aggregate((error, eCurrent) => new ModelError(error.ErrorMessage + @". " + eCurrent.ErrorMessage)).ErrorMessage);
+
+                try
+                {
+                    if (!bug.IsNotLoaded)
+                    {
+                        var csvRow = new CsvRow<Organization>(bug.ErrorData);
+                        var org = csvRow.GetObject();
+                        string errorStr;
+                        var taxRepository = new TaxRepository();
+                        if (!taxRepository.SaveTax(org.Inn, org.TaxCode, org.Date, org.Tax, out errorStr))
+                            throw new SaveTaxException(errorStr);
+                    }
+
+                    _repository.InsertOrUpdate(bug);
+                    _repository.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.NotAcceptable, e.Message); 
+                }
+
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
+            }
+            catch (Exception e)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotAcceptable, e.Message); 
+            }
+        }
+
+        public ActionResult IsLoadBug()
+        {
+            return Json(new { isLoadBag = !_repository.Any(b => b.IsNotLoaded) });
+        }
+    }
+}

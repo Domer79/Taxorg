@@ -1,0 +1,24 @@
+﻿@using TaxorgRepository.Repositories
+
+@{
+    ViewBag.Title = "О программе";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section about
+{
+    @string.Format("active")
+}
+
+<div class="container">
+    <div class="jumbotron">
+        <h1 class="">Налоги организаций</h1>
+        <p>
+            <h2>МКУ "ЦИТО"</h2>
+        </p>
+        <address>Написать разработчику <a href="mailto:garipov@salavat.ru">Дамиру Гарипову</a></address>
+        
+        <p>Все права защищены. Версия: @ApplicationCustomizer.AppVersion</p>
+    </div>
+</div>
+

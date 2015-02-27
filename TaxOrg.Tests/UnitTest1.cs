@@ -1,0 +1,170 @@
+﻿using System;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Security.Policy;
+using System.Text;
+using System.Web.Mvc;
+using System.Web.UI;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SqlClr;
+using TaxOrg.Controllers;
+using TaxOrg.Tools;
+using TaxorgRepository.Models;
+using TaxorgRepository.Repositories;
+using TaxorgRepository.Tools;
+using WebTools;
+using Organization = TaxOrg.Tools.Organization;
+
+namespace TaxOrg.Tests
+{
+    [TestClass]
+    public class UnitTest1
+    {
+        [TestMethod]
+        public void SqlClrYearMonthTest()
+        {
+            var yearMonth = new YearMonth() {Year = 2015, Month = 6};
+
+            for (int i = 0; i < 20; i++)
+            {
+                Debug.WriteLine(yearMonth--);
+            }
+
+            Debug.WriteLine(yearMonth);
+        }
+
+        [TestMethod]
+        public void SqlClrYearMonthSetTest()
+        {
+//            var yearMonth = new YearMonth();
+            var yearMonth = YearMonth.Parse("01.2015");
+            var expectedYearMonth = new YearMonth{Month = 1, Year = 2015};
+            Assert.AreEqual(expectedYearMonth, yearMonth);
+            Assert.AreEqual(expectedYearMonth.ToString(), "01.2015");
+            Debug.WriteLine(expectedYearMonth);
+        }
+
+        [TestMethod]
+        public void FileReadFromDbTest()
+        {
+            FileSystemRepository.FileDataName = "data";
+            FileSystemRepository.FileTableName = "FsFile";
+
+            using (var fs = new FileStream(@"c:\Users\Domer\Documents\excel1.xlsx", FileMode.Create))
+            {
+                using (var stream = FileSystemRepository.GetStreamFromData(9))
+                {
+                    stream.Seek(0, SeekOrigin.Begin);
+                    stream.DeCompress(fs);
+                }
+            }
+        }
+
+        [TestMethod]
+        public void ErrorSaveTest()
+        {
+            ApplicationCustomizer.ConnectionString = "Data Source=.;Integrated Security=True;Initial Catalog=Taxorg";
+            var context = TaxorgContext.Context;
+
+            try
+            {
+                throw new NotImplementedException("Тестовый метод не реализации");
+            }
+            catch (Exception e)
+            {
+                ErrorLog.SaveError(e);
+            }
+        }
+
+        [TestMethod]
+        public void TextFileEncodingTest()
+        {
+            var fileName = @"c:\Users\User\Documents\Формат данных в Excel.csv";
+            using (var sr = new StreamReader(fileName, Encoding.GetEncoding(866), false))
+            {
+                var buffer = new byte [sr.BaseStream.Length];
+                sr.BaseStream.Read(buffer, 0, buffer.Length);
+                var encodingString = Encoding.GetEncoding(1251).GetString(buffer);
+                Debug.WriteLine(encodingString);
+            }
+        }
+
+        [TestMethod]
+        public void CharToCodeTest()
+        {
+            var b = (byte) 's';
+            Debug.WriteLine(b);
+        }
+
+        [TestMethod]
+        public void CsvReaderTest()
+        {
+            using (var reader = new CsvReader<Organization>(@"c:\Users\Domer\Documents\Формат данных в Excel.csv"))
+            {
+                foreach (var organization in reader)
+                {
+                    Debug.WriteLine(organization);
+                }
+            }
+        }
+
+        [TestMethod]
+        public void EntityGetMemberAccessTest()
+        {
+            ApplicationCustomizer.ConnectionString = "Data Source=.;Integrated Security=True;Initial Catalog=Taxorg";
+            var context = new TaxorgContext(ApplicationCustomizer.ConnectionString);
+            var entityInfo = new EntityInfo<Bug>(context);
+            Expression<Func<Bug, int>> actualExpression = p => p.IdBug;
+
+            Assert.AreEqual(entityInfo.GetMemberAccess<int>(), actualExpression);
+        }
+
+        [TestMethod]
+        public void SliceRepositoryTest()
+        {
+            ApplicationCustomizer.ConnectionString = "Data Source=.;Integrated Security=True;Initial Catalog=Taxorg";
+            var repo = new SliceRepository(7816);
+            foreach (var sliceTax in repo)
+            {
+                Debug.WriteLine(sliceTax.Period);
+            }
+        }
+
+        [TestMethod]
+        public void TaxSummaryTaxDebitKreditFieldTest()
+        {
+            ApplicationCustomizer.ConnectionString = "Data Source=.;Integrated Security=True;Initial Catalog=Taxorg";
+            var repo = TaxSummaryRepository.Repository;
+
+            var query = repo.Where(e => e.TaxDebitKredit.Contains("+"));
+
+            foreach (var tax in query)
+            {
+                Debug.WriteLine(tax.TaxDebitKredit);
+            }
+        }
+
+        [TestMethod]
+        public void SliceTaxDebitKreditFieldTest()
+        {
+            ApplicationCustomizer.ConnectionString = "Data Source=.;Integrated Security=True;Initial Catalog=Taxorg";
+            var repo = new SliceRepository(1989);
+
+            var query = repo.Where(e => e.TaxDebitKredit.Contains("+"));
+
+            foreach (var tax in query)
+            {
+                Debug.WriteLine(tax.TaxDebitKredit);
+            }
+        }
+
+        [TestMethod]
+        public void AppVersionTest()
+        {
+            Assert.AreEqual("1.1.0.0", ApplicationCustomizer.AppVersion);
+        }
+    }
+}

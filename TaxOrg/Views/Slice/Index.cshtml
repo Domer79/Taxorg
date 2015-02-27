@@ -1,0 +1,73 @@
+﻿@using System.Web.Optimization
+@model dynamic
+
+@{
+    ViewBag.Title = "title";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@Scripts.Render("~/jqgrid")
+@Scripts.Render("~/scripts/jqgridlocale")
+
+
+<div style="margin-top: 60px" class="container">
+    <table id="sliceGrid"></table>
+    <div id="sliceGridPage"></div>
+</div>
+
+<script type="text/javascript">
+    var lastSel = null;
+
+    var idOrganization = @ViewBag.IdOrganization || 0;
+
+    $(document).ready(function() {
+        $("#sliceGrid").jqGrid({
+            url: "@Url.Action("GetData", "Slice")" + "?idOrganization=" + idOrganization,
+//            editurl: "@Url.Action("Edit")",
+            datatype: "json",
+            colModel: [
+                { name: "IdTax", hidden: true, key: true, editable: true },
+                { name: "IdOrganization", hidden: true, editable: true, editrules: { edithidden: true } },
+                { name: "OrganizationInn", label: "ИНН", editable: true, hidden: true, searchoptions: { sopt: ['cn', 'eq', 'ne'] }, editrules: { edithidden: true } },
+                { name: "OrganizationName", label: "Полное наименование организации", editable: true, searchoptions: { sopt: ['cn', 'eq', 'ne'] }, editrules: { edithidden: true } },
+                { name: "OrganizationShortName", label: "Краткое наименование организации", editable: true, searchoptions: { sopt: ['cn', 'eq', 'ne'] }, editrules: { edithidden: true } },
+                { name: "IdTaxType", editable: true, hidden: true, editrules: { edithidden: true } },
+                { name: "TaxCode", label: "Код налога", editable: true, searchoptions: { sopt: ['cn', 'eq', 'ne'] } },
+                { name: "TaxName", label: "Наименование налога", editable: true, searchoptions: { sopt: ['cn', 'eq', 'ne'] }},
+                { name: "TaxSum", label: "Сумма", hidden: true, editable: true, searchoptions: { sopt: ['eq', 'ne', 'gt', 'ge', 'lt', 'le'] } },
+                { name: "TaxDebitKredit", index: "TaxSum", label: "Сумма", width: 100, searchoptions: { sopt: ['eq', 'ne', 'gt', 'ge', 'lt', 'le'] }, editable: false},
+                { name: "Period", width: 100, label: "Период", searchoptions: { sopt: ['cn', 'eq', 'ne'] }, editable: false }
+            ],
+            mtype: 'POST',
+            pager: "#sliceGridPage",
+            rowNum: 30,
+            //            page: 20,
+            rowList: [10, 20, 30],
+            sortName: "shortName",
+            sortorder: "asc",
+            jsonReader: {
+                root: "rows",
+                page: "page",
+                total: "totalPages",
+                records: "records",
+                repeatitems: false,
+                userdata: "userdata"
+            },
+            height: "auto",
+            onSelectRow: function (id) {
+                if (id && id !== lastSel) {
+                    $('#sliceGrid').saveRow(lastSel);
+                    lastSel = id;
+                }
+                $('#sliceGrid').editRow(id, true);
+            }
+        });
+
+        $("#sliceGrid").jqGrid('filterToolbar', {
+            searchOperators: true,
+            stringResult: true
+        });
+    });
+</script>

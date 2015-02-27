@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{56EDD25A-4E9F-4711-81C5-55A3CF7211ED}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TaxorgRepository</RootNamespace>
+    <AssemblyName>TaxorgRepository</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="JavaPlagins">
+      <HintPath>..\..\Joblog\JavaPlagins\bin\Release\JavaPlagins.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Exceptions\SaveTaxException.cs" />
+    <Compile Include="Exceptions\SliceTaxInsertOrUpdateException.cs" />
+    <Compile Include="Interfaces\IOrganization.cs" />
+    <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="Models\Bug.cs" />
+    <Compile Include="Models\Errors.cs" />
+    <Compile Include="Models\FileSystem.cs" />
+    <Compile Include="Models\FsFile.cs" />
+    <Compile Include="Models\Organization.cs" />
+    <Compile Include="Models\SliceTax.cs" />
+    <Compile Include="Models\Tax.cs" />
+    <Compile Include="Models\TaxorgContext.cs" />
+    <Compile Include="Models\TaxSummary.cs" />
+    <Compile Include="Models\TaxType.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\BugRepository.cs" />
+    <Compile Include="Repositories\ErrorRepository.cs" />
+    <Compile Include="Repositories\FileSystemRepository.cs" />
+    <Compile Include="Repositories\OrganizationRepository.cs" />
+    <Compile Include="Repositories\Repository.cs" />
+    <Compile Include="Repositories\RepositoryBase.cs" />
+    <Compile Include="Repositories\SliceRepository.cs" />
+    <Compile Include="Repositories\TaxRepository.cs" />
+    <Compile Include="Repositories\TaxSummaryRepository.cs" />
+    <Compile Include="Repositories\TaxTypeRepository.cs" />
+    <Compile Include="Tools\EntityInfo.cs" />
+    <Compile Include="Tools\StreamExtensions.cs" />
+    <Compile Include="Tools\SystemLogs.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="TestModel\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SqlClr\SqlClr.csproj">
+      <Project>{AE4F25A4-7AEE-4C2D-8260-0F1A982EA12B}</Project>
+      <Name>SqlClr</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebTools\WebTools.csproj">
+      <Project>{8FB401C3-7285-4F17-A192-41F6CB77FC61}</Project>
+      <Name>WebTools</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

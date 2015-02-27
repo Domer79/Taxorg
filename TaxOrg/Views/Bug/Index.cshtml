@@ -1,0 +1,85 @@
+﻿@using System.Web.Optimization
+
+@{
+    ViewBag.Title = "Ошибочные строки";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section meta
+{
+    <meta http-equiv="PRAGMA" content="NO-CACHE">
+    <meta http-equiv="Expires" content="-1">
+    <meta http-equiv="CACHE-Control" content="NO-CACHE">
+}
+
+@Scripts.Render("~/jqgrid")
+@Scripts.Render("~/scripts/jqgridlocale")
+
+
+<div style="margin-top: 60px">
+    <table id="bugGrid">
+        
+    </table>
+    <div id="bugGridPage"></div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        var lastSel = null;
+
+        var causeEditoptions = {};
+        causeEditoptions.dataInit = function(elem) {
+            $(elem).attr("disabled", "disabled");
+        };
+
+        var timeLabelEditoptions = {};
+        timeLabelEditoptions.dataInit = function (elem) {
+            $(elem).attr("disabled", "disabled");
+        };
+
+        $("#bugGrid").jqGrid({
+            url: "@Url.Action("GetData")",
+            editurl: "@Url.Action("Edit")",
+            datatype: "json",
+            colModel: [
+                {name: "IdBug", hidden: true, key: true, editable: true},
+                {name: "ErrorData", label: "Ошибочные данные", width: 500, editable: true},
+                {name: "Cause", label: "Причина", editable: true, editoptions: causeEditoptions },
+                {name: "TimeLabel", label: "Метка времени", editable: true, formatter: 'date', formatoptions: {newformat: "d.m.Y H:i:s"}, editoptions: timeLabelEditoptions},
+                {name: "IsNotLoaded", label: "Не сохранено", editable: true, formatter: 'checkbox', formatoptions: {checkbox: {disabled: true}}, edittype: "checkbox", editoptions: {value: "False:True"}}
+            ],
+            mtype: 'POST',
+            pager: "#bugGridPage",
+            rowNum: 30,
+            //            page: 20,
+            rowList: [10, 20, 30],
+            sortName: "shortName",
+            sortorder: "asc",
+            jsonReader: {
+                root: "rows",
+                page: "page",
+                total: "totalPages",
+                records: "records",
+                repeatitems: false,
+                userdata: "userdata"
+            },
+            height: "auto",
+            onSelectRow: function (id) {
+                if (id && id !== lastSel) {
+                    $('#bugGrid').saveRow(lastSel);
+                    lastSel = id;
+                }
+                $('#bugGrid').editRow(id, true);
+            }
+        });
+    });
+    /*
+    
+        public string ErrorData { get; set; }
+        public string Cause { get; set; }
+        public DateTime TimeLabel { get; set; }
+        public bool IsNotLoaded { get; set; }
+    
+    */
+</script>
+

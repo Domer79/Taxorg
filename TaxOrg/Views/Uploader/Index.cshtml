@@ -1,0 +1,28 @@
+﻿@using MvcFileUploader.HtmlHelper
+@using MvcFileUploader.Models
+@{
+    ViewBag.Title = "Форма загрузки";
+
+    Layout = "~/Views/Shared/_MvcFileUploaderLayout.cshtml";
+}
+
+    <div class="well">
+        <legend>Нажмите кнопку "Загрузить"</legend>
+        <p class="help-block">Разрешено загружать по одному файлу xls/xlsx, размером не более 5 MB</p>
+@*        <p class="help-block">jpg/png size max 5 MB, single file upload</p>*@
+        @(
+        Html.MvcFileUpload()
+        .UploadAt(Url.Action("UploadFile"))
+        .WithFileTypes(@"/(\.|\/)(csv]*)$/i")
+        .WithMaxFileSize(5000000)
+        .MaxNumberOfFiles(1)
+        .AddFormField("entityId", "1234")        
+        .RenderPopup("Загрузить", "#dlgFileUpload", new {@class="btn btn-large btn-primary"})
+        )
+    </div>
+
+
+    <!-- file upload modal dialog -->
+    <div class="modal fade" id="dlgFileUpload" tabindex="-1" role="dialog" aria-hidden="true">
+  
+    </div><!-- /.modal -->

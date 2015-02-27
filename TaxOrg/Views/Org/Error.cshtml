@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Error";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Error</h2>
+
+<script type="text/javascript">
+    $(function() {
+        $("#erroDialog").dialog({
+            modal: true
+        });
+    })
+</script>
+
+<div id="erroDialog" title="Ошибка!!!">
+    <p>Это тестовое диалоговое окно ошибки</p>
+</div>
