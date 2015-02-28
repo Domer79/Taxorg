@@ -16,12 +16,13 @@ namespace TaxOrg.Controllers
         // GET: Slice
         public ActionResult Index(int? idOrganization)
         {
-            ViewBag.IdOrganization = idOrganization;
-
             if (idOrganization == null)
                 return RedirectToAction("Index", "Org");
 
-            return View();
+            var repo = new OrganizationRepository();
+            var organization = repo[idOrganization.Value];
+
+            return View(organization);
         }
 
         public ActionResult GetData(int idOrganization, GridSettings grid)

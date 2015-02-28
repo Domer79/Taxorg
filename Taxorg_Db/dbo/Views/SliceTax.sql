@@ -56,7 +56,7 @@ select
 	taxCode, 
 	taxName, 
 	taxSum,
-	prevTaxSum = dbo.GetSimpleTax(idOrganization, idTaxType, period.Minus(dbo.GetTaxPrevPeriod())),
+	prevTaxSum = isnull(dbo.GetSimpleTax(idOrganization, idTaxType, period.Minus(dbo.GetTaxPrevPeriod())), 0) * -1,
 	taxDebitKredit,
 	period,
 	periodName

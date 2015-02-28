@@ -14,8 +14,7 @@ select @idTaxType = idTaxType from TaxType where code = @taxCode
 
 if @idOrganization is null
 begin
-	exec AddOrganization null, null, null, @inn
-	--insert into Organization (inn) values(@inn)
+	insert into Organization (inn) values(@inn)
 	select @idOrganization = scope_identity()
 end
 

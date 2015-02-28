@@ -1,11 +1,9 @@
 using SqlClr;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TaxorgRepository.Models
 {
-    using System;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-
     [Table("Tax")]
     public class Tax : ModelBase
     {
@@ -26,6 +24,7 @@ namespace TaxorgRepository.Models
         public YearMonth Period { get; set; }
 
         [Column("periodName")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public string PeriodName { get; set; }
 
         public virtual Organization Organization { get; set; }

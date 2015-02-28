@@ -45,30 +45,32 @@
     </div>
 </div>
 
+@section scripts
+{
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
 
         var innEditOptions = {};
-        innEditOptions.dataInit = function(elem) {
+        innEditOptions.dataInit = function (elem) {
             $(elem).attr("readonly", "readonly").width(200);
         }
 
         var nameEditOptions = {};
-        nameEditOptions.dataInit = function(elem) {
+        nameEditOptions.dataInit = function (elem) {
             $(elem).width(200);
         };
 
         var shortNameEditOptions = {};
-        shortNameEditOptions.dataInit = function(elem) {
+        shortNameEditOptions.dataInit = function (elem) {
             $(elem).width(200);
         };
 
         var addressEditOptions = {};
-        addressEditOptions.dataInit = function(elem) {
+        addressEditOptions.dataInit = function (elem) {
             $(elem).width(200);
         };
 
-//        var lastSel;
+        //        var lastSel;
 
         $("#tOrg").jqGrid({
             url: "@Url.Action("GetData")",
@@ -77,7 +79,7 @@
             colModel: [
                 { name: "IdOrganization", hidden: true, key: true, editable: true, searchoptions: { sopt: ['eq', 'ne'] } },
                 { name: "Inn", label: "ИНН", editable: true, searchoptions: { sopt: ['cn', 'eq', 'ne'] }, editoptions: innEditOptions },
-                { name: "Name", label: "Полное наименование организации", hidden: true, searchoptions: { sopt: ['cn', 'eq', 'ne'] }, editable: true, editrules: {edithidden: true}, editoptions: nameEditOptions },
+                { name: "Name", label: "Полное наименование организации", hidden: true, searchoptions: { sopt: ['cn', 'eq', 'ne'] }, editable: true, editrules: { edithidden: true }, editoptions: nameEditOptions },
                 { name: "ShortName", width: 200, label: "Наименование организации", searchoptions: { sopt: ['cn', 'eq', 'ne'] }, editable: true, editoptions: shortNameEditOptions },
                 { name: "Address", width: 200, label: "Адрес", searchoptions: { sopt: ['cn', 'eq', 'ne'] }, editable: true, editoptions: addressEditOptions },
                 { name: "Tax", label: "Сумма", hidden: true, width: 100, searchoptions: { sopt: ['eq', 'ne', 'gt', 'ge', 'lt', 'le'] }, editable: false, formatter: "currency", formatoptions: { decimalSeparator: ".", thousandsSeparator: " ", decimalPlaces: 2 } },
@@ -89,7 +91,7 @@
             mtype: 'POST',
             pager: "#tOrgPage",
             rowNum: 25,
-//            page: 20,
+            //            page: 20,
             rowList: [10, 20, 30, @ViewBag.TotalTaxCount],
             sortName: "shortName",
             sortorder: "asc",
@@ -103,7 +105,7 @@
             },
             height: "auto",
             width: "100%",
-            gridComplete: function() {
+            gridComplete: function () {
                 $("tr:odd").addClass("oddRow");
                 $("#tOrg").css("width", "100%");
 
@@ -114,25 +116,25 @@
                 var url = "@Url.Action("Index", "Slice")" + parameters;
                 $(location).attr("href", url);
             }
-//            onSelectRow: function (id) {
-//                if (id && id !== lastSel) {
-////                                        $('#tOrg').restoreRow(lastSel);
-//                    $('#tOrg').saveRow(lastSel);
-//                    lastSel = id;
-//                }
-//                $('#tOrg').editRow(id, true);
-//            }
+            //            onSelectRow: function (id) {
+            //                if (id && id !== lastSel) {
+            ////                                        $('#tOrg').restoreRow(lastSel);
+            //                    $('#tOrg').saveRow(lastSel);
+            //                    lastSel = id;
+            //                }
+            //                $('#tOrg').editRow(id, true);
+            //            }
         });
 
         $("#tOrg").navGrid("#tOrgPage", {
-                edit: true,
-                add: true,
-                del: true,
-                refresh: true,
-                searchtext: "Поиск",
-                view: true,
-                modal: true
-            },
+            edit: true,
+            add: true,
+            del: true,
+            refresh: true,
+            searchtext: "Поиск",
+            view: true,
+            modal: true
+        },
             //Edit parameters
             {
                 id: 'myedit',
@@ -184,6 +186,5 @@
 
 
     });
-</script>
-
-<script src="~/Scripts/Org/doaction.js" type="text/javascript"></script>
+</script>   
+}

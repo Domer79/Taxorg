@@ -22,8 +22,8 @@ namespace TaxorgRepository.Models
         [Column("timeLoad")]
         public DateTime TimeLabel { get; set; }
 
-        [Column("isNotLoaded")]
-        public bool IsNotLoaded { get; set; }
+        [Column("accept")]
+        public bool Accept { get; set; }
 
         public override int GetHashCode()
         {

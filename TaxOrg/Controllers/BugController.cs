@@ -5,6 +5,7 @@ using System.Net;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using Microsoft.Ajax.Utilities;
 using TaxOrg.Infrastructure;
 using TaxOrg.Tools;
 using TaxorgRepository.Exceptions;
@@ -17,7 +18,7 @@ namespace TaxOrg.Controllers
 {
     public class BugController : Controller
     {
-        private readonly Repository<Bug> _repository = new Repository<Bug>();
+        private readonly BugRepository _repository = new BugRepository();
         // GET: Bug
         public ActionResult Index()
         {
@@ -40,24 +41,25 @@ namespace TaxOrg.Controllers
                             {
                                 if (current.Errors.Count > 0)
                                 {
-                                    state.Errors.Add(current.Errors.Aggregate((error, eCurrent) =>
-                                    {
-                                        return new ModelError(error.ErrorMessage + @". " + eCurrent.ErrorMessage);
-                                    }));
+                                    state.Errors.Add(current.Errors.Aggregate((error, eCurrent) => new ModelError(error.ErrorMessage + @". " + eCurrent.ErrorMessage)));
                                 }
                                 return state;
                             }).Errors.Aggregate((error, eCurrent) => new ModelError(error.ErrorMessage + @". " + eCurrent.ErrorMessage)).ErrorMessage);
 
                 try
                 {
-                    if (!bug.IsNotLoaded)
+                    //TODO Не забыть изменить на <<if (bug.Accept)>>
+                    var csvRow = new CsvRow<Organization>(bug.ErrorData);
+                    var org = csvRow.GetObject();
+                    var taxRepository = new TaxRepository();
+                    try
                     {
-                        var csvRow = new CsvRow<Organization>(bug.ErrorData);
-                        var org = csvRow.GetObject();
-                        string errorStr;
-                        var taxRepository = new TaxRepository();
-                        if (!taxRepository.SaveTax(org.Inn, org.TaxCode, org.Date, org.Tax, out errorStr))
-                            throw new SaveTaxException(errorStr);
+                        taxRepository.SaveTaxToDb(org.Inn, org.TaxCode, org.Date, org.Tax);
+                        bug.Accept = true;
+                    }
+                    catch (Exception e)
+                    {
+                        throw new SaveTaxException(e.Message);
                     }
 
                     _repository.InsertOrUpdate(bug);
@@ -65,7 +67,7 @@ namespace TaxOrg.Controllers
                 }
                 catch (Exception e)
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.NotAcceptable, e.Message); 
+                    return new HttpStatusCodeResult(HttpStatusCode.NotAcceptable, e.Message);
                 }
 
                 return new HttpStatusCodeResult(HttpStatusCode.OK);
@@ -78,7 +80,16 @@ namespace TaxOrg.Controllers
 
         public ActionResult IsLoadBug()
         {
-            return Json(new { isLoadBag = !_repository.Any(b => b.IsNotLoaded) });
+            var notAccepted = !_repository.All(b => b.Accept);
+
+            return Json(new { notAccepted = notAccepted });
+        }
+
+        public ActionResult Delete(int id)
+        {
+            _repository.Delete(_repository.GetObjectByKey(id));
+            _repository.SaveChanges();
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
     }
 }

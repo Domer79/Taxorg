@@ -166,5 +166,16 @@ namespace TaxOrg.Tests
         {
             Assert.AreEqual("1.1.0.0", ApplicationCustomizer.AppVersion);
         }
+
+        [TestMethod]
+        public void YearMonthDifferenceTest()
+        {
+            var period1 = new YearMonth("01.2016");
+            var period2 = new YearMonth("12.2015");
+
+            var actual = period1 - period2;
+            Debug.WriteLine(actual);
+            Assert.AreEqual(1, actual);
+        }
     }
 }

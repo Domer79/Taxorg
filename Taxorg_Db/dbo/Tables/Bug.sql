@@ -4,5 +4,5 @@
 	[data] nvarchar(max),
 	[cause] nvarchar(max),
 	[timeLoad] datetime not null default(getdate()),
-	[isNotLoaded] bit not null default 1
+	[accept] bit not null default 0
 )

@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Mime;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SqlClr;
+using TaxorgRepository;
 using TaxorgRepository.Models;
 using TaxorgRepository.Repositories;
 using WebTools;
@@ -93,6 +95,16 @@ namespace TaxOrg.Tests
             {
                 Debug.WriteLine(tax.TaxDebitKredit);
             }
+        }
+
+        [TestMethod]
+        public void GetCurrentPeriodTest()
+        {
+            ApplicationCustomizer.ConnectionString = "data source=.;initial catalog=Taxorg;integrated security=True;";
+
+            var period = TaxorgTools.GetCurrentPeriod();
+
+            Assert.AreEqual(new YearMonth("02.2015"), period);
         }
     }
 }

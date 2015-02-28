@@ -100,12 +100,12 @@ namespace TaxorgRepository.Models
                 .WithOptional(e => e.Organization)
                 .WillCascadeOnDelete();
 
-            modelBuilder.Entity<Organization>().MapToStoredProcedures(c =>
-            {
-                c.Insert(i => i.HasName("AddOrganization").Result(r => r.IdOrganization, "generated_blog_identity"));
-                c.Update(u => u.HasName("ModifyOrganization"));
-                c.Delete(d => d.HasName("DeleteOrganization"));
-            });
+//            modelBuilder.Entity<Organization>().MapToStoredProcedures(c =>
+//            {
+//                c.Insert(i => i.HasName("AddOrganization").Result(r => r.IdOrganization, "generated_blog_identity"));
+//                c.Update(u => u.HasName("ModifyOrganization"));
+//                c.Delete(d => d.HasName("DeleteOrganization"));
+//            });
 
             modelBuilder.Entity<Tax>()
                 .Property(e => e.TaxSum)
@@ -188,9 +188,8 @@ namespace TaxorgRepository.Models
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
 
             modelBuilder.Entity<Bug>()
-                .Property(e => e.IsNotLoaded)
+                .Property(e => e.Accept)
                 .IsRequired();
-//                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Computed);
         }
 
         public string GetKeyName<TEntity>() where TEntity : class

@@ -65,6 +65,11 @@ namespace SqlClr
             return new DateTime(Year, Month, Day).Ticks;
         }
 
+        public int AllMonths
+        {
+            get { return Year*12 + Month; }
+        }
+
         #region Operators
 
         public static bool operator ==(YearMonth date1, YearMonth date2)
@@ -151,6 +156,26 @@ namespace SqlClr
             var month = 12 - ((12 - yearMonth.Month) + i)%12;
 
             return new YearMonth {Year = year, Month = month};
+        }
+
+        /// <summary>
+        /// Вычисляет ращницу между периодами в месяцах
+        /// </summary>
+        /// <param name="reducing"></param>
+        /// <param name="mind"></param>
+        /// <returns>Количество месяцев в разнице</returns>
+        public static int operator -(YearMonth reducing, YearMonth mind)
+        {
+            if (reducing.IsNull)
+                throw new ArgumentNullException("reducing");
+
+            if (mind.IsNull)
+                throw new ArgumentNullException("reducing");
+
+            if (reducing < mind)
+                return mind - reducing;
+
+            return reducing.AllMonths - mind.AllMonths;
         }
 
         public static YearMonth operator ++(YearMonth year)
@@ -258,6 +283,12 @@ namespace SqlClr
 
             // Введите здесь код
             return ym;
+        }
+
+        [SqlMethod(DataAccess = DataAccessKind.Read)]
+        public SqlInt32 DifferenceMonth(YearMonth yearMonth)
+        {
+            return this - yearMonth;
         }
 
         public YearMonth Minus(int period)

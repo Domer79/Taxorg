@@ -15,71 +15,128 @@
 @Scripts.Render("~/jqgrid")
 @Scripts.Render("~/scripts/jqgridlocale")
 
-
-<div style="margin-top: 60px">
-    <table id="bugGrid">
-        
-    </table>
-    <div id="bugGridPage"></div>
+<div>
+    <div style="margin-top: 60px" class="container">
+        <table id="bugGrid"></table>
+        <div id="bugGridPage"></div>
+    </div>
 </div>
 
-<script type="text/javascript">
-    $(document).ready(function() {
-        var lastSel = null;
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var lastSel = null;
 
-        var causeEditoptions = {};
-        causeEditoptions.dataInit = function(elem) {
-            $(elem).attr("disabled", "disabled");
-        };
+            var causeEditoptions = {};
+            causeEditoptions.dataInit = function(elem) {
+                $(elem).attr("disabled", "disabled");
+            };
 
-        var timeLabelEditoptions = {};
-        timeLabelEditoptions.dataInit = function (elem) {
-            $(elem).attr("disabled", "disabled");
-        };
+            var timeLabelEditoptions = {};
+            timeLabelEditoptions.dataInit = function(elem) {
+                $(elem).attr("disabled", "disabled");
+            };
 
-        $("#bugGrid").jqGrid({
-            url: "@Url.Action("GetData")",
-            editurl: "@Url.Action("Edit")",
-            datatype: "json",
-            colModel: [
-                {name: "IdBug", hidden: true, key: true, editable: true},
-                {name: "ErrorData", label: "Ошибочные данные", width: 500, editable: true},
-                {name: "Cause", label: "Причина", editable: true, editoptions: causeEditoptions },
-                {name: "TimeLabel", label: "Метка времени", editable: true, formatter: 'date', formatoptions: {newformat: "d.m.Y H:i:s"}, editoptions: timeLabelEditoptions},
-                {name: "IsNotLoaded", label: "Не сохранено", editable: true, formatter: 'checkbox', formatoptions: {checkbox: {disabled: true}}, edittype: "checkbox", editoptions: {value: "False:True"}}
-            ],
-            mtype: 'POST',
-            pager: "#bugGridPage",
-            rowNum: 30,
-            //            page: 20,
-            rowList: [10, 20, 30],
-            sortName: "shortName",
-            sortorder: "asc",
-            jsonReader: {
-                root: "rows",
-                page: "page",
-                total: "totalPages",
-                records: "records",
-                repeatitems: false,
-                userdata: "userdata"
-            },
-            height: "auto",
-            onSelectRow: function (id) {
-                if (id && id !== lastSel) {
-                    $('#bugGrid').saveRow(lastSel);
-                    lastSel = id;
+            $("#bugGrid").jqGrid({
+                url: "@Url.Action("GetData")",
+                editurl: "@Url.Action("Edit")",
+                datatype: "json",
+                colModel: [
+                    { name: "IdBug", hidden: true, key: true, editable: true, searchoptions: { sopt: ['cn', 'eq', 'ne'] } },
+                    { name: "ErrorData", label: "Ошибочные данные", width: 500, editable: true, searchoptions: { sopt: ['cn', 'eq', 'ne'] } },
+                    { name: "Cause", label: "Причина", editable: true, editoptions: causeEditoptions, searchoptions: { sopt: ['cn', 'eq', 'ne'] } },
+                    { name: "TimeLabel", label: "Метка времени", editable: true, formatter: 'date', formatoptions: { newformat: "d.m.Y H:i:s" }, editoptions: timeLabelEditoptions, searchoptions: { sopt: ['cn', 'eq', 'ne'] } },
+                    { name: "Accept", label: "Не сохранено", editable: false, formatter: 'checkbox', formatoptions: { checkbox: { disabled: true } }}
+                ],
+                mtype: 'POST',
+                pager: "#bugGridPage",
+                rowNum: 30,
+                //            page: 20,
+                rowList: [10, 20, 30],
+                sortName: "IdBug",
+                sortorder: "asc",
+                jsonReader: {
+                    root: "rows",
+                    page: "page",
+                    total: "totalPages",
+                    records: "records",
+                    repeatitems: false,
+                    userdata: "userdata"
+                },
+                height: "auto",
+                ondblClickRow: function (id, iRow, iCol, e) {
+                    if (id && id !== lastSel) {
+                        $('#bugGrid').saveRow(lastSel);
+                        lastSel = id;
+                    }
+                    $('#bugGrid').editRow(id, true);
                 }
-                $('#bugGrid').editRow(id, true);
-            }
-        });
-    });
-    /*
-    
-        public string ErrorData { get; set; }
-        public string Cause { get; set; }
-        public DateTime TimeLabel { get; set; }
-        public bool IsNotLoaded { get; set; }
-    
-    */
-</script>
+            });
 
+            $("#bugGrid").navGrid("#bugGridPage", {
+                    edit: true,
+                    add: true,
+                    del: true,
+                    refresh: true,
+                    searchtext: "Поиск",
+                    view: true,
+                    modal: true
+                },
+//Edit parameters
+                {
+                    id: 'myedit',
+                    editCaption: "Редактирование записи",
+                    closeAfterEdit: true,
+                    width: 500
+                },
+//Add parameters
+                {
+                    id: 'myadd',
+                    addCaption: "Добавление новой записи",
+                    width: 500,
+                    saveData: "Data has been changed! Save changes?",
+                    closeAfterAdd: true,
+                    recreateForm: true,
+                    modal: true,
+                    //ajaxEditOptions: {
+                    //    error: function (xhr, textStatus, errorThrown) {
+                    //        alert("Error");
+                    //    }
+                    //}
+                },
+//Delete parameters
+                {
+                    id: 'mydel',
+                    url: "@Url.Action("Delete")"
+                },
+                //Search parameters
+                {
+                    closeOnEscape: true,
+                    multipleSearch: true,
+                    closeAfterSearch: true
+                },
+                //View parameters
+                {
+                    width: 600
+                }
+            );
+
+            $("#bugGrid").jqGrid('filterToolbar', {
+                searchOperators: true,
+                stringResult: true
+            });
+
+            $("#bugGrid").bind("jqGridInlineErrorSaveRow", function(e, rowid, orgClickEvent) {
+                alert(orgClickEvent.statusText);
+                $("#bugGrid").restoreRow(rowid);
+                return [true, jqXHR.responseText];
+            });
+
+            $("#bugGrid").bind("jqGridInlineSuccessSaveRow", function(e, rowid, orgClcikEvent) {
+                $(this).trigger("reloadGrid");
+            });
+
+        });
+    </script>   
+}

@@ -79,7 +79,6 @@
     <Build Include="dbo\Programming\Procedures\AddOrganization.sql" />
     <Build Include="dbo\Programming\Procedures\ModifyOrganization.sql" />
     <Build Include="dbo\Programming\Procedures\DeleteOrganization.sql" />
-    <Build Include="dbo\Tables\ModifyProcedureWork.sql" />
     <Build Include="dbo\Programming\Functions\TableIsModified.sql" />
     <Build Include="dbo\Programming\Procedures\SetModifyBegin.sql" />
     <Build Include="dbo\Programming\Procedures\SetModifyEnd.sql" />
@@ -98,6 +97,7 @@
     <Build Include="dbo\Views\SliceTax.sql" />
     <Build Include="dbo\Programming\Functions\GetTaxPrevPeriod.sql" />
     <Build Include="dbo\Programming\Functions\GetSimpleTax.sql" />
+    <Build Include="dbo\Tables\ModifyProcedureWork.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Taxorg_Db.publish.xml" />
@@ -121,5 +121,8 @@
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="PostDeployment.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PreDeploy Include="Script.PreDeployment.sql" />
   </ItemGroup>
 </Project>

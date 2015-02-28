@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using TaxorgRepository.Models;
 
 namespace TaxorgRepository.Repositories
 {
-    internal class BugRepository : RepositoryBase<Bug>
+    public class BugRepository : RepositoryBase<Bug>
     {
         private static BugRepository _buges;
 
@@ -21,17 +22,22 @@ namespace TaxorgRepository.Repositories
         public void TakeOff(int idBug)
         {
             var bug = GetObjectByKey(idBug);
-            bug.IsNotLoaded = false;
+            bug.Accept = true;
             SaveChanges();
         }
 
-        private BugRepository()
+        public BugRepository()
         {
         }
 
         public static BugRepository Buges
         {
             get { return _buges ?? (_buges = new BugRepository()); }
+        }
+
+        public override Expression Expression
+        {
+            get { return Set.Where(e => !e.Accept).Expression; }
         }
     }
 

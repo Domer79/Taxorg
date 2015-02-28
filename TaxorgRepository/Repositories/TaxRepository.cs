@@ -16,52 +16,19 @@ namespace TaxorgRepository.Repositories
             get { return _repository ?? (_repository = new TaxRepository()); }
         }
 
-        public void LoadTax(Organization organization, TaxType taxType, DateTime date, decimal taxSum)
+        private Tax GetTax(Organization organization, TaxType taxType, string periodName)
         {
-            var tax = Repository.GetTax(organization, taxType, date);
-            tax.TaxSum = taxSum;
-        }
-
-        private Tax GetTax(Organization organization, TaxType taxType, DateTime date)
-        {
-            var tax = this.SingleOrDefault(e => e.IdOrganization == organization.IdOrganization && e.IdTaxType == taxType.IdTaxType && e.Period == date);
+            var tax = this.SingleOrDefault(e => e.IdOrganization == organization.IdOrganization && e.IdTaxType == taxType.IdTaxType && e.PeriodName == periodName);
 
             if (tax == null)
             {
                 tax = Create();
                 tax.IdOrganization = organization.IdOrganization;
                 tax.IdTaxType = taxType.IdTaxType;
-                tax.Period = date;
-                InsertOrUpdate(tax);
+                tax.Period = periodName;
             }
 
             return tax;
-        }
-
-        public bool SaveTax(string inn, string taxCode, DateTime dateLoad, decimal taxSum, out string errorStr)
-        {
-            errorStr = string.Empty;
-            try
-            {
-                var contextOrganization = OrganizationRepository.GetOrganization(inn) ?? OrganizationRepository.CreateOrganization(inn);
-                var taxType = TaxTypeRepository.GetTaxType(taxCode) ?? TaxTypeRepository.Create(taxCode);
-                LoadTax(contextOrganization, taxType, dateLoad, taxSum);
-
-                var isError = false;
-                foreach (var item in Context.GetValidationErrors())
-                {
-                    errorStr = item.ValidationErrors.Aggregate("",
-                        (accumulate, error) => accumulate + error.ErrorMessage);
-                    isError = true;
-                }
-
-                return !isError;
-            }
-            catch (Exception e)
-            {
-                errorStr = e.Message;
-                return false;
-            }
         }
 
         public void SaveTaxToDb(string inn, string taxCode, DateTime dateLoad, decimal taxSum)

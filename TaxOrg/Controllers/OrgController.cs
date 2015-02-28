@@ -7,8 +7,10 @@ using System.Web.Mvc;
 using System.Web.SessionState;
 using MvcFileUploader;
 using MvcFileUploader.Models;
+using SqlClr;
 using TaxOrg.Infrastructure;
 using TaxOrg.Tools;
+using TaxorgRepository;
 using TaxorgRepository.Models;
 using TaxorgRepository.Repositories;
 
@@ -21,6 +23,7 @@ namespace TaxOrg.Controllers
         public ActionResult Index()
         {
             ViewBag.TotalTaxCount = _repository.Count();
+            ViewBag.CurrentPeriod = TaxorgTools.GetCurrentPeriod() - TaxorgTools.GetPrevPeriodCount();
             return View();
         }
 

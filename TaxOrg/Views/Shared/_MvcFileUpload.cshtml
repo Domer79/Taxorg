@@ -359,29 +359,30 @@ else //inline
 <!--template and scripts end-->
 
     <script type="text/javascript">
-            
-        // Initialize the jQuery File Upload widget:
-        $('#@(formId)').fileupload({url: '@Model.UploadUrl'});
 
-        $('#@(formId)').fileupload('option', { 
-            maxFileSize: @Model.MaxFileSizeInBytes,        
-            maxNumberOfFiles: @maxNoOfFiles,
-            disableImagePreview: @(Model.DisableImagePreview ? "true" : "false"),
-            resizeMaxWidth: 1920,
-            resizeMaxHeight: 1200,
-            acceptFileTypes: @Model.FileTypes,
-        });    
+    // Initialize the jQuery File Upload widget:
+    $('#@(formId)').fileupload({url: '@Model.UploadUrl'});
 
-        console.log('Привет Мир!!!');
+    $('#@(formId)').fileupload('option', {
+        maxFileSize: @Model.MaxFileSizeInBytes,
+        maxNumberOfFiles: @maxNoOfFiles,
+        disableImagePreview: @(Model.DisableImagePreview ? "true" : "false"),
+        resizeMaxWidth: 1920,
+        resizeMaxHeight: 1200,
+        acceptFileTypes: @Model.FileTypes,
+    });
 
-        $('#@(formId)')
+    console.log('Привет Мир!!!');
+
+    $('#@(formId)')
             .bind('fileuploaddone', function(e, data) {
-                //location.reload();
-
-                if(isBug())
-                    alert("dsgdsfgfds")
-
                 var url = "@Url.Action("Index", "Org")";
+
+                if (isBug()) {
+                    alert("При загрузке файла были выявлены строки неверного формата. Сейчас вы будете перенаправлены на страницу, с неправильными записями, где вы сможете их отредактировать.");
+                    url = "@Url.Action("Index", "Bug")";
+                }
+
                 $(location).attr("href", url);
             })
             .bind('fileuploadprogress', function(e, data) {
@@ -394,26 +395,22 @@ else //inline
             });
 
         var isBug = function() {
+            var result = false;
             $.ajax({
                 url: "@Url.Action("IsLoadBug", "Bug")",
-                success: function(data, textStatus, jqXHR) {
-                    alert(textStatus);
-                    alert(data);
-                    return data;
-                },
-                complete: function(jqXHR, textStatus) {
-                    alert(textStatus);
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    alert(textStatus);
-                    alert(errorThrown);
-                },
-                async: false,
-                cache: false,
-                dataType: "json"
-            });
+            success: function(data, textStatus, jqXHR) {
+                result = data.notAccepted;
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert(jqXHR.responseText)
+            },
+            async: false,
+            cache: false,
+            dataType: "json",
+            type: "POST"
+        });
 
-            return false;
-        };
+        return result;
+    };
 
     </script>
