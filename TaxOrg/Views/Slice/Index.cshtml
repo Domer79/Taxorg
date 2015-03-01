@@ -1,12 +1,11 @@
 ﻿@using System.Web.Optimization
+@using TaxorgRepository
 @model TaxorgRepository.Models.Organization
 
 @{
     ViewBag.Title = "title";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>@ViewBag.Title</h2>
 
 @Scripts.Render("~/jqgrid")
 @Scripts.Render("~/scripts/jqgridlocale")
@@ -16,7 +15,7 @@
     <p><span class="h3">ИНН: @Model.Inn</span></p>
     <p><span class="h5">Адрес: @Model.Address</span></p>
 </div>
-<div style="margin-top: 60px" class="container">
+<div class="container">
     <table id="sliceGrid"></table>
     <div id="sliceGridPage"></div>
 </div>
@@ -27,21 +26,16 @@
     $(document).ready(function() {
         $("#sliceGrid").jqGrid({
             url: "@Url.Action("GetData", "Slice")" + "?idOrganization=" + @Model.IdOrganization,
-//            editurl: "@Url.Action("Edit")",
             datatype: "json",
             colModel: [
                 { name: "IdTax", hidden: true, key: true, editable: true },
-//                { name: "IdOrganization", hidden: true, editable: true, editrules: { edithidden: true } },
-//                { name: "OrganizationInn", label: "ИНН", editable: true, hidden: true, searchoptions: { sopt: ['cn', 'eq', 'ne'] }, editrules: { edithidden: true } },
-//                { name: "OrganizationName", label: "Полное наименование организации", editable: true, searchoptions: { sopt: ['cn', 'eq', 'ne'] }, editrules: { edithidden: true } },
-//                { name: "OrganizationShortName", label: "Краткое наименование организации", editable: true, searchoptions: { sopt: ['cn', 'eq', 'ne'] }, editrules: { edithidden: true } },
                 { name: "IdTaxType", editable: true, hidden: true, editrules: { edithidden: true } },
-                { name: "TaxCode", label: "Код налога", editable: true, searchoptions: { sopt: ['cn', 'eq', 'ne'] } },
-                { name: "TaxName", label: "Наименование налога", editable: true, searchoptions: { sopt: ['cn', 'eq', 'ne'] }},
+                { name: "TaxCode", label: "Код налога", width: 200, editable: true, searchoptions: { sopt: ['cn', 'eq', 'ne'] } },
+                { name: "TaxName", label: "Наименование налога", width: 400, editable: true, searchoptions: { sopt: ['cn', 'eq', 'ne'] }},
                 { name: "TaxSum", label: "Сумма", hidden: true, editable: true, searchoptions: { sopt: ['eq', 'ne', 'gt', 'ge', 'lt', 'le'] } },
                 { name: "TaxDebitKredit", index: "TaxSum", label: "Сумма", width: 100, searchoptions: { sopt: ['eq', 'ne', 'gt', 'ge', 'lt', 'le'] }, editable: false},
-                { name: "PrevTaxSum", label: "Сумма долга", editable: false, searchoptions: { sopt: ['eq', 'ne', 'gt', 'ge', 'lt', 'le'] } },
-                { name: "PeriodName", width: 100, label: "Период", search: false, editable: false }
+                { name: "PrevTaxSum", label: "На @TaxorgTools.GetPrevPeriod()", editable: false, searchoptions: { sopt: ['eq', 'ne', 'gt', 'ge', 'lt', 'le'] } },
+                { name: "Delta", label: "Дельта", width: 100, searchoptions: { sopt: ['eq', 'ne', 'gt', 'ge', 'lt', 'le'] }, editable: false, formatter: "currency", formatoptions: { decimalSeparator: ".", thousandsSeparator: " ", decimalPlaces: 2 } }
             ],
             mtype: 'POST',
             pager: "#sliceGridPage",
@@ -58,14 +52,8 @@
                 repeatitems: false,
                 userdata: "userdata"
             },
-            height: "auto"
-//            onSelectRow: function (id) {
-//                if (id && id !== lastSel) {
-//                    $('#sliceGrid').saveRow(lastSel);
-//                    lastSel = id;
-//                }
-//                $('#sliceGrid').editRow(id, true);
-//            }
+            height: "auto",
+            caption: "Отчетный период: @TaxorgTools.GetCurrentPeriod()"
         });
 
         $("#sliceGrid").jqGrid('filterToolbar', {

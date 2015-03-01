@@ -68,7 +68,7 @@ namespace TaxOrg.Tests
         public void ErrorSaveTest()
         {
             ApplicationCustomizer.ConnectionString = "Data Source=.;Integrated Security=True;Initial Catalog=Taxorg";
-            ApplicationCustomizer.SaveErrorLog = ErrorLog.SaveError;
+            ApplicationCustomizer.RegisterErrorLog(ErrorLog.SaveError);
 
             try
             {

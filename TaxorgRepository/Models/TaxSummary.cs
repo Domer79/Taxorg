@@ -35,7 +35,8 @@ namespace TaxorgRepository.Models
         [NotMapped]
         public decimal Delta
         {
-            get { return Math.Abs(Tax - PrevTax); }
+            get { return Tax - PrevTax; }
+//            get { return Math.Abs(Tax - PrevTax); }
         }
 
         [Column("period")]

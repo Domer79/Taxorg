@@ -1,29 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SqlClr;
-using TaxorgRepository.Models;
+﻿using SqlClr;
 using TaxorgRepository.Tools;
-using SystemTools;
 
 namespace TaxorgRepository
 {
     public class TaxorgTools
     {
-        
-
         public static YearMonth GetCurrentPeriod()
         {
-            return InnerTools.GetCurrentPeriod(ApplicationCustomizer.ConnectionString);
+            return InnerTools.GetCurrentPeriod();
         }
 
         public static int GetPrevPeriodCount()
         {
-            return InnerTools.GetPrevPeriodCount(ApplicationCustomizer.ConnectionString);
+            return InnerTools.GetPrevPeriodCount();
+        }
+
+        public static YearMonth GetPrevPeriod()
+        {
+            return InnerTools.GetPrevPeriod();
+        }
+
+        public static bool IsNotSameTaxLoad
+        {
+            get { return InnerTools.IsNotSameTaxLoad; }
+            set { InnerTools.IsNotSameTaxLoad = value; }
         }
     }
 }

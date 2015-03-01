@@ -19,4 +19,7 @@ if not exists(select 1 from Settings where name = 'taxperiodmonth')
 if not exists(select 1 from Settings where name = 'taxprevperiod')
 	insert into Settings(name, value, description) values('taxprevperiod', '1', 'Значение для вычисления предыдущего периода')
 
+if not exists(select 1 from Settings where name = 'isnotsametaxload')
+	insert into Settings(name, value, description) values('isnotsametaxload', '0', 'Запрещает/Разрешает загрузку данных с одинаковыми значениями сумм долга за текущий и предыдущий периоды')
+
 exec GrantToPublic 0

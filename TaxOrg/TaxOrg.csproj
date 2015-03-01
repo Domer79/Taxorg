@@ -613,6 +613,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Org\Index.cshtml" />
     <Content Include="Документы\test.csv" />
+    <Content Include="Views\Settings\Index.cshtml" />
     <None Include="Документы\План работ на 26.02-10.03.2015.xlsx" />
     <Content Include="Документы\Февраль.csv" />
     <Content Include="Документы\Январь.csv" />
@@ -623,6 +624,7 @@
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\BugController.cs" />
     <Compile Include="Controllers\FileUploaderController.cs" />
+    <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\SliceController.cs" />
     <Compile Include="Controllers\UploaderController.cs" />
     <Compile Include="Controllers\OrgController.cs" />

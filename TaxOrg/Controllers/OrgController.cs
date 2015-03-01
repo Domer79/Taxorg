@@ -24,7 +24,8 @@ namespace TaxOrg.Controllers
         public ActionResult Index()
         {
             ViewBag.TotalTaxCount = _repository.Count();
-            ViewBag.CurrentPeriod = TaxorgTools.GetCurrentPeriod() - TaxorgTools.GetPrevPeriodCount();
+            ViewBag.CurrentPeriod = TaxorgTools.GetCurrentPeriod().ToString();
+            ViewBag.PrevPeriod = TaxorgTools.GetPrevPeriod().ToString();
             return View();
         }
 

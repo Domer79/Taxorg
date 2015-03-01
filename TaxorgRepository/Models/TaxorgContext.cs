@@ -1,15 +1,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity.Spatial;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.Dynamic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
-using System.Runtime.Remoting.Contexts;
-using System.Threading.Tasks;
-using TaxorgRepository.Repositories;
 using TaxorgRepository.Tools;
 using SystemTools;
 
@@ -51,10 +44,13 @@ namespace TaxorgRepository.Models
         public DbSet<Error> Errors { get; set; }
         public DbSet<Bug> Bugs { get; set; }
         public DbSet<SliceTax> SliceTax { get; set; }
+        public DbSet<Settings> Settings { get; set; }
 
         [DebuggerStepThrough]
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            #region FileSystem
+
             modelBuilder.Entity<FileSystem>()
                 .Property(e => e.FileName)
                 .IsUnicode(false);
@@ -79,6 +75,10 @@ namespace TaxorgRepository.Models
                 .Property(e => e.RemoteHostMac)
                 .IsUnicode(false);
 
+            #endregion
+
+            #region Organization
+
             modelBuilder.Entity<Organization>()
                 .Property(e => e.Name)
                 .IsUnicode(false);
@@ -100,6 +100,8 @@ namespace TaxorgRepository.Models
                 .WithOptional(e => e.Organization)
                 .WillCascadeOnDelete();
 
+            #endregion
+
 //            modelBuilder.Entity<Organization>().MapToStoredProcedures(c =>
 //            {
 //                c.Insert(i => i.HasName("AddOrganization").Result(r => r.IdOrganization, "generated_blog_identity"));
@@ -107,9 +109,15 @@ namespace TaxorgRepository.Models
 //                c.Delete(d => d.HasName("DeleteOrganization"));
 //            });
 
+            #region Tax
+
             modelBuilder.Entity<Tax>()
                 .Property(e => e.TaxSum)
                 .HasPrecision(19, 4);
+
+            #endregion
+
+            #region TaxType
 
             modelBuilder.Entity<TaxType>()
                 .Property(e => e.Code)
@@ -123,6 +131,10 @@ namespace TaxorgRepository.Models
                 .HasMany(e => e.Tax)
                 .WithRequired(e => e.TaxType)
                 .WillCascadeOnDelete(false);
+
+            #endregion
+
+            #region TaxSummary
 
             modelBuilder.Entity<TaxSummary>()
                 .HasKey(e => e.IdOrganization)
@@ -152,6 +164,10 @@ namespace TaxorgRepository.Models
                 .Property(e => e.PrevTax)
                 .HasPrecision(19, 4);
 
+            #endregion
+
+            #region Error
+
             modelBuilder.Entity<Error>()
                 .Property(e => e.TypeError)
                 .IsRequired()
@@ -174,6 +190,10 @@ namespace TaxorgRepository.Models
                 .HasKey(e => e.IdError)
                 .ToTable("Error");
 
+            #endregion
+
+            #region Bug
+
             modelBuilder.Entity<Bug>()
                 .HasKey(e => e.IdBug)
                 .ToTable("Bug");
@@ -190,6 +210,29 @@ namespace TaxorgRepository.Models
             modelBuilder.Entity<Bug>()
                 .Property(e => e.Accept)
                 .IsRequired();
+
+            #endregion
+
+            #region Settings
+
+            modelBuilder.Entity<Settings>()
+                .HasKey(e => e.IdSettings)
+                .ToTable("Settings");
+
+            modelBuilder.Entity<Settings>()
+                .Property(e => e.Name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Settings>()
+                .Property(e => e.Value)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Settings>()
+                .Property(e => e.Description)
+                .IsUnicode(false);
+
+            #endregion
+
         }
 
         public string GetKeyName<TEntity>() where TEntity : class

@@ -1,0 +1,126 @@
+﻿@using System.Web.Optimization
+@model dynamic
+
+@{
+    ViewBag.Title = "Настройки";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Scripts.Render("~/jqgrid")
+@Scripts.Render("~/scripts/jqgridlocale")
+
+<div class="container">
+    <div class="jumbotron h1">
+        <h2>Настройки</h2>
+    </div>
+
+    <table id="gridSettings"></table>
+    <div id="pageSettings"></div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var lastSel;
+
+            var nameEditOptions = {};
+            nameEditOptions.dataInit = function(elem) {
+                $(elem).attr("disabled", "disabled");
+            }
+
+
+            $("#gridSettings").jqGrid({
+                url: "@Url.Action("GetData")",
+                editurl: "@Url.Action("Edit")",
+                datatype: "json",
+                colModel: [
+                    { name: "IdSettings", hidden: true, key: true, editable: true, searchoptions: { sopt: ['eq', 'ne'] } },
+                    { name: "Name", label: "Имя", editable: true, editoptions: nameEditOptions, searchoptions: { sopt: ['cn', 'eq', 'ne'] } },
+                    { name: "Value", label: "Значение", editable: true, searchoptions: { sopt: ['cn', 'eq', 'ne'] } },
+                    { name: "Description", label: "Описание", width: 700, editable: true, editoptions: nameEditOptions, searchoptions: { sopt: ['cn', 'eq', 'ne'] } }
+                ],
+                mtype: 'POST',
+                pager: "#pageSettings",
+                rowNum: 25,
+                //            page: 20,
+                rowList: [10, 20, 30, @ViewBag.TotalTaxCount],
+                sortName: "shortName",
+                sortorder: "asc",
+                jsonReader: {
+                    root: "rows",
+                    page: "page",
+                    total: "totalPages",
+                    records: "records",
+                    repeatitems: false,
+                    userdata: "userdata"
+                },
+                height: "auto",
+                width: "100%",
+                gridComplete: function() {
+                    $("tr:odd").addClass("oddRow");
+//                    $(this).css("width", "100%");
+
+                },
+                ondblClickRow: function(rowId, iRow, iCol, e) {
+                    if (rowId && rowId !== lastSel) {
+//                        $(this).restoreRow(lastSel);
+                        $(this).saveRow(lastSel);
+                        lastSel = rowId;
+                    }
+                    $(this).editRow(rowId, true);
+                }
+            });
+
+            $("#gridSettings").navGrid("#pageSettings", {
+                    edit: true,
+                    add: false,
+                    del: false,
+                    refresh: true,
+                    searchtext: "Поиск",
+                    view: true,
+                    modal: true
+                },
+                //Edit parameters
+                {
+                    id: 'myedit',
+                    editCaption: "Редактирование записи",
+                    closeAfterEdit: true,
+                    width: 500
+                },
+                //Add parameters
+                {
+//                    id: 'myadd',
+//                    addCaption: "Добавление новой записи",
+//                    width: 500,
+//                    saveData: "Data has been changed! Save changes?",
+//                    closeAfterAdd: true,
+//                    recreateForm: true,
+//                    modal: true,
+                    //ajaxEditOptions: {
+                    //    error: function (xhr, textStatus, errorThrown) {
+                    //        alert("Error");
+                    //    }
+                    //}
+
+                },
+                //Delete parameters
+                {
+//                    id: 'mydel',
+//                    url: "@Url.Action("Delete")"
+
+                },
+                //Search parameters
+                {
+                    closeOnEscape: true,
+                    multipleSearch: true,
+                    closeAfterSearch: true
+                },
+                //View parameters
+                {
+                    width: 600
+                }
+            );
+        });
+    </script>
+}

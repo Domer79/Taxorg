@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 using System.Data.Common;
@@ -31,5 +32,12 @@ namespace TaxorgRepository.Models
         public YearMonth Period { get; set; }
 
         public string PeriodName { get; set; }
+
+        [NotMapped]
+        public decimal Delta
+        {
+            get { return TaxSum - PrevTaxSum; }
+        }
+
     }
 }

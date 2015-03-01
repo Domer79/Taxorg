@@ -24,7 +24,15 @@ namespace SystemTools
             set { ApplicationSettings.LoggingDbContext = value; }
         }
 
-        public static Action<Exception> SaveErrorLog { get; set; }
+        public static void RegisterErrorLog(Action<Exception> errorLog)
+        {
+            if (errorLog == null) 
+                throw new ArgumentNullException("errorLog");
+
+            SaveErrorLog = errorLog;
+        }
+
+        internal static Action<Exception> SaveErrorLog { get; set; }
 
         public static string AppVersion
         {

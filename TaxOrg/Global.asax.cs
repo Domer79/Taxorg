@@ -13,7 +13,7 @@ namespace TaxOrg
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            ApplicationCustomizer.SaveErrorLog = ErrorLog.SaveError;
+            ApplicationCustomizer.RegisterErrorLog(ErrorLog.SaveError);
         }
     }
 }

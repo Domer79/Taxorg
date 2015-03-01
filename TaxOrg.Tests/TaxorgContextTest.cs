@@ -106,5 +106,33 @@ namespace TaxOrg.Tests
 
             Assert.AreEqual(new YearMonth("02.2015"), period);
         }
+
+        [TestMethod]
+        public void GetPrevPeriodCountTest()
+        {
+            ApplicationCustomizer.ConnectionString = "data source=.;initial catalog=Taxorg;integrated security=True;";
+            var count = TaxorgTools.GetPrevPeriodCount();
+
+            Assert.AreEqual(1, count);
+        }
+
+        [TestMethod]
+        public void GetPrevPeriodTest()
+        {
+            ApplicationCustomizer.ConnectionString = "data source=.;initial catalog=Taxorg;integrated security=True;";
+            Assert.AreEqual(new YearMonth("02.2015"), TaxorgTools.GetPrevPeriod());
+        }
+
+        [TestMethod]
+        public void IsNotSameTaxLoadTest()
+        {
+            ApplicationCustomizer.ConnectionString = "data source=.;initial catalog=Taxorg;integrated security=True;";
+
+            Assert.IsTrue(!TaxorgTools.IsNotSameTaxLoad);
+
+            TaxorgTools.IsNotSameTaxLoad = true;
+
+            Assert.IsTrue(TaxorgTools.IsNotSameTaxLoad);
+        }
     }
 }
