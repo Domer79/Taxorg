@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using SystemTools.Extensions;
 using TaxOrg.Infrastructure;
 using TaxorgRepository.Models;
 using TaxorgRepository.Repositories;
@@ -18,7 +19,7 @@ namespace TaxOrg.Tools
             }
             catch (Exception e)
             {
-                ErrorLog.SaveError(e);
+                e.SaveError();
                 throw;
             }
         }

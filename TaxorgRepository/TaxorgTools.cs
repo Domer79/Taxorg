@@ -8,12 +8,14 @@ using System.Threading.Tasks;
 using SqlClr;
 using TaxorgRepository.Models;
 using TaxorgRepository.Tools;
-using WebTools;
+using SystemTools;
 
 namespace TaxorgRepository
 {
     public class TaxorgTools
     {
+        
+
         public static YearMonth GetCurrentPeriod()
         {
             return InnerTools.GetCurrentPeriod(ApplicationCustomizer.ConnectionString);
@@ -21,7 +23,7 @@ namespace TaxorgRepository
 
         public static int GetPrevPeriodCount()
         {
-            return InnerTools.GetPrevPeriodCount();
+            return InnerTools.GetPrevPeriodCount(ApplicationCustomizer.ConnectionString);
         }
     }
 }

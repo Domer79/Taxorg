@@ -8,6 +8,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Web.Mvc;
 using System.Web.UI;
+using SystemTools.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SqlClr;
 using TaxOrg.Controllers;
@@ -15,7 +16,7 @@ using TaxOrg.Tools;
 using TaxorgRepository.Models;
 using TaxorgRepository.Repositories;
 using TaxorgRepository.Tools;
-using WebTools;
+using SystemTools;
 using Organization = TaxOrg.Tools.Organization;
 
 namespace TaxOrg.Tests
@@ -67,7 +68,7 @@ namespace TaxOrg.Tests
         public void ErrorSaveTest()
         {
             ApplicationCustomizer.ConnectionString = "Data Source=.;Integrated Security=True;Initial Catalog=Taxorg";
-            var context = TaxorgContext.Context;
+            ApplicationCustomizer.SaveErrorLog = ErrorLog.SaveError;
 
             try
             {
@@ -75,7 +76,7 @@ namespace TaxOrg.Tests
             }
             catch (Exception e)
             {
-                ErrorLog.SaveError(e);
+                e.SaveError();
             }
         }
 
@@ -176,6 +177,19 @@ namespace TaxOrg.Tests
             var actual = period1 - period2;
             Debug.WriteLine(actual);
             Assert.AreEqual(1, actual);
+        }
+
+        [TestMethod]
+        public void ExceptionTest()
+        {
+            try
+            {
+                throw new ArgumentNullException("Test exception");
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
         }
     }
 }

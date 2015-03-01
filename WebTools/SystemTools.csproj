@@ -7,8 +7,8 @@
     <ProjectGuid>{8FB401C3-7285-4F17-A192-41F6CB77FC61}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WebTools</RootNamespace>
-    <AssemblyName>WebTools</AssemblyName>
+    <RootNamespace>SystemTools</RootNamespace>
+    <AssemblyName>SystemTools</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -47,6 +47,7 @@
     <Compile Include="ExcelColumnAttribute.cs" />
     <Compile Include="ExcelDataStructure.cs" />
     <Compile Include="ExcelSheet.cs" />
+    <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="FileUtils.cs" />
     <Compile Include="Interfaces\IRow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

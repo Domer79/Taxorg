@@ -1,6 +1,6 @@
 using System;
 
-namespace WebTools
+namespace SystemTools
 {
     public class DebugHelper
     {

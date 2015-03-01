@@ -5,6 +5,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.SessionState;
+using SystemTools.Extensions;
 using MvcFileUploader;
 using MvcFileUploader.Models;
 using SqlClr;
@@ -65,7 +66,7 @@ namespace TaxOrg.Controllers
             {
                 try
                 {
-                    ErrorLog.SaveError(e);
+                    e.SaveError();
                 }
                 catch
                 {

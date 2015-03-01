@@ -2,7 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Reflection;
 
-namespace WebTools
+namespace SystemTools
 {
     public static class ApplicationCustomizer
     {
@@ -23,6 +23,8 @@ namespace WebTools
             get { return ApplicationSettings.LoggingDbContext; }
             set { ApplicationSettings.LoggingDbContext = value; }
         }
+
+        public static Action<Exception> SaveErrorLog { get; set; }
 
         public static string AppVersion
         {

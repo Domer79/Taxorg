@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using SystemTools.Extensions;
 using MvcFileUploader;
 using MvcFileUploader.Models;
 using TaxOrg.Tools;
 using TaxorgRepository.Exceptions;
 using TaxorgRepository.Models;
 using TaxorgRepository.Repositories;
-using WebTools;
+using SystemTools;
 using Organization = TaxOrg.Tools.Organization;
 
 namespace TaxOrg.Controllers
@@ -63,14 +64,14 @@ namespace TaxOrg.Controllers
                     }
                     catch (Exception e)
                     {
-                        ErrorLog.SaveError(e);
+                        e.SaveError();
                         return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, e.Message);
                     }
 
                 }
                 catch (Exception e)
                 {
-                    ErrorLog.SaveError(e);
+                    e.SaveError();
                 }
 
                 try
@@ -82,7 +83,7 @@ namespace TaxOrg.Controllers
                     var csvReader = new CsvReader<Organization>(excelPath, (e, row) =>
                     {
                         Buges.SaveBugRow(row, e.Message); 
-                        ErrorLog.SaveError(e);
+                        e.SaveError();
                     });
 
                     var taxRepository = new TaxRepository();
@@ -95,7 +96,7 @@ namespace TaxOrg.Controllers
                 }
                 catch (Exception e)
                 {
-                    ErrorLog.SaveError(e);
+                    e.SaveError();
                     return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, e.Message);
                 }
             }

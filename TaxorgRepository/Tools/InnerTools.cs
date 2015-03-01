@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using SqlClr;
@@ -20,6 +21,9 @@ namespace TaxorgRepository.Tools
 
         public static YearMonth GetCurrentPeriod(TaxorgContext context)
         {
+            if (context == null) 
+                throw new ArgumentNullException("context");
+
             var result = context.Database.SqlQuery<string>("select dbo.GetCurrentPeriod()").ToList();
 
             if (result.Count == 0)
@@ -29,7 +33,17 @@ namespace TaxorgRepository.Tools
 
         }
 
-        public static int GetPrevPeriodCount()
+        public static int GetPrevPeriodCount(TaxorgContext context)
+        {
+            if (context == null) 
+                throw new ArgumentNullException("context");
+
+            var result = context.Database.SqlQuery<string>("select dbo.GetTaxPrevPeriod()").ToList();
+
+            throw new NotImplementedException();
+        }
+
+        public static int GetPrevPeriodCount(string connectionString)
         {
             throw new NotImplementedException();
         }

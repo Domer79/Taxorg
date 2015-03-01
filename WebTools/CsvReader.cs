@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using WebTools.Interfaces;
+using SystemTools.Interfaces;
 
-namespace WebTools
+namespace SystemTools
 {
     public delegate void CsvReaderErrorHandler(Exception e, string bugRow);
     public class CsvReader<T> : IEnumerable<T>, IDisposable where T : class

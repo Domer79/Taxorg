@@ -1,6 +1,6 @@
 using System.Configuration;
 
-namespace WebTools
+namespace SystemTools
 {
     public class ApplicationSettings
     {

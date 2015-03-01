@@ -245,6 +245,6 @@
 //	}
 //}
 
-namespace WebTools
+namespace SystemTools
 {
 }

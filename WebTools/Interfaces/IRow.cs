@@ -1,6 +1,6 @@
 using System;
 
-namespace WebTools.Interfaces
+namespace SystemTools.Interfaces
 {
     public interface IRow<out T> where T : class
     {
