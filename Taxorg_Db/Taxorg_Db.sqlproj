@@ -104,6 +104,8 @@
     <None Include="TaxorgToIis-nalog.publish.xml" />
     <None Include="Taxorg_Db.To_Vmssqlserver.publish.xml" />
     <None Include="Routina\Script v1.1.sql" />
+    <None Include="Routina\v1.1.1.0.sql" />
+    <None Include="Routina\Service.sql" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

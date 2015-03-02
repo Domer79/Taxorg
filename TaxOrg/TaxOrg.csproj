@@ -62,9 +62,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="JavaPlagins">
-      <HintPath>..\..\Joblog\JavaPlagins\bin\Release\JavaPlagins.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -614,6 +611,7 @@
     <Content Include="Views\Org\Index.cshtml" />
     <Content Include="Документы\test.csv" />
     <Content Include="Views\Settings\Index.cshtml" />
+    <Content Include="Views\Org\Maintenance.cshtml" />
     <None Include="Документы\План работ на 26.02-10.03.2015.xlsx" />
     <Content Include="Документы\Февраль.csv" />
     <Content Include="Документы\Январь.csv" />
@@ -626,6 +624,7 @@
     <Compile Include="Controllers\FileUploaderController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\SliceController.cs" />
+    <Compile Include="Controllers\SysController.cs" />
     <Compile Include="Controllers\UploaderController.cs" />
     <Compile Include="Controllers\OrgController.cs" />
     <Compile Include="Global.asax.cs">
@@ -681,6 +680,7 @@
     <Folder Include="Content\uploads\" />
     <Folder Include="Interfaces\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Sys\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

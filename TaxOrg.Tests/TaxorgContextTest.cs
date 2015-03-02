@@ -134,5 +134,21 @@ namespace TaxOrg.Tests
 
             Assert.IsTrue(TaxorgTools.IsNotSameTaxLoad);
         }
+
+        [TestMethod]
+        public void AppVersionTest()
+        {
+            ApplicationCustomizer.ConnectionString = "data source=.;initial catalog=Taxorg;integrated security=True;";
+
+            Assert.AreEqual("1.1.1.0", TaxorgTools.AppVersion);
+        }
+
+        [TestMethod]
+        public void SetTaxPrevPeriodCountTest()
+        {
+            ApplicationCustomizer.ConnectionString = "data source=.;initial catalog=Taxorg;integrated security=True;";
+
+            TaxorgTools.SetTaxPrevPeriodCount(2);
+        }
     }
 }

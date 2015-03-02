@@ -22,4 +22,7 @@ if not exists(select 1 from Settings where name = 'taxprevperiod')
 if not exists(select 1 from Settings where name = 'isnotsametaxload')
 	insert into Settings(name, value, description) values('isnotsametaxload', '0', 'Запрещает/Разрешает загрузку данных с одинаковыми значениями сумм долга за текущий и предыдущий периоды')
 
+if not exists(select 1 from Settings where name = 'appversion')
+	insert into Settings(name, value, description) values('appversion', '1.1.1.0', 'Версия приложения')
+
 exec GrantToPublic 0

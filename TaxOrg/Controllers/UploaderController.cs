@@ -7,6 +7,7 @@ using SystemTools.Extensions;
 using MvcFileUploader;
 using MvcFileUploader.Models;
 using TaxOrg.Tools;
+using TaxorgRepository;
 using TaxorgRepository.Exceptions;
 using TaxorgRepository.Models;
 using TaxorgRepository.Repositories;
@@ -22,6 +23,9 @@ namespace TaxOrg.Controllers
 
         public ActionResult Index(bool? inline, string ui = "bootstrap")
         {
+            if (TaxorgTools.IsMaintenance)
+                return RedirectToAction("Maintenance", "Org");
+
             return View(inline);
         }
 

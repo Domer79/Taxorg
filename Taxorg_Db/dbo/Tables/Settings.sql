@@ -3,7 +3,8 @@
 	[idSettings] INT NOT NULL PRIMARY KEY identity,
 	name varchar(30),
 	value varchar(max),
-	description varchar(4000)
+	description varchar(4000),
+	visible bit not null default(1)
 )
 go
 

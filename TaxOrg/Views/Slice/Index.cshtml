@@ -5,15 +5,28 @@
 @{
     ViewBag.Title = "title";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    const string orgUndefined = "Не задано";
 }
 
 @Scripts.Render("~/jqgrid")
 @Scripts.Render("~/scripts/jqgridlocale")
 
+<style type="text/css">
+    .grid {
+        margin-top: 50px;
+    }
+
+    .oddRow {
+        /*font-size: 12px;*/
+        font-weight: bold;
+        background-image: url('~/Content/themes/overcast/images/ui-bg_flat_55_c0402a_40x100.png') !important;
+    }
+</style>
+
 <div class="container navbar">
-    <p><span class="h1">@Model.Name</span></p>
+    <p><span class="h1">@if(Model.Name == null) {@orgUndefined} else{@Model.Name} </span></p>
     <p><span class="h3">ИНН: @Model.Inn</span></p>
-    <p><span class="h5">Адрес: @Model.Address</span></p>
+    <p><span class="h5">Адрес: @if(Model.Address == null){@orgUndefined} else{@Model.Address}</span></p>
 </div>
 <div class="container">
     <table id="sliceGrid"></table>
@@ -34,7 +47,7 @@
                 { name: "TaxName", label: "Наименование налога", width: 400, editable: true, searchoptions: { sopt: ['cn', 'eq', 'ne'] }},
                 { name: "TaxSum", label: "Сумма", hidden: true, editable: true, searchoptions: { sopt: ['eq', 'ne', 'gt', 'ge', 'lt', 'le'] } },
                 { name: "TaxDebitKredit", index: "TaxSum", label: "Сумма", width: 100, searchoptions: { sopt: ['eq', 'ne', 'gt', 'ge', 'lt', 'le'] }, editable: false},
-                { name: "PrevTaxSum", label: "На @TaxorgTools.GetPrevPeriod()", editable: false, searchoptions: { sopt: ['eq', 'ne', 'gt', 'ge', 'lt', 'le'] } },
+                { name: "PrevTaxSum", label: "На @TaxorgTools.GetPrevPeriod()", editable: false, searchoptions: { sopt: ['eq', 'ne', 'gt', 'ge', 'lt', 'le'] }, formatter: "currency", formatoptions: { decimalSeparator: ".", thousandsSeparator: " ", decimalPlaces: 2 } },
                 { name: "Delta", label: "Дельта", width: 100, searchoptions: { sopt: ['eq', 'ne', 'gt', 'ge', 'lt', 'le'] }, editable: false, formatter: "currency", formatoptions: { decimalSeparator: ".", thousandsSeparator: " ", decimalPlaces: 2 } }
             ],
             mtype: 'POST',
@@ -44,6 +57,7 @@
             rowList: [10, 20, 30],
             sortName: "shortName",
             sortorder: "asc",
+            viewrecords: true,
             jsonReader: {
                 root: "rows",
                 page: "page",
@@ -51,6 +65,15 @@
                 records: "records",
                 repeatitems: false,
                 userdata: "userdata"
+            },
+            gridComplete: function() {
+                $("tr:odd").addClass("oddRow");
+                $(this).css("width", "100%");
+
+            },
+            loadComplete: function (data) {
+                var label = "На " + getPrevPeriod();
+                $(this).jqGrid('setLabel', "PrevTaxSum", label);
             },
             height: "auto",
             caption: "Отчетный период: @TaxorgTools.GetCurrentPeriod()"

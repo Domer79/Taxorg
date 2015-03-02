@@ -25,5 +25,21 @@ namespace TaxorgRepository
             get { return InnerTools.IsNotSameTaxLoad; }
             set { InnerTools.IsNotSameTaxLoad = value; }
         }
+
+        public static string AppVersion
+        {
+            get { return InnerTools.AppVersion; }
+        }
+
+        public static void SetTaxPrevPeriodCount(int taxPrevPeriod)
+        {
+            InnerTools.SetTaxPrevPeriodCount(taxPrevPeriod);
+        }
+
+        public static bool IsMaintenance
+        {
+            get { return InnerTools.IsMaintenance; }
+            set { InnerTools.IsMaintenance = value; }
+        }
     }
 }
