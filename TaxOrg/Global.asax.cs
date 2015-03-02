@@ -2,6 +2,7 @@
 using System.Web.Optimization;
 using System.Web.Routing;
 using SystemTools;
+using TaxorgRepository;
 using TaxorgRepository.Repositories;
 
 namespace TaxOrg
@@ -14,6 +15,7 @@ namespace TaxOrg
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             ApplicationCustomizer.RegisterErrorLog(ErrorLog.SaveError);
+            ApplicationCustomizer.AppVersion = TaxorgTools.AppVersion;
         }
     }
 }

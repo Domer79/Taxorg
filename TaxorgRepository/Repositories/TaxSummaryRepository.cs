@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using TaxorgRepository.Models;
@@ -12,34 +13,28 @@ namespace TaxorgRepository.Repositories
 
         public override void InsertOrUpdate(TaxSummary item)
         {
-//            var org = Context.Organization.SingleOrDefault(o => o.IdOrganization == item.IdOrganization);
-//            if (org != null)
-//            {
-//                org.Name = item.Name;
-//                org.ShortName = item.ShortName;
-//                Context.Entry(org).State = EntityState.Modified;
-//                return;
-//            }
-//
-//            org = new Organization();
-//            org.Name = item.Name;
-//            org.ShortName = item.ShortName;
-//            org.Inn = item.Inn;
-//            org.Address = item.Address;
-//
-//            Context.Organization.Add(org);
-
             throw new NotImplementedException();
         }
 
         public override void Delete(TaxSummary item)
         {
-            throw new NotImplementedException();
+            base.Delete(item);
         }
 
         public static TaxSummaryRepository Repository
         {
             get { return _repository ?? (_repository = new TaxSummaryRepository()); }
+        }
+
+        public override Expression Expression
+        {
+            get
+            {
+                if (TaxorgTools.IsNotSameTaxLoad)
+                    return Set.Where(e => e.Tax != e.PrevTax).Expression;
+
+                return base.Expression;
+            }
         }
     }
 }

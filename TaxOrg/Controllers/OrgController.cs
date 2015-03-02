@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.SessionState;
 using SystemTools.Extensions;
-using MvcFileUploader;
-using MvcFileUploader.Models;
-using SqlClr;
 using TaxOrg.Infrastructure;
 using TaxOrg.Tools;
 using TaxorgRepository;
@@ -23,6 +18,9 @@ namespace TaxOrg.Controllers
 
         public ActionResult Index()
         {
+            if (TaxorgTools.IsMaintenance)
+                return RedirectToAction("Maintenance");
+
             ViewBag.TotalTaxCount = _repository.Count();
             ViewBag.CurrentPeriod = TaxorgTools.GetCurrentPeriod().ToString();
             ViewBag.PrevPeriod = TaxorgTools.GetPrevPeriod().ToString();
@@ -65,14 +63,8 @@ namespace TaxOrg.Controllers
             }
             catch (Exception e)
             {
-                try
-                {
-                    e.SaveError();
-                }
-                catch
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, e.Message);
-                }
+                e.SaveError();
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, e.Message);
             }
 
             return new HttpStatusCodeResult(HttpStatusCode.OK);
@@ -80,7 +72,26 @@ namespace TaxOrg.Controllers
 
         public ActionResult Delete(int id)
         {
-            return new HttpStatusCodeResult(HttpStatusCode.OK, "Удалено");
+            try
+            {
+                var repo = new OrganizationRepository();
+                repo.Delete(repo.GetObjectByKey(id));
+                repo.SaveChanges();
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
+            }
+            catch (Exception e)
+            {
+                e.SaveError();
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+
+        public ActionResult Maintenance()
+        {
+            if (!TaxorgTools.IsMaintenance)
+                return RedirectToAction("Index");
+
+            return View();
         }
 
         public ActionResult Error(string s)

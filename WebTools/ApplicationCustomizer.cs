@@ -6,6 +6,8 @@ namespace SystemTools
 {
     public static class ApplicationCustomizer
     {
+        private static string _appVersion = "1.0.0.0";
+
         [DebuggerHidden]
         public static string ConnectionString
         {
@@ -36,14 +38,8 @@ namespace SystemTools
 
         public static string AppVersion
         {
-            get
-            {
-                var assembly = Assembly.GetCallingAssembly();
-
-                var attr = (AssemblyVersionAttribute)Attribute.GetCustomAttribute(assembly, typeof(AssemblyVersionAttribute));
-
-                return attr == null ? "1.0.0.0" : attr.Version;
-            }
+            get { return _appVersion; }
+            set { _appVersion = value; }
         }
     }
 }

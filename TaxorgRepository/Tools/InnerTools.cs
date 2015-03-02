@@ -20,6 +20,48 @@ namespace TaxorgRepository.Tools
             set { SetIsNotSameTaxLoad(value); }
         }
 
+        public static string AppVersion
+        {
+            get { return GetAppVersion(); }
+        }
+
+        public static bool IsMaintenance
+        {
+            get { return GetIsMaintenance(); }
+            set { SetIsMaintenance(value); }
+        }
+
+        private static void SetIsMaintenance(bool value)
+        {
+            var context = new TaxorgContext(ApplicationCustomizer.ConnectionString);
+            context.Database.ExecuteSqlCommand("exec SetMaintenance @value = @p0", value.ToString());
+        }
+
+        private static bool GetIsMaintenance()
+        {
+            var repo = new Repository<Settings>();
+            var setting = repo.FirstOrDefault(e => e.Name == Settings.IsMaintenance);
+            if (setting == null)
+                return false;
+
+            try
+            {
+                return bool.Parse(setting.Value);
+            }
+            catch (Exception e)
+            {
+                e.SaveError();
+                return false;
+            }
+        }
+
+        private static string GetAppVersion()
+        {
+            var repo = new Repository<Settings>();
+            var setting = repo.FirstOrDefault(e => e.Name == Settings.AppVersion);
+            return setting == null ? "1.0.0.0" : setting.Value;
+        }
+
         private static void SetIsNotSameTaxLoad(bool value)
         {
             var repo = new Repository<Settings>();
@@ -111,6 +153,12 @@ namespace TaxorgRepository.Tools
             var result = context.Database.SqlQuery<T>(string.Format("select {0}{1}({2})", schemaName, functionName, functionArgs), parameters);
 
             return result.FirstOrDefault();
+        }
+
+        public static void SetTaxPrevPeriodCount(int taxPrevPeriod)
+        {
+            var context = new TaxorgContext(ApplicationCustomizer.ConnectionString);
+            context.Database.ExecuteSqlCommand("exec SetTaxPrevPeriodCount @value = @p0", taxPrevPeriod);
         }
     }
 }
