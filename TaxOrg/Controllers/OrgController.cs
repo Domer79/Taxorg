@@ -16,6 +16,7 @@ namespace TaxOrg.Controllers
     {
         private readonly TaxSummaryRepository _repository = new TaxSummaryRepository();
 
+        [Authorize]
         public ActionResult Index()
         {
             if (TaxorgTools.IsMaintenance)

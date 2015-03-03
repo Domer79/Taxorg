@@ -99,55 +99,6 @@ namespace TaxorgRepository.Repositories
             return GetEnumerator();
         }
 
-
-//        #region ICollection<T>
-//        [Obsolete("Используйте InsertOrUpdate(T item)", true)]
-//        public void Add(T item)
-//        {
-//            throw new NotImplementedException();
-//        }
-//
-//        public void Clear()
-//        {
-//            foreach (T item in Set)
-//            {
-//                Delete(item);
-//            }
-//        }
-//
-//        public bool Contains(T item)
-//        {
-//            return Set.Find(GetKeyValue(item, Context)) != null;
-//        }
-//
-//        public bool Contains(Func<T, bool> predicat)
-//        {
-//            return Set.SingleOrDefault(predicat) != null;
-//        }
-//
-//        public void CopyTo(T[] array, int arrayIndex)
-//        {
-//            Array.Copy(this.ToArray(), arrayIndex, array, 0, Count);
-//        }
-//
-//        public bool Remove(T item)
-//        {
-//            Delete(item);
-//            return true;
-//        }
-//
-//        public int Count
-//        {
-//            get { return Set.Count(); }
-//        }
-//
-//        public bool IsReadOnly
-//        {
-//            get { return false; }
-//        }
-//
-//#endregion
-
         protected TaxorgContext Context
         {
             get { return _context; }

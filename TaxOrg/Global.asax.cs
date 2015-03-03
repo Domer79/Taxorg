@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Web;
+using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using SystemTools;
@@ -16,6 +17,21 @@ namespace TaxOrg
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             ApplicationCustomizer.RegisterErrorLog(ErrorLog.SaveError);
             ApplicationCustomizer.AppVersion = TaxorgTools.AppVersion;
+        }
+
+        public override void Init()
+        {
+            base.Init();
+        }
+
+        public override string GetVaryByCustomString(HttpContext context, string custom)
+        {
+            return base.GetVaryByCustomString(context, custom);
+        }
+
+        public override string GetOutputCacheProviderName(HttpContext context)
+        {
+            return base.GetOutputCacheProviderName(context);
         }
     }
 }
