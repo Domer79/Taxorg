@@ -525,6 +525,8 @@
     <Content Include="Content\mvcfileupload\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\mvcfileupload\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\mvcfileupload\fonts\glyphicons-halflings-regular.eot" />
+    <None Include="Properties\PublishProfiles\Domer-pc filesystem.pubxml" />
+    <None Include="Properties\PublishProfiles\Domer-pc iis.pubxml" />
     <None Include="Properties\PublishProfiles\file_system.pubxml" />
     <None Include="Properties\PublishProfiles\local iis.pubxml" />
     <None Include="Properties\PublishProfiles\local web server.pubxml" />
@@ -609,12 +611,12 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Org\Index.cshtml" />
-    <Content Include="Документы\test.csv" />
+    <None Include="Документы\test.csv" />
     <Content Include="Views\Settings\Index.cshtml" />
     <Content Include="Views\Org\Maintenance.cshtml" />
     <None Include="Документы\План работ на 26.02-10.03.2015.xlsx" />
-    <Content Include="Документы\Февраль.csv" />
-    <Content Include="Документы\Январь.csv" />
+    <None Include="Документы\Февраль.csv" />
+    <None Include="Документы\Январь.csv" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />

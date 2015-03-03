@@ -16,7 +16,7 @@ namespace TaxOrg.Controllers
     {
         private readonly TaxSummaryRepository _repository = new TaxSummaryRepository();
 
-        [Authorize]
+        [Authorize(Roles = "Administrators, Администраторы", Users = @"Domer-pc\Domer")]
         public ActionResult Index()
         {
             if (TaxorgTools.IsMaintenance)
