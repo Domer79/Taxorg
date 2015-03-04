@@ -16,12 +16,12 @@ namespace TaxOrg.Controllers
     {
         private readonly TaxSummaryRepository _repository = new TaxSummaryRepository();
 
-        [Authorize(Roles = "Administrators, Администраторы", Users = @"Domer-pc\Domer")]
+//        [Authorize]
         public ActionResult Index()
         {
             if (TaxorgTools.IsMaintenance)
                 return RedirectToAction("Maintenance");
-
+            
             ViewBag.TotalTaxCount = _repository.Count();
             ViewBag.CurrentPeriod = TaxorgTools.GetCurrentPeriod().ToString();
             ViewBag.PrevPeriod = TaxorgTools.GetPrevPeriod().ToString();
