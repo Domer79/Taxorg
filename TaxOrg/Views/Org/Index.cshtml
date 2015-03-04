@@ -2,7 +2,7 @@
 @using MvcFileUploader.HtmlHelper
 @using TaxOrg.Controllers
 @using TaxorgRepository
-@model dynamic
+@model IEnumerable<string>
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -204,3 +204,12 @@
         });
     </script>   
 }
+
+<div class="container">
+    <ol class="nav navbar">
+        @foreach (var group in Model)
+        {
+            <li>@group</li>@Environment.NewLine
+        }
+    </ol>
+</div>

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.DirectoryServices.AccountManagement;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -25,7 +27,22 @@ namespace TaxOrg.Controllers
             ViewBag.TotalTaxCount = _repository.Count();
             ViewBag.CurrentPeriod = TaxorgTools.GetCurrentPeriod().ToString();
             ViewBag.PrevPeriod = TaxorgTools.GetPrevPeriod().ToString();
-            return View();
+            ViewBag.UserName = string.Format("{0}", HttpContext.User == null ? "анонимный" : HttpContext.User.Identity.Name);
+
+            var list = new List<string>();
+            foreach (var group in ((System.Security.Principal.WindowsIdentity)(User.Identity)).Groups)
+            {
+                list.Add(GetGroupNameBySid(group.Value));
+            }
+
+            return View(list);
+        }
+
+        public static string GetGroupNameBySid(string sid)
+        {
+            var ctx = new PrincipalContext(ContextType.Machine);
+            GroupPrincipal group = GroupPrincipal.FindByIdentity(ctx, IdentityType.Sid, sid);
+            return group.SamAccountName;
         }
 
         public JsonResult GetData(GridSettings grid)
