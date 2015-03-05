@@ -58,6 +58,7 @@
     <Compile Include="Models\Errors.cs" />
     <Compile Include="Models\FileSystem.cs" />
     <Compile Include="Models\FsFile.cs" />
+    <Compile Include="Models\ModelBase.cs" />
     <Compile Include="Models\Organization.cs" />
     <Compile Include="Models\Settings.cs" />
     <Compile Include="Models\SliceTax.cs" />
