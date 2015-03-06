@@ -7,6 +7,7 @@ namespace SystemTools
         private static string _connectionString;
         private static string _excelFilePath;
         private static bool? _loggingDbContext;
+        private static string _securityConnectionString;
 
         private static string GetConnectionString()
         {
@@ -35,6 +36,17 @@ namespace SystemTools
                 return _connectionString ?? (_connectionString = GetConnectionString());
             }
             set { _connectionString = value; }
+        }
+
+        public static string SecurityConnectionString
+        {
+            get { return _securityConnectionString ?? (_securityConnectionString = GeSecurityConnectionString()); }
+            set { _securityConnectionString = value; }
+        }
+
+        private static string GeSecurityConnectionString()
+        {
+            return ConfigurationManager.AppSettings["SecurityConnectionString"];
         }
 
         public static bool LoggingDbContext

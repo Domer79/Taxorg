@@ -1,8 +1,8 @@
-п»їusing System;
+using System;
 using System.IO;
 using System.IO.Compression;
 
-namespace TaxorgRepository.Tools
+namespace SystemTools.Extensions
 {
     public static class StreamExtensions
     {
@@ -30,10 +30,10 @@ namespace TaxorgRepository.Tools
                 int read;
 
                 if (!source.CanSeek)
-                    throw new InvalidOperationException("Р’С…РѕРґРЅРѕР№ РїРѕС‚РѕРє РЅРµ РїРѕРґРґРµСЂР¶РёРІР°РµС‚ СЃРјРµС‰РµРЅРёРµ РїРѕР·РёС†РёРё СѓРєР°Р·Р°С‚РµР»СЏ С‡С‚РµРЅРёСЏ");
+                    throw new InvalidOperationException("Входной поток не поддерживает смещение позиции указателя чтения");
 
                 if (!dest.CanSeek)
-                    throw new InvalidOperationException("Р’С‹С…РѕРґРЅРѕР№ РїРѕС‚РѕРє РЅРµ РїРѕРґРґРµСЂР¶РёРІР°РµС‚ СЃРјРµС‰РµРЅРёРµ РїРѕР·РёС†РёРё СѓРєР°Р·Р°С‚РµР»СЏ С‡С‚РµРЅРёСЏ");
+                    throw new InvalidOperationException("Выходной поток не поддерживает смещение позиции указателя чтения");
 
                 source.Seek(0, SeekOrigin.Begin);
 
@@ -59,10 +59,10 @@ namespace TaxorgRepository.Tools
                 int read;
 
                 if (!source.CanSeek)
-                    throw new InvalidOperationException("Р’С…РѕРґРЅРѕР№ РїРѕС‚РѕРє РЅРµ РїРѕРґРґРµСЂР¶РёРІР°РµС‚ СЃРјРµС‰РµРЅРёРµ РїРѕР·РёС†РёРё СѓРєР°Р·Р°С‚РµР»СЏ С‡С‚РµРЅРёСЏ");
+                    throw new InvalidOperationException("Входной поток не поддерживает смещение позиции указателя чтения");
 
                 if (!dest.CanSeek)
-                    throw new InvalidOperationException("Р’С‹С…РѕРґРЅРѕР№ РїРѕС‚РѕРє РЅРµ РїРѕРґРґРµСЂР¶РёРІР°РµС‚ СЃРјРµС‰РµРЅРёРµ РїРѕР·РёС†РёРё СѓРєР°Р·Р°С‚РµР»СЏ С‡С‚РµРЅРёСЏ");
+                    throw new InvalidOperationException("Выходной поток не поддерживает смещение позиции указателя чтения");
 
                 source.Seek(0, SeekOrigin.Begin);
 

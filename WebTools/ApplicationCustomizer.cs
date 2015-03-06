@@ -1,6 +1,4 @@
 using System;
-using System.Diagnostics;
-using System.Reflection;
 
 namespace SystemTools
 {
@@ -8,11 +6,17 @@ namespace SystemTools
     {
         private static string _appVersion = "1.0.0.0";
 
-        [DebuggerHidden]
+//        [DebuggerHidden]
         public static string ConnectionString
         {
             get { return ApplicationSettings.ConnectionString; }
             set { ApplicationSettings.ConnectionString = value; }
+        }
+
+        public static string SecurityConnectionString
+        {
+            get { return ApplicationSettings.SecurityConnectionString; }
+            set { ApplicationSettings.SecurityConnectionString = value; }
         }
 
         public static string ExcelFilePath
