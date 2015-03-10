@@ -41,11 +41,5 @@ namespace SystemTools
             get { return _appVersion; }
             set { _appVersion = value; }
         }
-
-        public static string SecurityConnectionString
-        {
-            get { return ApplicationSettings.SecurityConnectionString; }
-            set { ApplicationSettings.SecurityConnectionString = value; }
-        }
     }
 }

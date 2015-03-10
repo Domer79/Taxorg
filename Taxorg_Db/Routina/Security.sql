@@ -19,7 +19,7 @@ create unique index UQ_Role_Name on sec._Role(name)
 create table sec.Member
 (
 	idMember int not null primary key identity,
-	name varchar(200) not null
+	name varchar(200)
 )
 
 create unique index UQ_Member_Name on sec.Member(name)
