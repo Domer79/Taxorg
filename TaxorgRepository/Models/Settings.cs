@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TaxorgRepository.Models
@@ -6,9 +6,9 @@ namespace TaxorgRepository.Models
     [Table("Settings")]
     public class Settings : ModelBase
     {
-        public const string IsNotSameTaxLoad = "isnotsametaxload";
-        public const string TaxPeriodMonth = "taxperiodmonth";
         public const string TaxPeriodYear = "taxperiodyear";
+        public const string TaxPeriodMonth = "taxperiodmonth";
+        public const string IsNotSameTaxLoad = "isnotsametaxload";
         public const string TaxPrevPeriod = "taxprevperiod";
         public const string AppVersion = "appversion";
         public const string IsMaintenance = "ismaintenance";

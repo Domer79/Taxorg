@@ -58,6 +58,7 @@
     <Compile Include="Models\Errors.cs" />
     <Compile Include="Models\FileSystem.cs" />
     <Compile Include="Models\FsFile.cs" />
+    <Compile Include="Models\ModelBase.cs" />
     <Compile Include="Models\Organization.cs" />
     <Compile Include="Models\Settings.cs" />
     <Compile Include="Models\SliceTax.cs" />
@@ -80,7 +81,6 @@
     <Compile Include="TaxorgTools.cs" />
     <Compile Include="Tools\EntityInfo.cs" />
     <Compile Include="Tools\InnerTools.cs" />
-    <Compile Include="Tools\StreamExtensions.cs" />
     <Compile Include="Tools\SystemLogs.cs" />
   </ItemGroup>
   <ItemGroup>
