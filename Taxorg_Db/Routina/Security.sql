@@ -127,7 +127,7 @@ create table sec.MemberRole
 	idRole int not null,
 	constraint PK_MemberRole primary key(idMember, idRole),
 	constraint FK_MemberRole_Member foreign key(idMember) references sec.Member(idMember) on delete cascade, --При удалении участника безопасности также удаляем и все его связи с ролями
-	constraint FK_MemberRole_Role foreign key(idRole) references sec._Role(idRole) on delete cascade --При удалении роли таккже удаляем все ее связи с участниками безопасности
+	constraint FK_MemberRole_Role foreign key(idRole) references sec._Role(idRole) on delete cascade --При удалении роли также удаляем все ее связи с участниками безопасности
 )
 
 --raiserror('Тестовая ошибка', 20, 10) with log

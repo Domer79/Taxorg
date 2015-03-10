@@ -28,21 +28,7 @@ namespace TaxOrg.Controllers
             ViewBag.CurrentPeriod = TaxorgTools.GetCurrentPeriod().ToString();
             ViewBag.PrevPeriod = TaxorgTools.GetPrevPeriod().ToString();
             ViewBag.UserName = string.Format("{0}", HttpContext.User == null ? "анонимный" : HttpContext.User.Identity.Name);
-
-            var list = new List<string>();
-            foreach (var group in ((System.Security.Principal.WindowsIdentity)(User.Identity)).Groups)
-            {
-                list.Add(GetGroupNameBySid(group.Value));
-            }
-
-            return View(list);
-        }
-
-        public static string GetGroupNameBySid(string sid)
-        {
-            var ctx = new PrincipalContext(ContextType.Machine);
-            GroupPrincipal group = GroupPrincipal.FindByIdentity(ctx, IdentityType.Sid, sid);
-            return group.SamAccountName;
+            return View();
         }
 
         public JsonResult GetData(GridSettings grid)

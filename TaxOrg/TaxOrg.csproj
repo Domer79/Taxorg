@@ -14,7 +14,7 @@
     <RootNamespace>TaxOrg</RootNamespace>
     <AssemblyName>TaxOrg</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort>
     </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication>disabled</IISExpressAnonymousAuthentication>
@@ -701,7 +701,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>1254</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/TaxOrg</IISUrl>
+          <IISUrl>http://localhost:1254/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>http://taxorg</CustomServerUrl>
