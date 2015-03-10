@@ -38,17 +38,6 @@ namespace SystemTools
             set { _connectionString = value; }
         }
 
-        public static string SecurityConnectionString
-        {
-            get { return _securityConnectionString ?? (_securityConnectionString = GeSecurityConnectionString()); }
-            set { _securityConnectionString = value; }
-        }
-
-        private static string GeSecurityConnectionString()
-        {
-            return ConfigurationManager.AppSettings["SecurityConnectionString"];
-        }
-
         public static bool LoggingDbContext
         {
             get
@@ -63,6 +52,17 @@ namespace SystemTools
                 }
             }
             set { _loggingDbContext = value; }
+        }
+
+        public static string SecurityConnectionString
+        {
+            get { return _securityConnectionString ?? (_securityConnectionString = GetSecurityConnectionString());}
+            set { _securityConnectionString = value; }
+        }
+
+        private static string GetSecurityConnectionString()
+        {
+            return ConfigurationManager.AppSettings["SecurityConnectionString"];
         }
 
         private static bool GetAppSettings(string parameterName)
