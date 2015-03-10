@@ -88,7 +88,7 @@
                     { name: "ShortName", width: 400, label: "Наименование организации", searchoptions: { sopt: ['cn', 'eq', 'ne'] }, editable: true, editoptions: shortNameEditOptions },
                     { name: "Address", width: 300, label: "Адрес", searchoptions: { sopt: ['cn', 'eq', 'ne'] }, editable: true, editoptions: addressEditOptions },
                     { name: "Tax", label: "Сумма", hidden: true, width: 100, searchoptions: { sopt: ['eq', 'ne', 'gt', 'ge', 'lt', 'le'] }, editable: false, formatter: "currency", formatoptions: { decimalSeparator: ".", thousandsSeparator: " ", decimalPlaces: 2 } },
-                    { name: "TaxDebitKredit", index: "Tax", label: "Сумма долга", width: 100, searchoptions: { sopt: ['eq', 'ne', 'gt', 'ge', 'lt', 'le'] }, editable: false },
+                    { name: "TaxDebitKredit", index: "Tax", label: "Сумма долга", width: 100, searchoptions: { sopt: ['eq', 'ne', 'gt', 'ge', 'lt', 'le'] }, editable: false  },
                     { name: "PrevTax", label: "На @ViewBag.PrevPeriod", width: 100, searchoptions: { sopt: ['eq', 'ne', 'gt', 'ge', 'lt', 'le'] }, editable: false, formatter: "currency", formatoptions: { decimalSeparator: ".", thousandsSeparator: " ", decimalPlaces: 2 } },
                     { name: "Delta", label: "Дельта", width: 100, searchoptions: { sopt: ['eq', 'ne', 'gt', 'ge', 'lt', 'le'] }, editable: false, formatter: "currency", formatoptions: { decimalSeparator: ".", thousandsSeparator: " ", decimalPlaces: 2 } },
                     { name: "PeriodName", width: 100, label: "Период", hidden: true, searchoptions: { sopt: ['cn', 'eq', 'ne'] }, editable: false }
