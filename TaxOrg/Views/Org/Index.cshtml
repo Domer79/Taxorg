@@ -86,7 +86,7 @@
                     { name: "ShortName", width: 400, label: "Наименование организации", searchoptions: { sopt: ['cn', 'eq', 'ne'] }, editable: true, editoptions: shortNameEditOptions },
                     { name: "Address", width: 300, label: "Адрес", searchoptions: { sopt: ['cn', 'eq', 'ne'] }, editable: true, editoptions: addressEditOptions },
                     { name: "Tax", label: "Сумма", hidden: true, width: 100, searchoptions: { sopt: ['eq', 'ne', 'gt', 'ge', 'lt', 'le'] }, editable: false, formatter: "currency", formatoptions: { decimalSeparator: ".", thousandsSeparator: " ", decimalPlaces: 2 } },
-                    { name: "TaxDebitKredit", index: "Tax", label: "Сумма долга", align: "right", width: 100, searchoptions: { sopt: ['eq', 'ne', 'gt', 'ge', 'lt', 'le'] }, editable: false, formatter: "currency", formatoptions: { decimalSeparator: ".", thousandsSeparator: " ", decimalPlaces: 2 } },
+                    { name: "TaxDebitKredit", index: "Tax", label: "Сумма долга", align: "right", width: 100, searchoptions: { sopt: ['eq', 'ne', 'gt', 'ge', 'lt', 'le'] }, editable: false},
                     { name: "PrevTax", label: "На @ViewBag.PrevPeriod", align: "right", width: 100, searchoptions: { sopt: ['eq', 'ne', 'gt', 'ge', 'lt', 'le'] }, editable: false, formatter: "currency", formatoptions: { decimalSeparator: ".", thousandsSeparator: " ", decimalPlaces: 2 } },
                     { name: "Delta", label: "Дельта", width: 100, align: "right", searchoptions: { sopt: ['eq', 'ne', 'gt', 'ge', 'lt', 'le'] }, editable: false, formatter: "currency", formatoptions: { decimalSeparator: ".", thousandsSeparator: " ", decimalPlaces: 2 } },
                     { name: "PeriodName", width: 100, label: "Период", hidden: true, searchoptions: { sopt: ['cn', 'eq', 'ne'] }, editable: false }
@@ -181,6 +181,7 @@
                 .css("height", "32px");;
 
             $("#t_tOrg").append('<input type="button" id="hideSameRows" class="btn btn-default" value="@IsNotLoadSameLabel()" title="Запрещает/Разрешает загрузку данных с одинаковыми значениями сумм долга за текущий и предыдущий периоды" />');
+            $("#t_tOrg").append('<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Выбрать по КБК</button>');
 
             $("#hideSameRows").click(function () {
                 var result = false;
@@ -202,3 +203,22 @@
         });
     </script>   
 }
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Закрыть"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Выбор данных по определенным КБК</h4>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Button trigger modal -->

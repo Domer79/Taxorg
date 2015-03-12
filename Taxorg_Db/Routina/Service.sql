@@ -338,8 +338,8 @@ as
 		org.addr,
 		tax = tax * -1,
 		case
-			when t1.tax > 0 then '+ ' + cast(t1.tax as varchar(100))
-			else cast(ABS(t1.tax) as varchar(100))
+			when t1.tax > 0 then '+ ' + replace(convert(varchar(100), t1.tax, 1), ',', ' ')
+			else replace(convert(varchar(30), ABS(t1.tax), 1), ',', ' ')
 		end as taxDebitKredit,
 		t1.period,
 		t1.periodName
