@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.SessionState;
 using SystemTools.Extensions;
 using TaxOrg.Infrastructure;
 using TaxOrg.Tools;
@@ -14,6 +15,7 @@ using TaxorgRepository.Repositories;
 
 namespace TaxOrg.Controllers
 {
+    [SessionState(SessionStateBehavior.Required)]
     public class OrgController : Controller
     {
         private readonly TaxSummaryRepository _repository = new TaxSummaryRepository();
@@ -24,6 +26,8 @@ namespace TaxOrg.Controllers
             if (TaxorgTools.IsMaintenance)
                 return RedirectToAction("Maintenance");
             
+            
+
             ViewBag.TotalTaxCount = _repository.Count();
             ViewBag.CurrentPeriod = TaxorgTools.GetCurrentPeriod().ToString();
             ViewBag.PrevPeriod = TaxorgTools.GetPrevPeriod().ToString();
