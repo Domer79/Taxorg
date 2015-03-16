@@ -106,6 +106,7 @@
     <None Include="Routina\Script v1.1.sql" />
     <None Include="Routina\v1.1.1.0.sql" />
     <None Include="Routina\Service.sql" />
+    <None Include="Routina\v1.1.2.sql" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

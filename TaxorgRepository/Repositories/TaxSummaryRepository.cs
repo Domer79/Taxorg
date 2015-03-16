@@ -16,11 +16,6 @@ namespace TaxorgRepository.Repositories
             throw new NotImplementedException();
         }
 
-        public override void Delete(TaxSummary item)
-        {
-            base.Delete(item);
-        }
-
         public static TaxSummaryRepository Repository
         {
             get { return _repository ?? (_repository = new TaxSummaryRepository()); }

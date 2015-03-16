@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Exceptions\SaveTaxException.cs" />
     <Compile Include="Exceptions\SliceTaxInsertOrUpdateException.cs" />
+    <Compile Include="Infrastructure\Interceptor.cs" />
     <Compile Include="Interfaces\IOrganization.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Models\Bug.cs" />

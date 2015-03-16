@@ -8,7 +8,7 @@ namespace TaxorgRepository.Models
     public class TaxSummary : ModelBase
     {
         [Key]
-        [Column("idOrganization")]
+        [Column("idOrganizations")]
         public int IdOrganization { get; set; }
 
         [Column("inn")]

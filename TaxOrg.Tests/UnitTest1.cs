@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Net.Mime;
 using System.Security.Policy;
 using System.Text;
 using System.Web.Mvc;
@@ -24,6 +25,12 @@ namespace TaxOrg.Tests
     [TestClass]
     public class UnitTest1
     {
+        public UnitTest1()
+        {
+            ApplicationCustomizer.ConnectionString =
+                "data source=cito1;initial catalog=Taxorg;User Id=developer;Password=sppdeveloper;MultipleActiveResultSets=True;App=EntityFramework";
+        }
+
         [TestMethod]
         public void SqlClrYearMonthTest()
         {
@@ -189,6 +196,19 @@ namespace TaxOrg.Tests
             catch (Exception e)
             {
                 Debug.WriteLine(e);
+            }
+        }
+
+        [TestMethod]
+        public void DbContextSqlQueryTest()
+        {
+            var context = new TaxorgContext();
+//            var query = context.Database.SqlQuery<TaxSummary>("select top(5) idOrganizations, inn, name, shortName, addr as Address, tax, taxDebitKredit, prevTax, periodName from TaxSummary");
+            var query = context.TaxSummary;
+
+            foreach (var taxSummary in query)
+            {
+                Debug.WriteLine(taxSummary.Name, taxSummary.Tax);
             }
         }
     }
