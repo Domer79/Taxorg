@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.DirectoryServices.AccountManagement;
 using System.Linq;
 using System.Net;
@@ -25,6 +26,8 @@ namespace TaxOrg.Controllers
         {
             if (TaxorgTools.IsMaintenance)
                 return RedirectToAction("Maintenance");
+
+            HttpContext.Session.Add("testObject", "Привет");
             
             
 
@@ -50,7 +53,6 @@ namespace TaxOrg.Controllers
             HttpContext.Response.Cache.SetExpires(new DateTime(now.Ticks + 50000000));
             HttpContext.Response.Cache.SetNoTransforms();
 
-            
             return jsonData;
         }
 
