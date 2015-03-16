@@ -625,7 +625,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\BugController.cs" />
+    <Compile Include="Controllers\CheckSession.cs" />
     <Compile Include="Controllers\FileUploaderController.cs" />
+    <Compile Include="Controllers\ProtectManager.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\SliceController.cs" />
     <Compile Include="Controllers\SysController.cs" />
