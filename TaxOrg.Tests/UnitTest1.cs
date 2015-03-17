@@ -204,7 +204,7 @@ namespace TaxOrg.Tests
         {
             var context = new TaxorgContext();
 //            var query = context.Database.SqlQuery<TaxSummary>("select top(5) idOrganizations, inn, name, shortName, addr as Address, tax, taxDebitKredit, prevTax, periodName from TaxSummary");
-            var query = context.TaxSummary;
+            var query = context.TaxSummaries;
 
             foreach (var taxSummary in query)
             {

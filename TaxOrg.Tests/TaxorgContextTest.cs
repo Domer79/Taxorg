@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
@@ -15,6 +17,11 @@ namespace TaxOrg.Tests
     [TestClass]
     public class TaxorgContextTest
     {
+        public TaxorgContextTest()
+        {
+            ApplicationCustomizer.ConnectionString = "data source=cito1;initial catalog=Taxorg;User Id=developer;Password=sppdeveloper;MultipleActiveResultSets=True;App=EntityFramework";
+        }
+
         [TestMethod]
         public void TaxorgContextConnectionTest()
         {
@@ -76,7 +83,6 @@ namespace TaxOrg.Tests
         [TestMethod]
         public void TaxSummaryGetTest()
         {
-            ApplicationCustomizer.ConnectionString = "data source=.;initial catalog=Taxorg;integrated security=True;";
             var repo = TaxSummaryRepository.Repository;
 
             foreach (var taxSummary in repo)
@@ -88,7 +94,6 @@ namespace TaxOrg.Tests
         [TestMethod]
         public void SliceTaxGetTest()
         {
-            ApplicationCustomizer.ConnectionString = "data source=.;initial catalog=Taxorg;integrated security=True;";
             var repo = new SliceRepository(1989);
 
             foreach (var tax in repo)
@@ -100,8 +105,6 @@ namespace TaxOrg.Tests
         [TestMethod]
         public void GetCurrentPeriodTest()
         {
-            ApplicationCustomizer.ConnectionString = "data source=.;initial catalog=Taxorg;integrated security=True;";
-
             var period = TaxorgTools.GetCurrentPeriod();
 
             Assert.AreEqual(new YearMonth("02.2015"), period);
@@ -110,7 +113,6 @@ namespace TaxOrg.Tests
         [TestMethod]
         public void GetPrevPeriodCountTest()
         {
-            ApplicationCustomizer.ConnectionString = "data source=.;initial catalog=Taxorg;integrated security=True;";
             var count = TaxorgTools.GetPrevPeriodCount();
 
             Assert.AreEqual(1, count);
@@ -119,15 +121,12 @@ namespace TaxOrg.Tests
         [TestMethod]
         public void GetPrevPeriodTest()
         {
-            ApplicationCustomizer.ConnectionString = "data source=.;initial catalog=Taxorg;integrated security=True;";
             Assert.AreEqual(new YearMonth("02.2015"), TaxorgTools.GetPrevPeriod());
         }
 
         [TestMethod]
         public void IsNotSameTaxLoadTest()
         {
-            ApplicationCustomizer.ConnectionString = "data source=.;initial catalog=Taxorg;integrated security=True;";
-
             Assert.IsTrue(!TaxorgTools.IsNotSameTaxLoad);
 
             TaxorgTools.IsNotSameTaxLoad = true;
@@ -138,17 +137,71 @@ namespace TaxOrg.Tests
         [TestMethod]
         public void AppVersionTest()
         {
-            ApplicationCustomizer.ConnectionString = "data source=.;initial catalog=Taxorg;integrated security=True;";
-
             Assert.AreEqual("1.1.1.0", TaxorgTools.AppVersion);
         }
 
         [TestMethod]
         public void SetTaxPrevPeriodCountTest()
         {
-            ApplicationCustomizer.ConnectionString = "data source=.;initial catalog=Taxorg;integrated security=True;";
-
             TaxorgTools.SetTaxPrevPeriodCount(2);
+        }
+
+        [TestMethod]
+        public void TaxOnlySummaryTest()
+        {
+            const string sessionId = "qwertyuiop";
+            const bool sessionIsAdd = true;
+            var context = new TaxorgContext();
+            var session = context.Sessions.FirstOrDefault(s => s.SessionId == sessionId);
+            if (session != null)
+            {
+                context.Sessions.Remove(session);
+                context.SaveChanges();
+            }
+
+            if (sessionIsAdd)
+            {
+                context.Sessions.Add(new Session(sessionId));
+                context.SessionTaxTypes.AddRange(new[]
+                {
+                    new SessionTaxType()
+                    {
+                        IdTaxType = context.TaxTypes.FirstOrDefault(tt => tt.IdTaxType == 306).IdTaxType,
+                        SessionId = sessionId
+                    },
+                    new SessionTaxType()
+                    {
+                        IdTaxType = context.TaxTypes.FirstOrDefault(tt => tt.IdTaxType == 307).IdTaxType,
+                        SessionId = sessionId
+                    },
+                    new SessionTaxType()
+                    {
+                        IdTaxType = context.TaxTypes.FirstOrDefault(tt => tt.IdTaxType == 308).IdTaxType,
+                        SessionId = sessionId
+                    },
+                });
+            }
+
+            context.SaveChanges();
+
+            var query = context.Taxes.AsQueryable();
+            var taxSource = context.SessionTaxTypes.SelectMany(e => e.TaxType.Taxes);
+            if (taxSource.Any())
+                query = query.Intersect(taxSource);
+//            var joinQuery = query.Join(context.SessionTaxTypes, t => t.IdTaxType, stt => stt.IdTaxType, (tax, type) => new {tax.TaxSum, tax.Organization, tax.PeriodName, tax.IdTaxType});
+            var groupedQuery = query
+                .GroupBy(e => new {e.Organization, e.PeriodName})
+                .Select(e => new {Tax = e.Sum(t => t.TaxSum), e.Key.Organization, e.Key.PeriodName, PrevTax = context.Taxes.Intersect(taxSource).Where(tax => tax.PeriodName == "01.2015" && tax.Organization == e.Key.Organization).Select(tax => tax == null ? 0 : tax.TaxSum).Sum()})
+                .Where(e => e.PeriodName == "02.2015");
+
+            groupedQuery = groupedQuery.Take(10);
+            var list = groupedQuery.ToList();
+
+            foreach (var tax in list)
+//            foreach (var tax in query)
+            {
+                Debug.WriteLine("{0};{1};{2}", tax.Tax, tax.Organization.Inn, tax.PrevTax);
+            }
         }
     }
 }
