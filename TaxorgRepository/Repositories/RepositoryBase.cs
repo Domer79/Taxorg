@@ -91,7 +91,7 @@ namespace TaxorgRepository.Repositories
 
         public IEnumerator<T> GetEnumerator()
         {
-            return ((IQueryable<T>)Set).GetEnumerator();
+            return ((IQueryable<T>)Set).Where(e => true).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()

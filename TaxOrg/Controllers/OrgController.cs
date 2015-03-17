@@ -19,7 +19,12 @@ namespace TaxOrg.Controllers
     [SessionState(SessionStateBehavior.Required)]
     public class OrgController : Controller
     {
-        private readonly TaxSummaryRepository _repository = new TaxSummaryRepository();
+        private readonly TaxSummaryRepository _repository;
+
+        public OrgController()
+        {
+            _repository = new TaxSummaryRepository(System.Web.HttpContext.Current.Session.SessionID);
+        }
 
 //        [Authorize]
         public ActionResult Index()
@@ -31,7 +36,7 @@ namespace TaxOrg.Controllers
             
             
 
-            ViewBag.TotalTaxCount = _repository.Count();
+            ViewBag.TotalTaxCount = _repository.GetData().Count();
             ViewBag.CurrentPeriod = TaxorgTools.GetCurrentPeriod().ToString();
             ViewBag.PrevPeriod = TaxorgTools.GetPrevPeriod().ToString();
             ViewBag.UserName = string.Format("{0}", HttpContext.User == null ? "анонимный" : HttpContext.User.Identity.Name);
@@ -40,7 +45,7 @@ namespace TaxOrg.Controllers
 
         public JsonResult GetData(GridSettings grid)
         {
-            var jsonResult = ControllerHelper.GetData(grid, _repository);
+            var jsonResult = ControllerHelper.GetData(grid, _repository.GetData(), "ShortName");
             var jsonData = Json(jsonResult);
             
             HttpContext.Response.Cache.SetCacheability(HttpCacheability.NoCache);

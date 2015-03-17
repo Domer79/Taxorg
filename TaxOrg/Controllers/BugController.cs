@@ -27,7 +27,7 @@ namespace TaxOrg.Controllers
 
         public JsonResult GetData(GridSettings grid)
         {
-            return Json(ControllerHelper.GetData(grid, _repository));
+            return Json(ControllerHelper.GetData(grid, _repository, _repository.GetKeyName()));
         }
 
         [HttpPost]

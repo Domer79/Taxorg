@@ -1,8 +1,5 @@
 ﻿using System;
-<<<<<<< HEAD
-=======
 using System.Collections.Generic;
->>>>>>> origin/master
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Diagnostics;
@@ -20,18 +17,14 @@ namespace TaxOrg.Tests
     [TestClass]
     public class TaxorgContextTest
     {
-<<<<<<< HEAD
+        const string SessionId = "qwertyuiop";
+
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="T:System.Object"/>.
         /// </summary>
         public TaxorgContextTest()
         {
-            ApplicationCustomizer.ConnectionString = "data source=Domer-pc;initial catalog=Taxorg;User Id=developer;Password=sppdeveloper;MultipleActiveResultSets=True;App=EntityFramework";
-=======
-        public TaxorgContextTest()
-        {
-            ApplicationCustomizer.ConnectionString = "data source=cito1;initial catalog=Taxorg;User Id=developer;Password=sppdeveloper;MultipleActiveResultSets=True;App=EntityFramework";
->>>>>>> origin/master
+            ApplicationCustomizer.ConnectionString = "data source=.;initial catalog=Taxorg;User Id=developer;Password=sppdeveloper;MultipleActiveResultSets=True;App=EntityFramework";
         }
 
         [TestMethod]
@@ -95,11 +88,28 @@ namespace TaxOrg.Tests
         [TestMethod]
         public void TaxSummaryGetTest()
         {
-            var repo = TaxSummaryRepository.Repository;
+            SetSessionTestValues(new TaxorgContext(), true);
+            var repo = TaxSummaryRepository.GetRepository(SessionId);
+            var query = repo.AsQueryable();
+            query = query.Take(10);
 
-            foreach (var taxSummary in repo)
+            foreach (var taxSummary in query)
             {
-                Debug.WriteLine(taxSummary.Inn);
+                Debug.WriteLine(taxSummary.Inn, taxSummary.Tax);
+            }
+        }
+
+        [TestMethod]
+        public void TaxSummaryTaxDebitKreditFieldTest()
+        {
+            SetSessionTestValues(new TaxorgContext(), true);
+            var repo = TaxSummaryRepository.GetRepository("sessionid");
+
+            var query = repo.Where(e => e.TaxDebitKredit.Contains("+"));
+
+            foreach (var tax in query)
+            {
+                Debug.WriteLine(tax.TaxDebitKredit);
             }
         }
 
@@ -159,55 +169,14 @@ namespace TaxOrg.Tests
         }
 
         [TestMethod]
-<<<<<<< HEAD
-        public void GetTaxFilterbyTaxTypeTest()
-        {
-            var context = new TaxorgContext();
-            var 
-            var query = context.Taxes.AsQueryable();
-            query = query.Include(t => t.Organization);
-            query = query.Where()
-//            query = query.GroupBy(t => t.Organization);
-=======
         public void TaxOnlySummaryTest()
         {
-            const string sessionId = "qwertyuiop";
             const bool sessionIsAdd = true;
             var context = new TaxorgContext();
-            var session = context.Sessions.FirstOrDefault(s => s.SessionId == sessionId);
-            if (session != null)
-            {
-                context.Sessions.Remove(session);
-                context.SaveChanges();
-            }
-
-            if (sessionIsAdd)
-            {
-                context.Sessions.Add(new Session(sessionId));
-                context.SessionTaxTypes.AddRange(new[]
-                {
-                    new SessionTaxType()
-                    {
-                        IdTaxType = context.TaxTypes.FirstOrDefault(tt => tt.IdTaxType == 306).IdTaxType,
-                        SessionId = sessionId
-                    },
-                    new SessionTaxType()
-                    {
-                        IdTaxType = context.TaxTypes.FirstOrDefault(tt => tt.IdTaxType == 307).IdTaxType,
-                        SessionId = sessionId
-                    },
-                    new SessionTaxType()
-                    {
-                        IdTaxType = context.TaxTypes.FirstOrDefault(tt => tt.IdTaxType == 308).IdTaxType,
-                        SessionId = sessionId
-                    },
-                });
-            }
-
-            context.SaveChanges();
+            SetSessionTestValues(context, sessionIsAdd);
 
             var query = context.Taxes.AsQueryable();
-            var taxSource = context.SessionTaxTypes.SelectMany(e => e.TaxType.Taxes);
+            var taxSource = context.SessionTaxTypes.Where(stt => stt.SessionId == SessionId).SelectMany(e => e.TaxType.Taxes);
             if (taxSource.Any())
                 query = query.Intersect(taxSource);
 //            var joinQuery = query.Join(context.SessionTaxTypes, t => t.IdTaxType, stt => stt.IdTaxType, (tax, type) => new {tax.TaxSum, tax.Organization, tax.PeriodName, tax.IdTaxType});
@@ -224,7 +193,41 @@ namespace TaxOrg.Tests
             {
                 Debug.WriteLine("{0};{1};{2}", tax.Tax, tax.Organization.Inn, tax.PrevTax);
             }
->>>>>>> origin/master
+        }
+
+        private static void SetSessionTestValues(TaxorgContext context, bool sessionIsAdd)
+        {
+            var session = context.Sessions.FirstOrDefault(s => s.SessionId == SessionId);
+            if (session != null)
+            {
+                context.Sessions.Remove(session);
+                context.SaveChanges();
+            }
+
+            if (sessionIsAdd)
+            {
+                context.Sessions.Add(new Session(SessionId));
+                context.SessionTaxTypes.AddRange(new[]
+                {
+                    new SessionTaxType()
+                    {
+                        IdTaxType = context.TaxTypes.FirstOrDefault(tt => tt.IdTaxType == 5).IdTaxType,
+                        SessionId = SessionId
+                    },
+                    new SessionTaxType()
+                    {
+                        IdTaxType = context.TaxTypes.FirstOrDefault(tt => tt.IdTaxType == 6).IdTaxType,
+                        SessionId = SessionId
+                    },
+                    new SessionTaxType()
+                    {
+                        IdTaxType = context.TaxTypes.FirstOrDefault(tt => tt.IdTaxType == 7).IdTaxType,
+                        SessionId = SessionId
+                    },
+                });
+            }
+
+            context.SaveChanges();
         }
     }
 }

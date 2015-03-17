@@ -11,11 +11,11 @@ namespace TaxOrg.Tools
 {
     public class ControllerHelper
     {
-        public static object GetData<TEntity>(GridSettings grid, RepositoryBase<TEntity> repository) where TEntity : ModelBase
+        public static object GetData<TEntity>(GridSettings grid, IQueryable<TEntity> repository, string keyName) where TEntity : class
         {
             try
             {
-                return GetDataNotSafe(grid, repository);
+                return GetDataNotSafe(grid, repository, keyName);
             }
             catch (Exception e)
             {
@@ -24,8 +24,7 @@ namespace TaxOrg.Tools
             }
         }
 
-        private static object GetDataNotSafe<TEntity>(GridSettings grid, RepositoryBase<TEntity> repository)
-            where TEntity : ModelBase
+        private static object GetDataNotSafe<TEntity>(GridSettings grid, IQueryable<TEntity> repository, string keyName) where TEntity : class 
         {
             IQueryable<TEntity> query = repository.AsQueryable();
 
@@ -49,7 +48,7 @@ namespace TaxOrg.Tools
 
 //            query = query.OrderByDescending(repository.Context.GetExpression<TEntity>(grid.SortColumn));
 //            query.Where();
-            query = query.OrderBy(string.IsNullOrEmpty(grid.SortColumn) ? repository.GetKeyName() : grid.SortColumn, grid.SortOrder);
+            query = query.OrderBy(string.IsNullOrEmpty(grid.SortColumn) ? keyName : grid.SortColumn, grid.SortOrder);
 
             int count = query.Count();
             var totalPage = (int) Math.Ceiling((double) count/grid.PageSize);

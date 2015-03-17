@@ -27,7 +27,8 @@ namespace TaxOrg.Controllers
 
         public ActionResult GetData(int idOrganization, GridSettings grid)
         {
-            var data = ControllerHelper.GetData(grid, new SliceRepository(idOrganization));
+            var sliceRepository = new SliceRepository(idOrganization);
+            var data = ControllerHelper.GetData(grid, sliceRepository, sliceRepository.GetKeyName());
             return Json(data);
         }
 

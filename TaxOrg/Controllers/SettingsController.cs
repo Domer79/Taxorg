@@ -25,7 +25,7 @@ namespace TaxOrg.Controllers
 
         public ActionResult GetData(GridSettings grid)
         {
-            return Json(ControllerHelper.GetData(grid, _repo));
+            return Json(ControllerHelper.GetData(grid, _repo, _repo.GetKeyName()));
         }
 
         public ActionResult Edit(Settings settings)

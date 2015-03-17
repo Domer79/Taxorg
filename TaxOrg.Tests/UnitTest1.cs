@@ -142,20 +142,6 @@ namespace TaxOrg.Tests
         }
 
         [TestMethod]
-        public void TaxSummaryTaxDebitKreditFieldTest()
-        {
-            ApplicationCustomizer.ConnectionString = "Data Source=.;Integrated Security=True;Initial Catalog=Taxorg";
-            var repo = TaxSummaryRepository.Repository;
-
-            var query = repo.Where(e => e.TaxDebitKredit.Contains("+"));
-
-            foreach (var tax in query)
-            {
-                Debug.WriteLine(tax.TaxDebitKredit);
-            }
-        }
-
-        [TestMethod]
         public void SliceTaxDebitKreditFieldTest()
         {
             ApplicationCustomizer.ConnectionString = "Data Source=.;Integrated Security=True;Initial Catalog=Taxorg";
