@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -15,6 +16,11 @@ namespace TaxorgRepository.Repositories
         {
             throw new NotImplementedException();
         }
+
+//        public List<TaxSummary> GeTaxSummaries(string sessionId, int offset, int count, bool isNotLoadSameTax)
+//        {
+//            
+//        }
 
         public static TaxSummaryRepository Repository
         {

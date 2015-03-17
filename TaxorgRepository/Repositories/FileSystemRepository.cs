@@ -17,12 +17,12 @@ namespace TaxorgRepository.Repositories
 
         public static IQueryable<FileSystem> GetObjects()
         {
-            return Context.FileSystem;
+            return Context.FileSystems;
         }
 
         public static void InsertOrUpdate(FileSystem item)
         {
-            var fs = Context.FileSystem.FirstOrDefault(f => f.IdFileSystem == item.IdFileSystem);
+            var fs = Context.FileSystems.FirstOrDefault(f => f.IdFileSystem == item.IdFileSystem);
             if (fs != null)
             {
                 Context.Entry(item).State = EntityState.Modified;
@@ -34,7 +34,7 @@ namespace TaxorgRepository.Repositories
             fs.RemoteHostFileName = item.RemoteHostFileName;
             fs.IsCompressed = item.IsCompressed;
 
-            Context.FileSystem.Add(fs);
+            Context.FileSystems.Add(fs);
         }
 
         public static void FileSave(HttpPostedFileBase file, string fullPath)
@@ -58,11 +58,11 @@ namespace TaxorgRepository.Repositories
 
         public static void SaveMetadata(FileSystem fileInstance)
         {
-            var fileSystem = Context.FileSystem.SingleOrDefault(fs => fs.IdFileSystem == fileInstance.IdFileSystem);
+            var fileSystem = Context.FileSystems.SingleOrDefault(fs => fs.IdFileSystem == fileInstance.IdFileSystem);
 
             if (fileSystem == null)
             {
-                Context.FileSystem.Add(fileInstance);
+                Context.FileSystems.Add(fileInstance);
                 Context.SaveChanges();
             }
             else
@@ -70,10 +70,10 @@ namespace TaxorgRepository.Repositories
                 Context.Entry(fileInstance).State = EntityState.Modified;
 
             }
-            var fsFile = Context.FsFile.SingleOrDefault(f => f.IdFileSystem == fileInstance.IdFileSystem);
+            var fsFile = Context.FsFiles.SingleOrDefault(f => f.IdFileSystem == fileInstance.IdFileSystem);
             if (fsFile == null)
             {
-                Context.FsFile.Add(new FsFile {IdFileSystem = fileInstance.IdFileSystem});
+                Context.FsFiles.Add(new FsFile {IdFileSystem = fileInstance.IdFileSystem});
             }
             else
             {

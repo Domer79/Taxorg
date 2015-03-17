@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Common;
+﻿using System.Data.Common;
 using System.Data.Entity.Infrastructure.Interception;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TaxorgRepository.Infrastructure
 {
@@ -28,29 +23,10 @@ namespace TaxorgRepository.Infrastructure
 
         public void ReaderExecuting(DbCommand command, DbCommandInterceptionContext<DbDataReader> interceptionContext)
         {
-            try
-            {
-                if (interceptionContext.Result != null)
-                {
-                    var dataTable = interceptionContext.Result.GetSchemaTable();
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e);
-            }
         }
 
         public void ReaderExecuted(DbCommand command, DbCommandInterceptionContext<DbDataReader> interceptionContext)
         {
-            try
-            {
-                var dataTable = interceptionContext.Result.GetSchemaTable();
-            }
-            catch (Exception e)
-            {
-//                Debug.WriteLine(e);
-            }
         }
 
         public void ScalarExecuting(DbCommand command, DbCommandInterceptionContext<object> interceptionContext)

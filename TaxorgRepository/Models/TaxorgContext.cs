@@ -39,15 +39,15 @@ namespace TaxorgRepository.Models
 #endif
         }
 
-        public DbSet<FsFile> FsFile { get; set; }
-        public DbSet<FileSystem> FileSystem { get; set; }
-        public DbSet<Organization> Organization { get; set; }
-        public DbSet<Tax> Tax { get; set; }
-        public DbSet<TaxType> TaxType { get; set; }
-        public DbSet<TaxSummary> TaxSummary { get; set; }
+        public DbSet<FsFile> FsFiles { get; set; }
+        public DbSet<FileSystem> FileSystems { get; set; }
+        public DbSet<Organization> Organizations { get; set; }
+        public DbSet<Tax> Taxes { get; set; }
+        public DbSet<TaxType> TaxTypes { get; set; }
+        public DbSet<TaxSummary> TaxSummaries { get; set; }
         public DbSet<Error> Errors { get; set; }
         public DbSet<Bug> Bugs { get; set; }
-        public DbSet<SliceTax> SliceTax { get; set; }
+        public DbSet<SliceTax> SliceTaxes { get; set; }
         public DbSet<Settings> Settings { get; set; }
 
         [DebuggerStepThrough]

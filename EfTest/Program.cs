@@ -9,7 +9,7 @@ namespace EfTest
         {
             var context = TaxorgContext.Context;
 
-            foreach (var org in context.Organization)
+            foreach (var org in context.Organizations)
             {
                 Console.WriteLine(org);
             }

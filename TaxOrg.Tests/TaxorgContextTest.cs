@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
@@ -15,6 +16,14 @@ namespace TaxOrg.Tests
     [TestClass]
     public class TaxorgContextTest
     {
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="T:System.Object"/>.
+        /// </summary>
+        public TaxorgContextTest()
+        {
+            ApplicationCustomizer.ConnectionString = "data source=Domer-pc;initial catalog=Taxorg;User Id=developer;Password=sppdeveloper;MultipleActiveResultSets=True;App=EntityFramework";
+        }
+
         [TestMethod]
         public void TaxorgContextConnectionTest()
         {
@@ -76,7 +85,6 @@ namespace TaxOrg.Tests
         [TestMethod]
         public void TaxSummaryGetTest()
         {
-            ApplicationCustomizer.ConnectionString = "data source=.;initial catalog=Taxorg;integrated security=True;";
             var repo = TaxSummaryRepository.Repository;
 
             foreach (var taxSummary in repo)
@@ -88,7 +96,6 @@ namespace TaxOrg.Tests
         [TestMethod]
         public void SliceTaxGetTest()
         {
-            ApplicationCustomizer.ConnectionString = "data source=.;initial catalog=Taxorg;integrated security=True;";
             var repo = new SliceRepository(1989);
 
             foreach (var tax in repo)
@@ -100,8 +107,6 @@ namespace TaxOrg.Tests
         [TestMethod]
         public void GetCurrentPeriodTest()
         {
-            ApplicationCustomizer.ConnectionString = "data source=.;initial catalog=Taxorg;integrated security=True;";
-
             var period = TaxorgTools.GetCurrentPeriod();
 
             Assert.AreEqual(new YearMonth("02.2015"), period);
@@ -110,7 +115,6 @@ namespace TaxOrg.Tests
         [TestMethod]
         public void GetPrevPeriodCountTest()
         {
-            ApplicationCustomizer.ConnectionString = "data source=.;initial catalog=Taxorg;integrated security=True;";
             var count = TaxorgTools.GetPrevPeriodCount();
 
             Assert.AreEqual(1, count);
@@ -119,15 +123,12 @@ namespace TaxOrg.Tests
         [TestMethod]
         public void GetPrevPeriodTest()
         {
-            ApplicationCustomizer.ConnectionString = "data source=.;initial catalog=Taxorg;integrated security=True;";
             Assert.AreEqual(new YearMonth("02.2015"), TaxorgTools.GetPrevPeriod());
         }
 
         [TestMethod]
         public void IsNotSameTaxLoadTest()
         {
-            ApplicationCustomizer.ConnectionString = "data source=.;initial catalog=Taxorg;integrated security=True;";
-
             Assert.IsTrue(!TaxorgTools.IsNotSameTaxLoad);
 
             TaxorgTools.IsNotSameTaxLoad = true;
@@ -138,17 +139,24 @@ namespace TaxOrg.Tests
         [TestMethod]
         public void AppVersionTest()
         {
-            ApplicationCustomizer.ConnectionString = "data source=.;initial catalog=Taxorg;integrated security=True;";
-
             Assert.AreEqual("1.1.1.0", TaxorgTools.AppVersion);
         }
 
         [TestMethod]
         public void SetTaxPrevPeriodCountTest()
         {
-            ApplicationCustomizer.ConnectionString = "data source=.;initial catalog=Taxorg;integrated security=True;";
-
             TaxorgTools.SetTaxPrevPeriodCount(2);
+        }
+
+        [TestMethod]
+        public void GetTaxFilterbyTaxTypeTest()
+        {
+            var context = new TaxorgContext();
+            var 
+            var query = context.Taxes.AsQueryable();
+            query = query.Include(t => t.Organization);
+            query = query.Where()
+//            query = query.GroupBy(t => t.Organization);
         }
     }
 }
