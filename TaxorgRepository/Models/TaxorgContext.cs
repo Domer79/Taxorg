@@ -49,6 +49,8 @@ namespace TaxorgRepository.Models
         public DbSet<Bug> Bugs { get; set; }
         public DbSet<SliceTax> SliceTaxes { get; set; }
         public DbSet<Settings> Settings { get; set; }
+        public DbSet<Session> Sessions { get; set; }
+        public DbSet<SessionTaxType> SessionTaxTypes { get; set; }
 
         [DebuggerStepThrough]
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -132,7 +134,7 @@ namespace TaxorgRepository.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<TaxType>()
-                .HasMany(e => e.Tax)
+                .HasMany(e => e.Taxes)
                 .WithRequired(e => e.TaxType)
                 .WillCascadeOnDelete(false);
 

@@ -1,4 +1,8 @@
 ﻿using System;
+<<<<<<< HEAD
+=======
+using System.Collections.Generic;
+>>>>>>> origin/master
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Diagnostics;
@@ -16,12 +20,18 @@ namespace TaxOrg.Tests
     [TestClass]
     public class TaxorgContextTest
     {
+<<<<<<< HEAD
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="T:System.Object"/>.
         /// </summary>
         public TaxorgContextTest()
         {
             ApplicationCustomizer.ConnectionString = "data source=Domer-pc;initial catalog=Taxorg;User Id=developer;Password=sppdeveloper;MultipleActiveResultSets=True;App=EntityFramework";
+=======
+        public TaxorgContextTest()
+        {
+            ApplicationCustomizer.ConnectionString = "data source=cito1;initial catalog=Taxorg;User Id=developer;Password=sppdeveloper;MultipleActiveResultSets=True;App=EntityFramework";
+>>>>>>> origin/master
         }
 
         [TestMethod]
@@ -149,6 +159,7 @@ namespace TaxOrg.Tests
         }
 
         [TestMethod]
+<<<<<<< HEAD
         public void GetTaxFilterbyTaxTypeTest()
         {
             var context = new TaxorgContext();
@@ -157,6 +168,63 @@ namespace TaxOrg.Tests
             query = query.Include(t => t.Organization);
             query = query.Where()
 //            query = query.GroupBy(t => t.Organization);
+=======
+        public void TaxOnlySummaryTest()
+        {
+            const string sessionId = "qwertyuiop";
+            const bool sessionIsAdd = true;
+            var context = new TaxorgContext();
+            var session = context.Sessions.FirstOrDefault(s => s.SessionId == sessionId);
+            if (session != null)
+            {
+                context.Sessions.Remove(session);
+                context.SaveChanges();
+            }
+
+            if (sessionIsAdd)
+            {
+                context.Sessions.Add(new Session(sessionId));
+                context.SessionTaxTypes.AddRange(new[]
+                {
+                    new SessionTaxType()
+                    {
+                        IdTaxType = context.TaxTypes.FirstOrDefault(tt => tt.IdTaxType == 306).IdTaxType,
+                        SessionId = sessionId
+                    },
+                    new SessionTaxType()
+                    {
+                        IdTaxType = context.TaxTypes.FirstOrDefault(tt => tt.IdTaxType == 307).IdTaxType,
+                        SessionId = sessionId
+                    },
+                    new SessionTaxType()
+                    {
+                        IdTaxType = context.TaxTypes.FirstOrDefault(tt => tt.IdTaxType == 308).IdTaxType,
+                        SessionId = sessionId
+                    },
+                });
+            }
+
+            context.SaveChanges();
+
+            var query = context.Taxes.AsQueryable();
+            var taxSource = context.SessionTaxTypes.SelectMany(e => e.TaxType.Taxes);
+            if (taxSource.Any())
+                query = query.Intersect(taxSource);
+//            var joinQuery = query.Join(context.SessionTaxTypes, t => t.IdTaxType, stt => stt.IdTaxType, (tax, type) => new {tax.TaxSum, tax.Organization, tax.PeriodName, tax.IdTaxType});
+            var groupedQuery = query
+                .GroupBy(e => new {e.Organization, e.PeriodName})
+                .Select(e => new {Tax = e.Sum(t => t.TaxSum), e.Key.Organization, e.Key.PeriodName, PrevTax = context.Taxes.Intersect(taxSource).Where(tax => tax.PeriodName == "01.2015" && tax.Organization == e.Key.Organization).Select(tax => tax == null ? 0 : tax.TaxSum).Sum()})
+                .Where(e => e.PeriodName == "02.2015");
+
+            groupedQuery = groupedQuery.Take(10);
+            var list = groupedQuery.ToList();
+
+            foreach (var tax in list)
+//            foreach (var tax in query)
+            {
+                Debug.WriteLine("{0};{1};{2}", tax.Tax, tax.Organization.Inn, tax.PrevTax);
+            }
+>>>>>>> origin/master
         }
     }
 }

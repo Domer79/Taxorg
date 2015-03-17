@@ -11,7 +11,8 @@ namespace TaxorgRepository.Models
     {
         public TaxType()
         {
-            Tax = new HashSet<Tax>();
+            Taxes = new HashSet<Tax>();
+            SessionTaxTypes = new HashSet<SessionTaxType>();
         }
 
         [Key]
@@ -27,6 +28,7 @@ namespace TaxorgRepository.Models
         [Column("name")]
         public string Name { get; set; }
 
-        public virtual ICollection<Tax> Tax { get; set; }
+        public ICollection<Tax> Taxes { get; set; }
+        public ICollection<SessionTaxType> SessionTaxTypes { get; set; }
     }
 }
