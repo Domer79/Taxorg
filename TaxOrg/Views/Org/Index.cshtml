@@ -87,8 +87,10 @@
                     { name: "Address", width: 300, label: "Адрес", searchoptions: { sopt: ['cn', 'eq', 'ne'] }, editable: true, editoptions: addressEditOptions },
                     { name: "Tax", label: "Сумма", hidden: true, width: 100, searchoptions: { sopt: ['eq', 'ne', 'gt', 'ge', 'lt', 'le'] }, editable: false, formatter: "currency", formatoptions: { decimalSeparator: ".", thousandsSeparator: " ", decimalPlaces: 2 } },
                     { name: "TaxDebitKredit", index: "Tax", label: "Сумма долга", align: "right", width: 100, searchoptions: { sopt: ['eq', 'ne', 'gt', 'ge', 'lt', 'le'] }, editable: false},
-                    { name: "PrevTax", label: "На @ViewBag.PrevPeriod", align: "right", width: 100, searchoptions: { sopt: ['eq', 'ne', 'gt', 'ge', 'lt', 'le'] }, editable: false, formatter: "currency", formatoptions: { decimalSeparator: ".", thousandsSeparator: " ", decimalPlaces: 2 } },
-                    { name: "Delta", label: "Дельта", width: 100, align: "right", searchoptions: { sopt: ['eq', 'ne', 'gt', 'ge', 'lt', 'le'] }, editable: false, formatter: "currency", formatoptions: { decimalSeparator: ".", thousandsSeparator: " ", decimalPlaces: 2 } },
+//                    { name: "PrevTax", label: "На @ViewBag.PrevPeriod", align: "right", width: 100, searchoptions: { sopt: ['eq', 'ne', 'gt', 'ge', 'lt', 'le'] }, editable: false, formatter: "currency", formatoptions: { decimalSeparator: ".", thousandsSeparator: " ", decimalPlaces: 2 } },
+                    { name: "PrevTax", label: "На @ViewBag.PrevPeriod", align: "right", width: 100, searchoptions: { sopt: ['eq', 'ne', 'gt', 'ge', 'lt', 'le'] }, editable: false},
+//                    { name: "Delta", label: "Дельта", width: 100, align: "right", searchoptions: { sopt: ['eq', 'ne', 'gt', 'ge', 'lt', 'le'] }, editable: false, formatter: "currency", formatoptions: { decimalSeparator: ".", thousandsSeparator: " ", decimalPlaces: 2 } },
+                    { name: "Delta", label: "Дельта", width: 100, align: "right", searchoptions: { sopt: ['eq', 'ne', 'gt', 'ge', 'lt', 'le'] }, editable: false },
                     { name: "PeriodName", width: 100, label: "Период", hidden: true, searchoptions: { sopt: ['cn', 'eq', 'ne'] }, editable: false }
                 ],
                 mtype: 'POST',

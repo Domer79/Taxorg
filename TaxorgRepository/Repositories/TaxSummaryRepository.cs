@@ -48,12 +48,12 @@ namespace TaxorgRepository.Repositories
                             e.Key.Organization.Name, 
                             e.Key.Organization.ShortName, 
                             e.Key.Organization.Address,
-                            Tax = Math.Abs(e.Sum(t => t.TaxSum ?? 0)),
+                            Tax = e.Sum(t => t.TaxSum),
                             e.Key.PeriodName,
-                            PrevTax = Math.Abs(Context.Taxes.Intersect(intersectSource)
+                            PrevTax = Math.Abs(Context.Taxes.Intersect(intersectSource) //TODO: Продумать правильное использование Intersect
                                     .Where(tax => tax.PeriodName == PrevPeriod && tax.Organization == e.Key.Organization)
-                                    .Select(tax => tax.TaxSum ?? 0)
-                                    .Sum())
+                                    .Select(tax => tax.TaxSum)
+                                    .Sum() ?? 0)
                         })
                 .Where(e => e.PeriodName == CurrentPeriod);
 
@@ -73,10 +73,11 @@ namespace TaxorgRepository.Repositories
                 e.Name,
                 e.ShortName,
                 e.Address,
-                e.Tax,
-                TaxDebitKredit = e.Tax > 0 ? string.Format("+{0}", Convert.ToString(e.Tax, CultureInfo.CurrentCulture)) : Convert.ToString(e.Tax, CultureInfo.CurrentCulture),
+                Tax = Math.Abs(e.Tax.Value),
+                TaxDebitKredit = e.Tax > 0 ? string.Format("+{0}", e.Tax.Value.ToString("C")) : Math.Abs(e.Tax.Value).ToString("C"),
                 e.PeriodName,
-                PrevTax = Math.Abs(e.PrevTax)
+                PrevTax = Math.Abs(e.PrevTax).ToString("C"),
+                Delta = (e.Tax.Value - Math.Abs(e.PrevTax)).ToString("C")
             });
 
             var jsonResult = new
