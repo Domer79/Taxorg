@@ -18,7 +18,7 @@ namespace TaxorgRepository.Models
         public int IdTaxType { get; set; }
 
         [Column("tax", TypeName = "money")]
-        public decimal TaxSum { get; set; }
+        public decimal? TaxSum { get; set; }
 
         [Column("period")]
         public YearMonth Period { get; set; }

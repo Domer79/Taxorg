@@ -5,7 +5,7 @@ using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Web.Mvc;
 
-namespace TaxOrg.Infrastructure
+namespace SystemTools.WebTools.Infrastructure
 {
     [ModelBinder(typeof(GridModelBinder))]
     public class GridSettings

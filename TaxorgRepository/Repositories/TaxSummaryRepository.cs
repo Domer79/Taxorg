@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using SystemTools.WebTools.Helpers;
+using SystemTools.WebTools.Infrastructure;
+using SqlClr;
 using TaxorgRepository.Models;
 
 namespace TaxorgRepository.Repositories
@@ -16,13 +20,16 @@ namespace TaxorgRepository.Repositories
         private readonly TaxorgContext _context = new TaxorgContext();
         private static string _currentPeriod;
         private static string _prevPeriod;
+        private readonly object _data;
 
-        public TaxSummaryRepository(string sessionId)
+        public TaxSummaryRepository(string sessionId, GridSettings gridSettings)
         {
             _sessionId = sessionId;
+            _sessionId = "qwertyuiop";//TODO: Потом удалить
+            _data = GetData(gridSettings);
         }
 
-        public IQueryable<object> GetData()
+        private object GetData(GridSettings gridSettings)
         {
             var query = Context.Taxes.AsQueryable();
             query = query.Include(e => e.Organization);
@@ -30,25 +37,57 @@ namespace TaxorgRepository.Repositories
             if (intersectSource.Any())
                 query = query.Intersect(intersectSource);
 
-            var groupedQuery = query
+            var taxByOrganizationQuery = query
                 .GroupBy(e => new {e.Organization, e.PeriodName})
                 .Select(
                     e =>
                         new
                         {
                             e.Key.Organization.IdOrganization, 
-                            e.Key.Organization.Inn, e.Key.Organization.Name, e.Key.Organization.ShortName, e.Key.Organization.Address,
-                            Tax = e.Sum(t => t.TaxSum),
-//                            e.Key.Organization,
+                            e.Key.Organization.Inn, 
+                            e.Key.Organization.Name, 
+                            e.Key.Organization.ShortName, 
+                            e.Key.Organization.Address,
+                            Tax = Math.Abs(e.Sum(t => t.TaxSum ?? 0)),
                             e.Key.PeriodName,
-                            PrevTax = Context.Taxes.Intersect(intersectSource)
+                            PrevTax = Math.Abs(Context.Taxes.Intersect(intersectSource)
                                     .Where(tax => tax.PeriodName == PrevPeriod && tax.Organization == e.Key.Organization)
-                                    .Select(tax => tax == null ? 0 : tax.TaxSum)
-                                    .Sum()
+                                    .Select(tax => tax.TaxSum ?? 0)
+                                    .Sum())
                         })
                 .Where(e => e.PeriodName == CurrentPeriod);
 
-            return groupedQuery;
+            Count = taxByOrganizationQuery.Count();
+            var totalPage = (int) Math.Ceiling((double) Count/gridSettings.PageSize);
+            totalPage = totalPage == 0 ? 1 : totalPage;
+            gridSettings.PageIndex = (gridSettings.PageIndex > totalPage) ? totalPage : gridSettings.PageIndex;
+
+            taxByOrganizationQuery = taxByOrganizationQuery.SetFilterToQuery(gridSettings.Where,
+                string.IsNullOrEmpty(gridSettings.SortColumn) ? "Inn" : gridSettings.SortColumn, gridSettings.SortOrder,
+                (gridSettings.PageIndex - 1)*gridSettings.PageSize, gridSettings.PageSize);
+
+            var data = taxByOrganizationQuery.ToList().Select(e => new
+            {
+                e.IdOrganization,
+                e.Inn,
+                e.Name,
+                e.ShortName,
+                e.Address,
+                e.Tax,
+                TaxDebitKredit = e.Tax > 0 ? string.Format("+{0}", Convert.ToString(e.Tax, CultureInfo.CurrentCulture)) : Convert.ToString(e.Tax, CultureInfo.CurrentCulture),
+                e.PeriodName,
+                PrevTax = Math.Abs(e.PrevTax)
+            });
+
+            var jsonResult = new
+            {
+                rows = data,
+                totalPages = totalPage,
+                records = Count,
+                pageIndex = 1
+            };
+
+            return jsonResult;
         }
 
         private static string CurrentPeriod
@@ -61,19 +100,21 @@ namespace TaxorgRepository.Repositories
             get { return _prevPeriod ?? (_prevPeriod = TaxorgTools.GetPrevPeriod().ToString()); }
         }
 
-//        public List<TaxSummary> GeTaxSummaries(string sessionId, int offset, int count, bool isNotLoadSameTax)
-//        {
-//            
-//        }
-
-        public static TaxSummaryRepository GetRepository(string sessionId)
+        public static TaxSummaryRepository GetRepository(string sessionId, GridSettings gridSettings)
         {
-            return _repository ?? (_repository = new TaxSummaryRepository(sessionId));
+            return _repository ?? (_repository = new TaxSummaryRepository(sessionId, gridSettings));
         }
 
-        public TaxorgContext Context
+        private TaxorgContext Context
         {
             get { return _context; }
+        }
+
+        public int Count { get; private set; }
+
+        public object Data
+        {
+            get { return _data; }
         }
     }
 }

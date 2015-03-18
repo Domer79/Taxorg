@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Mime;
+using SystemTools.WebTools.Infrastructure;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SqlClr;
 using TaxorgRepository;
@@ -83,34 +84,6 @@ namespace TaxOrg.Tests
         public void ConnectionStringFromConfigTest()
         {
             Assert.AreEqual(ApplicationSettings.ConnectionString, "data source=.;initial catalog=Taxorg;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework");
-        }
-
-        [TestMethod]
-        public void TaxSummaryGetTest()
-        {
-            SetSessionTestValues(new TaxorgContext(), true);
-            var repo = TaxSummaryRepository.GetRepository(SessionId);
-            var query = repo.AsQueryable();
-            query = query.Take(10);
-
-            foreach (var taxSummary in query)
-            {
-                Debug.WriteLine(taxSummary.Inn, taxSummary.Tax);
-            }
-        }
-
-        [TestMethod]
-        public void TaxSummaryTaxDebitKreditFieldTest()
-        {
-            SetSessionTestValues(new TaxorgContext(), true);
-            var repo = TaxSummaryRepository.GetRepository("sessionid");
-
-            var query = repo.Where(e => e.TaxDebitKredit.Contains("+"));
-
-            foreach (var tax in query)
-            {
-                Debug.WriteLine(tax.TaxDebitKredit);
-            }
         }
 
         [TestMethod]

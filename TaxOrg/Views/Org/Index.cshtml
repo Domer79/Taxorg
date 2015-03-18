@@ -93,9 +93,9 @@
                 ],
                 mtype: 'POST',
                 pager: "#tOrgPage",
-                rowNum: 25,
+                rowNum: 30,
                 //            page: 20,
-                rowList: [10, 20, 30, @ViewBag.TotalTaxCount],
+                rowList: [30, 50, 100],
                 sortName: "shortName",
                 sortorder: "asc",
                 shrinkToFit: true,
@@ -124,7 +124,7 @@
                     var url = "@Url.Action("Index", "Slice")" + parameters;
                     $(location).attr("href", url);
                 },
-                caption: "Отчетный период: @TaxorgTools.GetCurrentPeriod()",
+                caption: "Отчетный период: @ViewBag.CurrentPeriod",
                 toolbar: [true, "top"]
             });
 

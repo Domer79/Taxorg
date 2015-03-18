@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
 
-namespace TaxOrg.Infrastructure
+namespace SystemTools.WebTools.Infrastructure
 {
     public class GridModelBinder : IModelBinder
     {
