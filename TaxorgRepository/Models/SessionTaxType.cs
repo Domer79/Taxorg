@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace TaxorgRepository.Models
 {
     [Table("SessionTaxType")]
-    public class SessionTaxType
+    public class SessionTaxType : ModelBase
     {
         [Key]
         public int IdSessionTaxType { get; set; }

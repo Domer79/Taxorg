@@ -641,7 +641,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Org\Index.cshtml" />
-    <Content Include="Views\Org\KbkList.cshtml" />
+    <Content Include="Views\Kbk\Index.cshtml" />
     <None Include="Документы\test.csv" />
     <Content Include="Views\Settings\Index.cshtml" />
     <Content Include="Views\Org\Maintenance.cshtml" />
@@ -656,6 +656,7 @@
     <Compile Include="Controllers\BugController.cs" />
     <Compile Include="Controllers\CheckSession.cs" />
     <Compile Include="Controllers\FileUploaderController.cs" />
+    <Compile Include="Controllers\KbkController.cs" />
     <Compile Include="Controllers\ProtectManager.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\SliceController.cs" />

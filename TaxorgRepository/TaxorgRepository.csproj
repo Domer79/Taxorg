@@ -76,6 +76,7 @@
     <Compile Include="Repositories\OrganizationRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Repositories\RepositoryBase.cs" />
+    <Compile Include="Repositories\SessionRepository.cs" />
     <Compile Include="Repositories\SettingsRepository.cs" />
     <Compile Include="Repositories\SliceRepository.cs" />
     <Compile Include="Repositories\TaxRepository.cs" />

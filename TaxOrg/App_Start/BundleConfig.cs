@@ -46,8 +46,8 @@ namespace TaxOrg
                 ));
 
             bundles.Add(new ScriptBundle("~/scripts/bootstrap").Include(
-//                    "~/Scripts/mvcfileupload/vendor/bootstrap.min.js"
-                    "~/Scripts/bootstrap-3.3.4-dist/js/bootstrap.min.js"
+                    "~/Scripts/mvcfileupload/vendor/bootstrap.min.js"
+//                    "~/Scripts/bootstrap-3.3.4-dist/js/bootstrap.js"
                 ));
 
             bundles.Add(new StyleBundle("~/Content/blueimp").Include(

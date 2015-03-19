@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace TaxorgRepository.Models
 {
     [Table("Sessions")]
-    public class Session
+    public class Session : ModelBase
     {
         public Session()
         {

@@ -17,5 +17,13 @@ namespace SystemTools.Extensions
                 Debug.WriteLine(e);
             }
         }
+
+        public static string GetErrorMessage(this Exception e)
+        {
+            if (e == null)
+                return string.Empty;
+
+            return string.Format("{0}. Внутреннее сообщение: {1}", e.Message, GetErrorMessage(e.InnerException));
+        }
     }
 }

@@ -26,7 +26,6 @@ namespace TaxorgRepository.Repositories
         public TaxSummaryRepository(string sessionId, GridSettings gridSettings)
         {
             _sessionId = sessionId;
-            _sessionId = "qwertyuiop";//TODO: Потом удалить
             _data = GetData(gridSettings);
         }
 

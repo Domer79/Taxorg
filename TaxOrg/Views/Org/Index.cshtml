@@ -202,6 +202,10 @@
                     }
                 });
             });
+
+            $("#myModal").on("hidden.bs.modal", function () {
+                $("#tOrg").trigger("reloadGrid");
+            });
         });
     </script>   
 }
@@ -214,11 +218,11 @@
                 <h4 class="modal-title" id="myModalLabel">Выбор данных по определенным КБК</h4>
             </div>
             <div class="modal-body">
-                <iframe src="@Url.Action("KbkList")"></iframe>
+                <iframe src="@Url.Action("Index", "Kbk")" style="width: 100%;height: 500px; border: 0" id="kbkFrame" ></iframe>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+@*                <button type="button" class="btn btn-default" data-dismiss="modal" id="closeKbkForm">Закрыть</button>*@
+@*                <button type="button" class="btn btn-primary" id="saveKbk">Сохранить</button>*@
             </div>
         </div>
     </div>

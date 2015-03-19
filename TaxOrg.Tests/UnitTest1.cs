@@ -9,6 +9,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Web.Mvc;
 using System.Web.UI;
+using System.Web.UI.WebControls;
 using SystemTools.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SqlClr;
@@ -195,6 +196,33 @@ namespace TaxOrg.Tests
             foreach (var taxSummary in query)
             {
                 Debug.WriteLine(taxSummary.Name, taxSummary.Tax);
+            }
+        }
+
+        [TestMethod]
+        public void GetErrorMessageTest()
+        {
+            try
+            {
+                throw new Exception("Exception 1");
+            }
+            catch (Exception e1)
+            {
+                try
+                {
+                    throw new Exception("Exception 2", e1);
+                }
+                catch (Exception e2)
+                {
+                    try
+                    {
+                        throw new Exception("Exception 3", e2);
+                    }
+                    catch (Exception e3)
+                    {
+                        Debug.WriteLine(e3.GetErrorMessage());
+                    }
+                }
             }
         }
     }
