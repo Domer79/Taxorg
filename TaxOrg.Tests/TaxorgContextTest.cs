@@ -168,6 +168,16 @@ namespace TaxOrg.Tests
             }
         }
 
+        [TestMethod]
+        public void GetTaxTypeCollectionTest()
+        {
+            var repo = new TaxTypeRepository();
+            foreach (var taxType in repo)
+            {
+                Debug.WriteLine(taxType.IdTaxType, taxType.Code);
+            }
+        }
+
         private static void SetSessionTestValues(TaxorgContext context, bool sessionIsAdd)
         {
             var session = context.Sessions.FirstOrDefault(s => s.SessionId == SessionId);

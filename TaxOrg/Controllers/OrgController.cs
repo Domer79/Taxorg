@@ -109,5 +109,11 @@ namespace TaxOrg.Controllers
         {
             return View(s);
         }
+
+        public ActionResult KbkList()
+        {
+            var taxTypeRepository = new TaxTypeRepository();
+            return View(taxTypeRepository);
+        }
     }
 }

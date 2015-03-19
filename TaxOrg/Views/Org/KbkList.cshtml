@@ -1,0 +1,30 @@
+﻿@using System.Web.Optimization
+@model IEnumerable<TaxorgRepository.Models.TaxType>
+
+@{
+    ViewBag.Title = "KbkList";
+    Layout = "";
+}
+
+@Scripts.Render("~/jquery")
+@Scripts.Render("~/jquery-ui")
+@Styles.Render("~/Content/themes/overcast/css")
+@Styles.Render("~/bootstrap/css")
+
+<div class="panel panel-collapse">
+    <div class="panel-body">
+        @foreach (var taxType in Model)
+        {
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <input type="checkbox" aria-label="@taxType.Name" value="@taxType.IdTaxType">
+                        </span>
+                        <span class="form-control">@taxType.Code</span>
+                    </div><!-- /input-group -->
+                </div><!-- /.col-lg-6 -->
+            </div>
+        }
+    </div>
+</div>

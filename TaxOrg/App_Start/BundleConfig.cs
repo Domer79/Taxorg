@@ -46,7 +46,8 @@ namespace TaxOrg
                 ));
 
             bundles.Add(new ScriptBundle("~/scripts/bootstrap").Include(
-                    "~/Scripts/mvcfileupload/vendor/bootstrap.min.js"
+//                    "~/Scripts/mvcfileupload/vendor/bootstrap.min.js"
+                    "~/Scripts/bootstrap-3.3.4-dist/js/bootstrap.min.js"
                 ));
 
             bundles.Add(new StyleBundle("~/Content/blueimp").Include(
@@ -107,8 +108,9 @@ namespace TaxOrg
             #endregion
 
             bundles.Add(new StyleBundle("~/bootstrap/css").Include(
-                "~/Content/mvcfileupload/vendor/bootstrap.min.css")
-            );
+                "~/Content/bootstrap-3.3.4-dist/css/bootstrap-theme.css",
+                "~/Content/bootstrap-3.3.4-dist/css/bootstrap.css"
+                ));
         }
     }
 }

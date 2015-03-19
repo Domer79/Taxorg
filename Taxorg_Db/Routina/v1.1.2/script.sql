@@ -1,6 +1,9 @@
 ﻿use Taxorg
 go
 
+update Settings set value = '1.1.2.0' where name = 'appversion'
+go
+
 create table Sessions
 (
 	sessionId varchar(100) not null primary key

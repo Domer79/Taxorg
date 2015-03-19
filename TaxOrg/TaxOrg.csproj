@@ -117,6 +117,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-3.3.4-dist\css\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-3.3.4-dist\css\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap-3.3.4-dist\css\bootstrap.css" />
+    <Content Include="Content\bootstrap-3.3.4-dist\css\bootstrap.min.css" />
+    <Content Include="Content\bootstrap-3.3.4-dist\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\bootstrap-3.3.4-dist\js\bootstrap.js" />
+    <Content Include="Content\bootstrap-3.3.4-dist\js\bootstrap.min.js" />
+    <Content Include="Content\bootstrap-3.3.4-dist\js\npm.js" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery-ui.structure.css" />
     <Content Include="Content\jquery.jqGrid\ui.jqgrid.css" />
@@ -527,6 +535,12 @@
     <Content Include="Content\mvcfileupload\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\mvcfileupload\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\mvcfileupload\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap-3.3.4-dist\css\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap-3.3.4-dist\css\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-3.3.4-dist\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap-3.3.4-dist\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\bootstrap-3.3.4-dist\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\bootstrap-3.3.4-dist\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Properties\PublishProfiles\Domer-pc filesystem.pubxml" />
     <None Include="Properties\PublishProfiles\Domer-pc iis.pubxml" />
     <None Include="Properties\PublishProfiles\file_system.pubxml" />
@@ -536,6 +550,14 @@
     <None Include="Properties\PublishProfiles\publish to local server.pubxml" />
     <None Include="Properties\PublishProfiles\Taxorg_filesystem.pubxml" />
     <None Include="Properties\PublishProfiles\Taxworg_publish.pubxml" />
+    <Content Include="Scripts\bootstrap-3.3.4-dist\css\bootstrap-theme.css" />
+    <Content Include="Scripts\bootstrap-3.3.4-dist\css\bootstrap-theme.min.css" />
+    <Content Include="Scripts\bootstrap-3.3.4-dist\css\bootstrap.css" />
+    <Content Include="Scripts\bootstrap-3.3.4-dist\css\bootstrap.min.css" />
+    <Content Include="Scripts\bootstrap-3.3.4-dist\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Scripts\bootstrap-3.3.4-dist\js\bootstrap.js" />
+    <Content Include="Scripts\bootstrap-3.3.4-dist\js\bootstrap.min.js" />
+    <Content Include="Scripts\bootstrap-3.3.4-dist\js\npm.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\i18n\grid.locale-ar.js" />
@@ -583,6 +605,12 @@
     <Content Include="Scripts\i18n\grid.locale-vi.js" />
     <None Include="Properties\PublishProfiles\to iis-nalog_taxorg.pubxml" />
     <None Include="Properties\PublishProfiles\to taxorg-ws.pubxml" />
+    <Content Include="Scripts\bootstrap-3.3.4-dist\css\bootstrap-theme.css.map" />
+    <Content Include="Scripts\bootstrap-3.3.4-dist\css\bootstrap.css.map" />
+    <Content Include="Scripts\bootstrap-3.3.4-dist\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Scripts\bootstrap-3.3.4-dist\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Scripts\bootstrap-3.3.4-dist\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Scripts\bootstrap-3.3.4-dist\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -613,6 +641,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Org\Index.cshtml" />
+    <Content Include="Views\Org\KbkList.cshtml" />
     <None Include="Документы\test.csv" />
     <Content Include="Views\Settings\Index.cshtml" />
     <Content Include="Views\Org\Maintenance.cshtml" />

@@ -21,6 +21,7 @@ namespace TaxorgRepository.Repositories
         private static string _currentPeriod;
         private static string _prevPeriod;
         private readonly object _data;
+        private bool? _isIntersect;
 
         public TaxSummaryRepository(string sessionId, GridSettings gridSettings)
         {
@@ -33,9 +34,7 @@ namespace TaxorgRepository.Repositories
         {
             var query = Context.Taxes.AsQueryable();
             query = query.Include(e => e.Organization);
-            var intersectSource = Context.SessionTaxTypes.Where(stt => stt.SessionId == _sessionId).SelectMany(e => e.TaxType.Taxes);
-            if (intersectSource.Any())
-                query = query.Intersect(intersectSource);
+            query = query.Intersect(IntersectSource);
 
             var taxByOrganizationQuery = query
                 .GroupBy(e => new {e.Organization, e.PeriodName})
@@ -50,7 +49,7 @@ namespace TaxorgRepository.Repositories
                             e.Key.Organization.Address,
                             Tax = e.Sum(t => t.TaxSum),
                             e.Key.PeriodName,
-                            PrevTax = Math.Abs(Context.Taxes.Intersect(intersectSource) //TODO: Продумать правильное использование Intersect
+                            PrevTax = Math.Abs(Context.Taxes.Intersect(IntersectSource) //TODO: Продумать правильное использование Intersect
                                     .Where(tax => tax.PeriodName == PrevPeriod && tax.Organization == e.Key.Organization)
                                     .Select(tax => tax.TaxSum)
                                     .Sum() ?? 0)
@@ -63,7 +62,7 @@ namespace TaxorgRepository.Repositories
             gridSettings.PageIndex = (gridSettings.PageIndex > totalPage) ? totalPage : gridSettings.PageIndex;
 
             taxByOrganizationQuery = taxByOrganizationQuery.SetFilterToQuery(gridSettings.Where,
-                string.IsNullOrEmpty(gridSettings.SortColumn) ? "Inn" : gridSettings.SortColumn, gridSettings.SortOrder,
+                string.IsNullOrEmpty(gridSettings.SortColumn) ? "IdOrganization" : gridSettings.SortColumn, gridSettings.SortOrder,
                 (gridSettings.PageIndex - 1)*gridSettings.PageSize, gridSettings.PageSize);
 
             var data = taxByOrganizationQuery.ToList().Select(e => new
@@ -77,7 +76,7 @@ namespace TaxorgRepository.Repositories
                 TaxDebitKredit = e.Tax > 0 ? string.Format("+{0}", e.Tax.Value.ToString("C")) : Math.Abs(e.Tax.Value).ToString("C"),
                 e.PeriodName,
                 PrevTax = Math.Abs(e.PrevTax).ToString("C"),
-                Delta = (e.Tax.Value - Math.Abs(e.PrevTax)).ToString("C")
+                Delta = (Math.Abs(e.Tax.Value) - Math.Abs(e.PrevTax)).ToString("C")
             });
 
             var jsonResult = new
@@ -89,6 +88,28 @@ namespace TaxorgRepository.Repositories
             };
 
             return jsonResult;
+        }
+
+        //TODO: Проверить как будет работать IEnumerable<Tax>
+        private IEnumerable<Tax> IntersectSource
+        {
+            get
+            {
+                return IsIntersect ? IntersectQuery : Context.Taxes;
+            }
+        }
+
+        private bool IsIntersect
+        {
+            get
+            {
+                return (bool)(_isIntersect ?? (_isIntersect = IntersectQuery.Any()));   
+            }
+        }
+
+        private IQueryable<Tax> IntersectQuery
+        {
+            get { return Context.SessionTaxTypes.Where(stt => stt.SessionId == _sessionId).SelectMany(e => e.TaxType.Taxes); }
         }
 
         private static string CurrentPeriod
