@@ -51,44 +51,44 @@
 @section scripts
 {
     <script type="text/javascript">
-        $(document).ready(function() {
+    $(document).ready(function() {
 
-            var innEditOptions = {};
-            innEditOptions.dataInit = function(elem) {
-                $(elem).attr("readonly", "readonly").width(200);
-            }
+        var innEditOptions = {};
+        innEditOptions.dataInit = function(elem) {
+            $(elem).attr("readonly", "readonly").width(200);
+        }
 
-            var nameEditOptions = {};
-            nameEditOptions.dataInit = function(elem) {
-                $(elem).width(200);
-            };
+        var nameEditOptions = {};
+        nameEditOptions.dataInit = function(elem) {
+            $(elem).width(200);
+        };
 
-            var shortNameEditOptions = {};
-            shortNameEditOptions.dataInit = function(elem) {
-                $(elem).width(200);
-            };
+        var shortNameEditOptions = {};
+        shortNameEditOptions.dataInit = function(elem) {
+            $(elem).width(200);
+        };
 
-            var addressEditOptions = {};
-            addressEditOptions.dataInit = function(elem) {
-                $(elem).width(200);
-            };
+        var addressEditOptions = {};
+        addressEditOptions.dataInit = function(elem) {
+            $(elem).width(200);
+        };
 
-            //        var lastSel;
+        //        var lastSel;
 
-            $("#tOrg").jqGrid({
-                url: "@Url.Action("GetData")",
-                editurl: "@Url.Action("Edit")",
-                datatype: "json",
-                colModel: [
-                    { name: "IdOrganization", hidden: true, key: true, editable: true, searchoptions: { sopt: ['eq', 'ne'] } },
-                    { name: "Inn", label: "ИНН", editable: true, searchoptions: { sopt: ['cn', 'eq', 'ne'] }, editoptions: innEditOptions },
-                    { name: "Name", label: "Полное наименование организации", hidden: true, searchoptions: { sopt: ['cn', 'eq', 'ne'] }, editable: true, editrules: { edithidden: true }, editoptions: nameEditOptions },
-                    { name: "ShortName", width: 400, label: "Наименование организации", searchoptions: { sopt: ['cn', 'eq', 'ne'] }, editable: true, editoptions: shortNameEditOptions },
-                    { name: "Address", width: 300, label: "Адрес", searchoptions: { sopt: ['cn', 'eq', 'ne'] }, editable: true, editoptions: addressEditOptions },
-                    { name: "Tax", label: "Сумма", hidden: true, width: 100, searchoptions: { sopt: ['eq', 'ne', 'gt', 'ge', 'lt', 'le'] }, editable: false, formatter: "currency", formatoptions: { decimalSeparator: ".", thousandsSeparator: " ", decimalPlaces: 2 } },
-                    { name: "TaxDebitKredit", index: "Tax", label: "Сумма долга", align: "right", width: 100, searchoptions: { sopt: ['eq', 'ne', 'gt', 'ge', 'lt', 'le'] }, editable: false},
+        $("#tOrg").jqGrid({
+            url: "@Url.Action("GetData")",
+            editurl: "@Url.Action("Edit")",
+            datatype: "json",
+            colModel: [
+                { name: "IdOrganization", hidden: true, key: true, editable: true, searchoptions: { sopt: ['eq', 'ne'] } },
+                { name: "Inn", label: "ИНН", editable: true, searchoptions: { sopt: ['cn', 'eq', 'ne'] }, editoptions: innEditOptions },
+                { name: "Name", label: "Полное наименование организации", hidden: true, searchoptions: { sopt: ['cn', 'eq', 'ne'] }, editable: true, editrules: { edithidden: true }, editoptions: nameEditOptions },
+                { name: "ShortName", width: 400, label: "Наименование организации", searchoptions: { sopt: ['cn', 'eq', 'ne'] }, editable: true, editoptions: shortNameEditOptions },
+                { name: "Address", width: 300, label: "Адрес", searchoptions: { sopt: ['cn', 'eq', 'ne'] }, editable: true, editoptions: addressEditOptions },
+                { name: "Tax", label: "Сумма", hidden: true, width: 100, searchoptions: { sopt: ['eq', 'ne', 'gt', 'ge', 'lt', 'le'] }, editable: false, formatter: "currency", formatoptions: { decimalSeparator: ".", thousandsSeparator: " ", decimalPlaces: 2 } },
+                { name: "TaxDebitKredit", index: "Tax", label: "Сумма долга", align: "right", width: 100, searchoptions: { sopt: ['eq', 'ne', 'gt', 'ge', 'lt', 'le'] }, editable: false },
 //                    { name: "PrevTax", label: "На @ViewBag.PrevPeriod", align: "right", width: 100, searchoptions: { sopt: ['eq', 'ne', 'gt', 'ge', 'lt', 'le'] }, editable: false, formatter: "currency", formatoptions: { decimalSeparator: ".", thousandsSeparator: " ", decimalPlaces: 2 } },
-                    { name: "PrevTax", label: "На @ViewBag.PrevPeriod", align: "right", width: 100, searchoptions: { sopt: ['eq', 'ne', 'gt', 'ge', 'lt', 'le'] }, editable: false},
+                { name: "PrevTax", label: "На @ViewBag.PrevPeriod", align: "right", width: 100, searchoptions: { sopt: ['eq', 'ne', 'gt', 'ge', 'lt', 'le'] }, editable: false },
 //                    { name: "Delta", label: "Дельта", width: 100, align: "right", searchoptions: { sopt: ['eq', 'ne', 'gt', 'ge', 'lt', 'le'] }, editable: false, formatter: "currency", formatoptions: { decimalSeparator: ".", thousandsSeparator: " ", decimalPlaces: 2 } },
                     { name: "Delta", label: "Дельта", width: 100, align: "right", searchoptions: { sopt: ['eq', 'ne', 'gt', 'ge', 'lt', 'le'] }, editable: false },
                     { name: "PeriodName", width: 100, label: "Период", hidden: true, searchoptions: { sopt: ['cn', 'eq', 'ne'] }, editable: false }
@@ -97,11 +97,13 @@
                 pager: "#tOrgPage",
                 rowNum: 30,
                 //            page: 20,
-                rowList: [30, 50, 100],
+                rowList: [30, 50, 100, @ViewBag.TotalTaxCount],
                 sortName: "ShortName",
                 sortorder: "asc",
                 shrinkToFit: true,
                 viewrecords: true,
+                footerrow: true,
+                userDataOnFooter: true,
                 jsonReader: {
                     root: "rows",
                     page: "page",
@@ -116,7 +118,7 @@
                     $("tr:odd").addClass("oddRow");
                     $(this).css("width", "100%");
                 },
-                loadComplete: function (data) {
+                loadComplete: function(data) {
                     var label = "На " + getPrevPeriod();
                     $(this).jqGrid('setLabel', "PrevTax", label);
                 },
@@ -124,89 +126,90 @@
                     var data = $(this).getRowData(rowId);
                     var parameters = "?idOrganization=" + data.IdOrganization;
                     var url = "@Url.Action("Index", "Slice")" + parameters;
-                    $(location).attr("href", url);
-                },
-                caption: "Отчетный период: @ViewBag.CurrentPeriod",
-                toolbar: [true, "top"]
-            });
+                $(location).attr("href", url);
+            },
+            caption: "Отчетный период: @ViewBag.CurrentPeriod",
+            toolbar: [true, "top"]
+        });
 
-            $("#tOrg").navGrid("#tOrgPage", {
-                    edit: true,
-                    add: false,
-                    del: true,
-                    refresh: true,
-                    searchtext: "Поиск",
-                    view: true,
-                    modal: true
+        $("#tOrg").navGrid("#tOrgPage", {
+            edit: true,
+            add: false,
+            del: true,
+            refresh: true,
+            searchtext: "Поиск",
+            view: true,
+            modal: true
+        },
+            //Edit parameters
+            {
+                id: 'myedit',
+                editCaption: "Редактирование записи",
+                closeAfterEdit: true,
+                reloadAfterSubmit: true,
+                width: 500
+            },
+            //Add parameters
+            {
+
+            },
+            //Delete parameters
+            {
+                id: 'mydel',
+                url: "@Url.Action("Delete")"
+            },
+            //Search parameters
+            {
+                closeOnEscape: true,
+                multipleSearch: true,
+                closeAfterSearch: true
+            },
+            //View parameters
+            {
+                width: 600
+            }
+        );
+
+        $("#tOrg").jqGrid('filterToolbar', {
+            searchOperators: true,
+            stringResult: true
+        });
+
+        $("#editDialog").dialog({
+            modal: true,
+            autoOpen: false
+        });
+
+        $("#t_tOrg")
+            .attr("role", "group")
+            .addClass("btn-group btn-group-sm")
+            .css("height", "32px");;
+
+        $("#t_tOrg").append('<input type="button" id="hideSameRows" class="btn btn-default" value="@IsNotLoadSameLabel()" title="Запрещает/Разрешает загрузку данных с одинаковыми значениями сумм долга за текущий и предыдущий периоды" />');
+        $("#t_tOrg").append('<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Выбрать по КБК</button>');
+
+        $("#hideSameRows").click(function() {
+            var result = false;
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("IsNotLoadSameTaxOnOff", "Sys")",
+                async: false,
+                cache: false,
+                dataType: "json",
+                success: function(data) {
+                    $("#hideSameRows").val(data ? "Добавить записи" : "Скрыть записи");
+                    $("#tOrg").trigger("reloadGrid");
                 },
-                //Edit parameters
-                {
-                    id: 'myedit',
-                    editCaption: "Редактирование записи",
-                    closeAfterEdit: true,
-                    reloadAfterSubmit: true,
-                    width: 500
-                },
-                //Add parameters
-                {
-                },
-                //Delete parameters
-                {
-                    id: 'mydel',
-                    url: "@Url.Action("Delete")"
-                },
-                //Search parameters
-                {
-                    closeOnEscape: true,
-                    multipleSearch: true,
-                    closeAfterSearch: true
-                },
-                //View parameters
-                {
-                    width: 600
+                error: function(jqXhr, textStatus, errorThrown) {
+                    alert("Не удалось установить значение параметра. " + textStatus + ". Обратитесь к системному администратору");
                 }
-            );
-
-            $("#tOrg").jqGrid('filterToolbar', {
-                searchOperators: true,
-                stringResult: true
-            });
-
-            $("#editDialog").dialog({
-                modal: true,
-                autoOpen: false
-            });
-
-            $("#t_tOrg")
-                .attr("role", "group")
-                .addClass("btn-group btn-group-sm")
-                .css("height", "32px");;
-
-            $("#t_tOrg").append('<input type="button" id="hideSameRows" class="btn btn-default" value="@IsNotLoadSameLabel()" title="Запрещает/Разрешает загрузку данных с одинаковыми значениями сумм долга за текущий и предыдущий периоды" />');
-            $("#t_tOrg").append('<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Выбрать по КБК</button>');
-
-            $("#hideSameRows").click(function () {
-                var result = false;
-                $.ajax({
-                    type: "POST",
-                    url: "@Url.Action("IsNotLoadSameTaxOnOff", "Sys")",
-                    async: false,
-                    cache: false,
-                    dataType: "json",
-                    success: function(data) {
-                        $("#hideSameRows").val(data ? "Добавить записи" : "Скрыть записи");
-                        $("#tOrg").trigger("reloadGrid");
-                    },
-                    error: function(jqXhr, textStatus, errorThrown) {
-                        alert("Не удалось установить значение параметра. " + textStatus + ". Обратитесь к системному администратору");
-                    }
-                });
-            });
-
-            $("#myModal").on("hidden.bs.modal", function () {
-                $("#tOrg").trigger("reloadGrid");
             });
         });
+
+        $("#myModal").on("hidden.bs.modal", function() {
+            $("#tOrg").trigger("reloadGrid");
+        });
+    });
     </script>   
 }
 <!-- Modal -->

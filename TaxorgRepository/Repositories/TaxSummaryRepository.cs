@@ -48,7 +48,7 @@ namespace TaxorgRepository.Repositories
                             e.Key.Organization.Address,
                             Tax = e.Sum(t => t.TaxSum),
                             e.Key.PeriodName,
-                            PrevTax = Math.Abs(Context.Taxes.Intersect(IntersectSource) //TODO: Продумать правильное использование Intersect
+                            PrevTax = Math.Abs(Context.Taxes.Intersect(IntersectSource) 
                                     .Where(tax => tax.PeriodName == PrevPeriod && tax.Organization == e.Key.Organization)
                                     .Select(tax => tax.TaxSum)
                                     .Sum() ?? 0)
@@ -56,6 +56,7 @@ namespace TaxorgRepository.Repositories
                 .Where(e => e.PeriodName == CurrentPeriod);
 
             Count = taxByOrganizationQuery.Count();
+            TaxSummary = taxByOrganizationQuery.Sum(e => e.Tax);
             var totalPage = (int) Math.Ceiling((double) Count/gridSettings.PageSize);
             totalPage = totalPage == 0 ? 1 : totalPage;
             gridSettings.PageIndex = (gridSettings.PageIndex > totalPage) ? totalPage : gridSettings.PageIndex;
@@ -83,11 +84,14 @@ namespace TaxorgRepository.Repositories
                 rows = data,
                 totalPages = totalPage,
                 records = Count,
-                pageIndex = 1
+                pageIndex = 1,
+                userdata = new { TaxDebitKredit =  TaxSummary.HasValue ? Math.Abs(TaxSummary.Value).ToString("C") : string.Empty}
             };
 
             return jsonResult;
         }
+
+        public decimal? TaxSummary { get; private set; }
 
         //TODO: Проверить как будет работать IEnumerable<Tax>
         private IEnumerable<Tax> IntersectSource
