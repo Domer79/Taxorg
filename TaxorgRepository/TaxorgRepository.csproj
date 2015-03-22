@@ -99,7 +99,7 @@
       <Project>{AE4F25A4-7AEE-4C2D-8260-0F1A982EA12B}</Project>
       <Name>SqlClr</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WebTools\SystemTools.csproj">
+    <ProjectReference Include="..\SystemTools\SystemTools.csproj">
       <Project>{8FB401C3-7285-4F17-A192-41F6CB77FC61}</Project>
       <Name>SystemTools</Name>
     </ProjectReference>

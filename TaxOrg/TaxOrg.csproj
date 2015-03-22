@@ -702,7 +702,7 @@
       <Project>{56edd25a-4e9f-4711-81c5-55a3cf7211ed}</Project>
       <Name>TaxorgRepository</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WebTools\SystemTools.csproj">
+    <ProjectReference Include="..\SystemTools\SystemTools.csproj">
       <Project>{8FB401C3-7285-4F17-A192-41F6CB77FC61}</Project>
       <Name>SystemTools</Name>
     </ProjectReference>

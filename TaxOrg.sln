@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EfTest", "EfTest\EfTest.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcFileUploader", "MvcFileUploader\MvcFileUploader.csproj", "{10BC1034-BD5C-4FBF-8E3A-05DDF07C4269}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemTools", "WebTools\SystemTools.csproj", "{8FB401C3-7285-4F17-A192-41F6CB77FC61}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemTools", "SystemTools\SystemTools.csproj", "{8FB401C3-7285-4F17-A192-41F6CB77FC61}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

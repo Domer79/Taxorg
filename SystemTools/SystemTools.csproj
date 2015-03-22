@@ -30,6 +30,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -45,19 +46,40 @@
   <ItemGroup>
     <Compile Include="ApplicationCustomizer.cs" />
     <Compile Include="ApplicationSettings.cs" />
+    <Compile Include="Crypto.cs" />
     <Compile Include="CsvReader.cs" />
     <Compile Include="DebugHelper.cs" />
     <Compile Include="ExcelColumnAttribute.cs" />
     <Compile Include="ExcelDataStructure.cs" />
     <Compile Include="ExcelSheet.cs" />
     <Compile Include="Extensions\AttributeCollectionExtension.cs" />
+    <Compile Include="Extensions\ByteArrayExtensions.cs" />
+    <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="Extensions\StreamExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\TypeExtentions.cs" />
     <Compile Include="FileUtils.cs" />
+    <Compile Include="Interfaces\IAccessType.cs" />
+    <Compile Include="Interfaces\IAccessTypeRepository.cs" />
+    <Compile Include="Interfaces\IGrant.cs" />
+    <Compile Include="Interfaces\IGroup.cs" />
+    <Compile Include="Interfaces\IGroupRepository.cs" />
+    <Compile Include="Interfaces\IMember.cs" />
+    <Compile Include="Interfaces\IQueryableCollection.cs" />
+    <Compile Include="Interfaces\IRole.cs" />
+    <Compile Include="Interfaces\IRoleOfMember.cs" />
+    <Compile Include="Interfaces\IRoleOfMemberRepository.cs" />
+    <Compile Include="Interfaces\IRoleRepository.cs" />
     <Compile Include="Interfaces\IRow.cs" />
+    <Compile Include="Interfaces\ISecObject.cs" />
+    <Compile Include="Interfaces\ISecuritySettings.cs" />
+    <Compile Include="Interfaces\IUser.cs" />
+    <Compile Include="Interfaces\IUserGroupsDetail.cs" />
+    <Compile Include="Interfaces\IUserGroupsDetailRepository.cs" />
+    <Compile Include="Interfaces\IWindowsUserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tests\Test1.cs" />
     <Compile Include="WebTools\Helpers\ControllerHelper.cs" />
     <Compile Include="WebTools\Infrastructure\GridModelBinder.cs" />
     <Compile Include="WebTools\Infrastructure\GridSettings.cs" />
@@ -65,7 +87,9 @@
     <Compile Include="WebTools\Providers\OdbcSessionStateStore.cs" />
     <Compile Include="WebTools\Providers\SessionStateProvider.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

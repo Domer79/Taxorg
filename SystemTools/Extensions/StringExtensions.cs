@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace SystemTools.Extensions
@@ -20,6 +21,22 @@ namespace SystemTools.Extensions
         public static string SplitReverse(this IEnumerable<object> args)
         {
             return SplitReverse(args, ", ");
+        }
+
+        public static byte[] GetBytes(this string value)
+        {
+            return Encoding.Unicode.GetBytes(value);
+        }
+
+        public static bool RxIsMatch(this string value, string pattern)
+        {
+            return RxIsMatch(value, pattern, RegexOptions.None);
+        }
+
+        public static bool RxIsMatch(this string value, string pattern, RegexOptions options)
+        {
+            var rx = new Regex(pattern);
+            return rx.IsMatch(value);
         }
     }
 }
