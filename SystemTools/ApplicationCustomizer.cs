@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.Reflection;
+using SystemTools.Interfaces;
 
 namespace SystemTools
 {
@@ -47,5 +48,7 @@ namespace SystemTools
             get { return ApplicationSettings.SecurityConnectionString; }
             set { ApplicationSettings.SecurityConnectionString = value; }
         }
+
+        public static ISecuritySettings SecuritySettings { get; set; }
     }
 }
