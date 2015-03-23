@@ -12,9 +12,7 @@ namespace SystemTools
     {
         public static string GetHashString(string value)
         {
-            var md5 = new MD5CryptoServiceProvider();
-            var computeHash = md5.ComputeHash(value.GetBytes());
-            var hashString = computeHash.GetString();
+            var hashString = value.GetHashBytes().GetString();
             return hashString;
         }
 
