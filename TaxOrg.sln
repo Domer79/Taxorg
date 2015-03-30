@@ -19,6 +19,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcFileUploader", "MvcFileU
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemTools", "SystemTools\SystemTools.csproj", "{8FB401C3-7285-4F17-A192-41F6CB77FC61}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataRepository", "..\Security\DataRepository\DataRepository.csproj", "{DAF6E782-54CF-428A-9CEC-02A95A35FAD2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSecurity", "..\Security\WebSecurity\WebSecurity.csproj", "{1268F61D-55E0-4428-83A5-F543C929AC6D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecurityDataModel", "..\Security\SecurityDataModel\SecurityDataModel.csproj", "{970B9170-F1B0-4AE3-B257-F6848B58768A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		CD_ROM|Any CPU = CD_ROM|Any CPU
@@ -110,6 +116,36 @@ Global
 		{8FB401C3-7285-4F17-A192-41F6CB77FC61}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8FB401C3-7285-4F17-A192-41F6CB77FC61}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
 		{8FB401C3-7285-4F17-A192-41F6CB77FC61}.SingleImage|Any CPU.Build.0 = Release|Any CPU
+		{DAF6E782-54CF-428A-9CEC-02A95A35FAD2}.CD_ROM|Any CPU.ActiveCfg = Release|Any CPU
+		{DAF6E782-54CF-428A-9CEC-02A95A35FAD2}.CD_ROM|Any CPU.Build.0 = Release|Any CPU
+		{DAF6E782-54CF-428A-9CEC-02A95A35FAD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAF6E782-54CF-428A-9CEC-02A95A35FAD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAF6E782-54CF-428A-9CEC-02A95A35FAD2}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAF6E782-54CF-428A-9CEC-02A95A35FAD2}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
+		{DAF6E782-54CF-428A-9CEC-02A95A35FAD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAF6E782-54CF-428A-9CEC-02A95A35FAD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAF6E782-54CF-428A-9CEC-02A95A35FAD2}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
+		{DAF6E782-54CF-428A-9CEC-02A95A35FAD2}.SingleImage|Any CPU.Build.0 = Release|Any CPU
+		{1268F61D-55E0-4428-83A5-F543C929AC6D}.CD_ROM|Any CPU.ActiveCfg = Release|Any CPU
+		{1268F61D-55E0-4428-83A5-F543C929AC6D}.CD_ROM|Any CPU.Build.0 = Release|Any CPU
+		{1268F61D-55E0-4428-83A5-F543C929AC6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1268F61D-55E0-4428-83A5-F543C929AC6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1268F61D-55E0-4428-83A5-F543C929AC6D}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{1268F61D-55E0-4428-83A5-F543C929AC6D}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
+		{1268F61D-55E0-4428-83A5-F543C929AC6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1268F61D-55E0-4428-83A5-F543C929AC6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1268F61D-55E0-4428-83A5-F543C929AC6D}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
+		{1268F61D-55E0-4428-83A5-F543C929AC6D}.SingleImage|Any CPU.Build.0 = Release|Any CPU
+		{970B9170-F1B0-4AE3-B257-F6848B58768A}.CD_ROM|Any CPU.ActiveCfg = Release|Any CPU
+		{970B9170-F1B0-4AE3-B257-F6848B58768A}.CD_ROM|Any CPU.Build.0 = Release|Any CPU
+		{970B9170-F1B0-4AE3-B257-F6848B58768A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{970B9170-F1B0-4AE3-B257-F6848B58768A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{970B9170-F1B0-4AE3-B257-F6848B58768A}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{970B9170-F1B0-4AE3-B257-F6848B58768A}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
+		{970B9170-F1B0-4AE3-B257-F6848B58768A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{970B9170-F1B0-4AE3-B257-F6848B58768A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{970B9170-F1B0-4AE3-B257-F6848B58768A}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
+		{970B9170-F1B0-4AE3-B257-F6848B58768A}.SingleImage|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

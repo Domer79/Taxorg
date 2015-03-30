@@ -48,7 +48,5 @@ namespace SystemTools
             get { return ApplicationSettings.SecurityConnectionString; }
             set { ApplicationSettings.SecurityConnectionString = value; }
         }
-
-        public static ISecuritySettings SecuritySettings { get; set; }
     }
 }

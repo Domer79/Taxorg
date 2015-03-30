@@ -1,7 +1,9 @@
-﻿namespace TaxorgRepository.Models
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using DataRepository;
+
+namespace TaxorgRepository.Models
 {
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
 
     [Table("FsFile")]
     public class FsFile : ModelBase

@@ -87,6 +87,10 @@
     <Compile Include="TaxorgContextTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Security\DataRepository\DataRepository.csproj">
+      <Project>{DAF6E782-54CF-428A-9CEC-02A95A35FAD2}</Project>
+      <Name>DataRepository</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MvcFileUploader\MvcFileUploader.csproj">
       <Project>{10bc1034-bd5c-4fbf-8e3a-05ddf07c4269}</Project>
       <Name>MvcFileUploader</Name>

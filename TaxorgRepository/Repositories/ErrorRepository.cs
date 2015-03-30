@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.Entity;
+using DataRepository;
 using TaxorgRepository.Models;
 
 namespace TaxorgRepository.Repositories
@@ -39,6 +37,11 @@ namespace TaxorgRepository.Repositories
         public static ErrorRepository Errors
         {
             get { return _instance ?? (_instance = new ErrorRepository()); }
+        }
+
+        protected override DbContext GetContext()
+        {
+            return new TaxorgContext();
         }
     }
 

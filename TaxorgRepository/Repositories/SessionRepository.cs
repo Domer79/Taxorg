@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.Entity;
+using DataRepository;
 using TaxorgRepository.Models;
 
 namespace TaxorgRepository.Repositories
@@ -12,6 +10,11 @@ namespace TaxorgRepository.Repositories
         public override void InsertOrUpdate(Session item)
         {
             Set.Add(item);
+        }
+
+        protected override DbContext GetContext()
+        {
+            return new TaxorgContext();
         }
     }
 }

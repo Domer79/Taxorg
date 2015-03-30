@@ -1,7 +1,8 @@
 using System;
-using System.Data.Entity.Infrastructure;
+using System.Data.Entity;
 using System.Linq;
 using SystemTools.Extensions;
+using DataRepository;
 using SqlClr;
 using TaxorgRepository.Exceptions;
 using TaxorgRepository.Models;
@@ -44,6 +45,11 @@ namespace TaxorgRepository.Repositories
                 e.SaveError();
                 throw new SaveTaxException(e.Message);
             }
+        }
+
+        protected override DbContext GetContext()
+        {
+            return new TaxorgContext();
         }
     }
 }

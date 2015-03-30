@@ -63,6 +63,7 @@
     <Compile Include="Interfaces\IAccessType.cs" />
     <Compile Include="Interfaces\IAccessTypeRepository.cs" />
     <Compile Include="Interfaces\IGrant.cs" />
+    <Compile Include="Interfaces\IGrantRepository.cs" />
     <Compile Include="Interfaces\IGroup.cs" />
     <Compile Include="Interfaces\IGroupRepository.cs" />
     <Compile Include="Interfaces\IMember.cs" />
@@ -73,7 +74,6 @@
     <Compile Include="Interfaces\IRoleRepository.cs" />
     <Compile Include="Interfaces\IRow.cs" />
     <Compile Include="Interfaces\ISecObject.cs" />
-    <Compile Include="Interfaces\ISecuritySettings.cs" />
     <Compile Include="Interfaces\IUser.cs" />
     <Compile Include="Interfaces\IUserGroupsDetail.cs" />
     <Compile Include="Interfaces\IUserGroupsDetailRepository.cs" />
@@ -83,8 +83,10 @@
     <Compile Include="WebTools\Helpers\ControllerHelper.cs" />
     <Compile Include="WebTools\Infrastructure\GridModelBinder.cs" />
     <Compile Include="WebTools\Infrastructure\GridSettings.cs" />
-    <Compile Include="WebTools\Infrastructure\IdentificationMode.cs" />
+    <Compile Include="WebTools\Infrastructure\IdentificationModule.cs" />
+    <Compile Include="WebTools\Infrastructure\ISecurity.cs" />
     <Compile Include="WebTools\Infrastructure\LinqExtensions.cs" />
+    <Compile Include="WebTools\Infrastructure\SecurityControllerFactory.cs" />
     <Compile Include="WebTools\Providers\OdbcSessionStateStore.cs" />
     <Compile Include="WebTools\Providers\SessionStateProvider.cs" />
   </ItemGroup>

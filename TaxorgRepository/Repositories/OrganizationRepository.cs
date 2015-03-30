@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Data.Entity;
+using System.Linq;
+using DataRepository;
 using TaxorgRepository.Models;
 
 namespace TaxorgRepository.Repositories
@@ -47,6 +49,11 @@ namespace TaxorgRepository.Repositories
             Repository.InsertOrUpdate(organization);
             Repository.SaveChanges();
             return organization;
+        }
+
+        protected override DbContext GetContext()
+        {
+            return new TaxorgContext();
         }
     }
 }

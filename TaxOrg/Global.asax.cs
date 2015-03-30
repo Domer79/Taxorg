@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using SystemTools;
+using SystemTools.WebTools.Infrastructure;
 using TaxorgRepository;
 using TaxorgRepository.Repositories;
 
@@ -13,6 +14,7 @@ namespace TaxOrg
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
+            ControllerBuilder.Current.SetControllerFactory(new SecurityControllerFactory());
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             ApplicationCustomizer.RegisterErrorLog(ErrorLog.SaveError);

@@ -57,6 +57,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Security\DataRepository\DataRepository.csproj">
+      <Project>{DAF6E782-54CF-428A-9CEC-02A95A35FAD2}</Project>
+      <Name>DataRepository</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TaxorgRepository\TaxorgRepository.csproj">
       <Project>{56EDD25A-4E9F-4711-81C5-55A3CF7211ED}</Project>
       <Name>TaxorgRepository</Name>

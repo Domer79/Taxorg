@@ -59,7 +59,6 @@
     <Compile Include="Models\Errors.cs" />
     <Compile Include="Models\FileSystem.cs" />
     <Compile Include="Models\FsFile.cs" />
-    <Compile Include="Models\ModelBase.cs" />
     <Compile Include="Models\Organization.cs" />
     <Compile Include="Models\Session.cs" />
     <Compile Include="Models\SessionTaxType.cs" />
@@ -75,7 +74,6 @@
     <Compile Include="Repositories\FileSystemRepository.cs" />
     <Compile Include="Repositories\OrganizationRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />
-    <Compile Include="Repositories\RepositoryBase.cs" />
     <Compile Include="Repositories\SessionRepository.cs" />
     <Compile Include="Repositories\SettingsRepository.cs" />
     <Compile Include="Repositories\SliceRepository.cs" />
@@ -95,6 +93,10 @@
     <Folder Include="TestModel\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Security\DataRepository\DataRepository.csproj">
+      <Project>{DAF6E782-54CF-428A-9CEC-02A95A35FAD2}</Project>
+      <Name>DataRepository</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SqlClr\SqlClr.csproj">
       <Project>{AE4F25A4-7AEE-4C2D-8260-0F1A982EA12B}</Project>
       <Name>SqlClr</Name>

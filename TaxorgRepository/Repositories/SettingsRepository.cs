@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+using DataRepository;
 using TaxorgRepository.Models;
 
 namespace TaxorgRepository.Repositories
@@ -13,6 +11,11 @@ namespace TaxorgRepository.Repositories
         public override Expression Expression
         {
             get { return Set.Where(e => e.Visible).Expression; }
+        }
+
+        protected override DbContext GetContext()
+        {
+            return new TaxorgContext();
         }
     }
 }

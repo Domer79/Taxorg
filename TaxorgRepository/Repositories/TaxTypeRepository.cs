@@ -1,5 +1,6 @@
+using System.Data.Entity;
 using System.Linq;
-using TaxorgRepository.Interfaces;
+using DataRepository;
 using TaxorgRepository.Models;
 
 namespace TaxorgRepository.Repositories
@@ -52,6 +53,11 @@ namespace TaxorgRepository.Repositories
             taxType.Name = taxName;
             Repository.InsertOrUpdate(taxType);
             return taxType;
+        }
+
+        protected override DbContext GetContext()
+        {
+            return new TaxorgContext();
         }
     }
 }

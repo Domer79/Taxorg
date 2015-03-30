@@ -1,6 +1,8 @@
 using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using DataRepository;
 using TaxorgRepository.Exceptions;
 using TaxorgRepository.Models;
 
@@ -61,6 +63,11 @@ namespace TaxorgRepository.Repositories
             {
                 return Set.Where(e => e.IdOrganization == _organization.IdOrganization).Expression;
             }
+        }
+
+        protected override DbContext GetContext()
+        {
+            return new TaxorgContext();
         }
     }
 }
