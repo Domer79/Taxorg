@@ -550,6 +550,7 @@
     <None Include="Properties\PublishProfiles\publish to local server.pubxml" />
     <None Include="Properties\PublishProfiles\Taxorg_filesystem.pubxml" />
     <None Include="Properties\PublishProfiles\Taxworg_publish.pubxml" />
+    <Content Include="HtmlPage1.html" />
     <Content Include="Scripts\bootstrap-3.3.4-dist\css\bootstrap-theme.css" />
     <Content Include="Scripts\bootstrap-3.3.4-dist\css\bootstrap-theme.min.css" />
     <Content Include="Scripts\bootstrap-3.3.4-dist\css\bootstrap.css" />

@@ -1,6 +1,9 @@
 using System;
 using System.Diagnostics;
+using System.Dynamic;
 using System.Reflection;
+using System.Security.Principal;
+using System.Web;
 using SystemTools.Interfaces;
 
 namespace SystemTools
@@ -47,6 +50,18 @@ namespace SystemTools
         {
             get { return ApplicationSettings.SecurityConnectionString; }
             set { ApplicationSettings.SecurityConnectionString = value; }
+        }
+
+        public static IUser User { get; set; }
+
+        public static void OnAuthenticated(IIdentity identity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static void OnAuthenticated(HttpCookie identity, HttpCookie passwordCookie)
+        {
+            throw new NotImplementedException();
         }
     }
 }
