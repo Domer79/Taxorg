@@ -23,6 +23,8 @@ namespace SystemTools.WebTools.Infrastructure
         void context_AuthenticateRequest(object sender, EventArgs e)
         {
             var application = ((HttpApplication) sender);
+            if (application.Context.Request.ContentType != "text/html")
+                return;
             if (application.User.Identity.IsAuthenticated)
             {
                 ApplicationCustomizer.OnAuthenticated(application.User.Identity);
@@ -36,6 +38,7 @@ namespace SystemTools.WebTools.Infrastructure
 
             application.Response.ContentEncoding = Encoding.UTF8;
             application.Response.HeaderEncoding = Encoding.UTF8;
+            application.Response.ContentType = "text/html";
             application.Response.Write(@"<html><body>
                 <h1>Идентификация</h1></body></html>");
             application.Response.End();
