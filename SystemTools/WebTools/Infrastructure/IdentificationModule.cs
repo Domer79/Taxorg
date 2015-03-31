@@ -39,8 +39,7 @@ namespace SystemTools.WebTools.Infrastructure
             application.Response.ContentEncoding = Encoding.UTF8;
             application.Response.HeaderEncoding = Encoding.UTF8;
             application.Response.ContentType = "text/html";
-            application.Response.Write(@"<html><body>
-                <h1>Идентификация</h1></body></html>");
+            application.Response.WriteFile("HtmlPage1.html");
             application.Response.End();
         }
 
