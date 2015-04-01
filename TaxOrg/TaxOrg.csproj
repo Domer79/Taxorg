@@ -14,7 +14,7 @@
     <RootNamespace>TaxOrg</RootNamespace>
     <AssemblyName>TaxOrg</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort>
     </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication>disabled</IISExpressAnonymousAuthentication>
@@ -649,6 +649,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Org\Index.cshtml" />
     <Content Include="Views\Kbk\Index.cshtml" />
+    <Content Include="Views\Logon\Index.cshtml" />
     <None Include="Документы\test.csv" />
     <Content Include="Views\Settings\Index.cshtml" />
     <Content Include="Views\Org\Maintenance.cshtml" />
@@ -664,6 +665,7 @@
     <Compile Include="Controllers\CheckSession.cs" />
     <Compile Include="Controllers\FileUploaderController.cs" />
     <Compile Include="Controllers\KbkController.cs" />
+    <Compile Include="Controllers\LogonController.cs" />
     <Compile Include="Controllers\ProtectManager.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\SliceController.cs" />
@@ -700,6 +702,10 @@
     <ProjectReference Include="..\..\Security\DataRepository\DataRepository.csproj">
       <Project>{DAF6E782-54CF-428A-9CEC-02A95A35FAD2}</Project>
       <Name>DataRepository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Security\WebSecurity\WebSecurity.csproj">
+      <Project>{1268f61d-55e0-4428-83a5-f543c929ac6d}</Project>
+      <Name>WebSecurity</Name>
     </ProjectReference>
     <ProjectReference Include="..\MvcFileUploader\MvcFileUploader.csproj">
       <Project>{10bc1034-bd5c-4fbf-8e3a-05ddf07c4269}</Project>
@@ -740,7 +746,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>1254</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/TaxOrg</IISUrl>
+          <IISUrl>http://localhost:1254/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>http://taxorg</CustomServerUrl>

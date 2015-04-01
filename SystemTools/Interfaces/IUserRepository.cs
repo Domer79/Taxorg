@@ -1,7 +1,9 @@
-﻿namespace SystemTools.Interfaces
+﻿using System.Linq;
+
+namespace SystemTools.Interfaces
 {
-    public interface IUserRepository : IQueryableCollection<IUser>
+    public interface IUserRepository
     {
-        void Add(string login, string domain, string password);
+        void Add(string login, string password);
     }
 }

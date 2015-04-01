@@ -10,16 +10,21 @@ namespace SystemTools.WebTools.Infrastructure
 {
     public class SecurityControllerFactory : DefaultControllerFactory
     {
+        #region Overrides of DefaultControllerFactory
+
         /// <summary>
-        /// Извлекает экземпляр контроллера для заданного контекста запроса и типа контроллера.
+        /// Создает указанный контроллер, используя заданный контекст запроса.
         /// </summary>
         /// <returns>
-        /// Экземпляр контроллера.
+        /// Контроллер.
         /// </returns>
-        /// <param name="requestContext">Контекст HTTP-запроса, включающий в себя контекст HTTP и данные маршрута.</param><param name="controllerType">Тип контроллера.</param><exception cref="T:System.Web.HttpException">Параметр <paramref name="controllerType"/> равен null.</exception><exception cref="T:System.ArgumentException">Невозможно присвоить тип <paramref name="controllerType"/>.</exception><exception cref="T:System.InvalidOperationException">Невозможно создать экземпляр <paramref name="controllerType"/>.</exception>
-        protected override IController GetControllerInstance(RequestContext requestContext, Type controllerType)
+        /// <param name="requestContext">Контекст HTTP-запроса, включающий в себя контекст HTTP и данные маршрута.</param><param name="controllerName">Имя контроллера.</param><exception cref="T:System.ArgumentNullException">Параметр <paramref name="requestContext"/> равен null.</exception><exception cref="T:System.ArgumentException">Параметр <paramref name="controllerName"/> имеет значение null или пуст.</exception>
+        public override IController CreateController(RequestContext requestContext, string controllerName)
         {
-            return base.GetControllerInstance(requestContext, controllerType);
+            RouteValueDictionary routeValueDictionary = requestContext.RouteData.Values;
+            return base.CreateController(requestContext, controllerName);
         }
+
+        #endregion
     }
 }

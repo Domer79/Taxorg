@@ -74,12 +74,17 @@
   <ItemGroup>
     <Compile Include="ApplicationCustomizer.cs" />
     <Compile Include="ApplicationSettings.cs" />
+    <Compile Include="ConfigSections\AdditionalConfiguration.cs" />
+    <Compile Include="ConfigSections\SignPage.cs" />
     <Compile Include="Crypto.cs" />
     <Compile Include="CsvReader.cs" />
     <Compile Include="DebugHelper.cs" />
+    <Compile Include="Delegates\AuthenticatedEventHandler.cs" />
+    <Compile Include="EventArgs\AuthenticatedEventArgs.cs" />
     <Compile Include="ExcelColumnAttribute.cs" />
     <Compile Include="ExcelDataStructure.cs" />
     <Compile Include="ExcelSheet.cs" />
+    <Compile Include="Exceptions\LogonException.cs" />
     <Compile Include="Extensions\AttributeCollectionExtension.cs" />
     <Compile Include="Extensions\ByteArrayExtensions.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
@@ -102,6 +107,7 @@
     <Compile Include="Interfaces\IRoleRepository.cs" />
     <Compile Include="Interfaces\IRow.cs" />
     <Compile Include="Interfaces\ISecObject.cs" />
+    <Compile Include="Interfaces\ISecurity.cs" />
     <Compile Include="Interfaces\IUser.cs" />
     <Compile Include="Interfaces\IUserGroupsDetail.cs" />
     <Compile Include="Interfaces\IUserGroupsDetailRepository.cs" />
@@ -112,7 +118,6 @@
     <Compile Include="WebTools\Infrastructure\GridModelBinder.cs" />
     <Compile Include="WebTools\Infrastructure\GridSettings.cs" />
     <Compile Include="WebTools\Infrastructure\IdentificationModule.cs" />
-    <Compile Include="WebTools\Infrastructure\ISecurity.cs" />
     <Compile Include="WebTools\Infrastructure\LinqExtensions.cs" />
     <Compile Include="WebTools\Infrastructure\SecurityControllerFactory.cs" />
     <Compile Include="WebTools\Providers\OdbcSessionStateStore.cs" />
