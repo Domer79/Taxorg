@@ -120,6 +120,7 @@
     <Compile Include="WebTools\Infrastructure\IdentificationModule.cs" />
     <Compile Include="WebTools\Infrastructure\LinqExtensions.cs" />
     <Compile Include="WebTools\Infrastructure\SecurityControllerFactory.cs" />
+    <Compile Include="WebTools\Infrastructure\UriBuilder2.cs" />
     <Compile Include="WebTools\Providers\OdbcSessionStateStore.cs" />
     <Compile Include="WebTools\Providers\SessionStateProvider.cs" />
   </ItemGroup>
