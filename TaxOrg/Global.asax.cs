@@ -21,6 +21,7 @@ namespace TaxOrg
             ApplicationCustomizer.RegisterErrorLog(ErrorLog.SaveError);
             ApplicationCustomizer.AppVersion = TaxorgTools.AppVersion;
             ApplicationCustomizer.Authenticated += ApplicationCustomizer_Authenticated;
+            ApplicationCustomizer.EnableSecurity = true;
         }
 
         void ApplicationCustomizer_Authenticated(SystemTools.EventArgs.AuthenticatedEventArgs args)

@@ -84,7 +84,7 @@
     <Compile Include="ExcelColumnAttribute.cs" />
     <Compile Include="ExcelDataStructure.cs" />
     <Compile Include="ExcelSheet.cs" />
-    <Compile Include="Exceptions\LogonException.cs" />
+    <Compile Include="Exceptions\LogonPageNotConfiguredException.cs" />
     <Compile Include="Extensions\AttributeCollectionExtension.cs" />
     <Compile Include="Extensions\ByteArrayExtensions.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
@@ -119,6 +119,8 @@
     <Compile Include="WebTools\Infrastructure\GridSettings.cs" />
     <Compile Include="WebTools\Infrastructure\IdentificationModule.cs" />
     <Compile Include="WebTools\Infrastructure\LinqExtensions.cs" />
+    <Compile Include="WebTools\Infrastructure\PathCollection.cs" />
+    <Compile Include="WebTools\Infrastructure\QueryCollection.cs" />
     <Compile Include="WebTools\Infrastructure\SecurityControllerFactory.cs" />
     <Compile Include="WebTools\Infrastructure\UriBuilder2.cs" />
     <Compile Include="WebTools\Providers\OdbcSessionStateStore.cs" />

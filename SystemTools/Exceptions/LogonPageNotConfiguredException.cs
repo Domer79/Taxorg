@@ -2,7 +2,7 @@ using System;
 
 namespace SystemTools.Exceptions
 {
-    internal class LogonException : Exception
+    internal class LogonPageNotConfiguredException : Exception
     {
     }
 }

@@ -1,21 +1,12 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Web.Mvc;
 
 namespace SystemTools.WebTools.Infrastructure
 {
     public class UriBuilder2
     {
-        private string _uriPath;
-        private StringBuilder _uriStringBuilder = new StringBuilder();
         private UriBuilder _uriBuilder = new UriBuilder();
         private readonly PathCollection _paths = new PathCollection();
-        private readonly List<string> _queries = new List<string>();
+        private readonly QueryCollection _queries = new QueryCollection();
 
         #region CTOR
 
@@ -33,6 +24,8 @@ namespace SystemTools.WebTools.Infrastructure
         public UriBuilder2(string uri)
         {
             UriBuilder = new UriBuilder(uri);
+            Path = UriBuilder.Path;
+            Query = UriBuilder.Query;
         }
 
         /// <summary>
@@ -42,6 +35,8 @@ namespace SystemTools.WebTools.Infrastructure
         public UriBuilder2(Uri uri)
         {
             UriBuilder = new UriBuilder(uri);
+            Path = UriBuilder.Path;
+            Query = UriBuilder.Query;
         }
 
         /// <summary>
@@ -51,6 +46,8 @@ namespace SystemTools.WebTools.Infrastructure
         public UriBuilder2(string schemeName, string hostName)
         {
             UriBuilder = new UriBuilder(schemeName, hostName);
+            Path = UriBuilder.Path;
+            Query = UriBuilder.Query;
         }
 
         /// <summary>
@@ -60,6 +57,8 @@ namespace SystemTools.WebTools.Infrastructure
         public UriBuilder2(string scheme, string host, int portNumber)
         {
             UriBuilder = new UriBuilder(scheme, host, portNumber);
+            Path = UriBuilder.Path;
+            Query = UriBuilder.Query;
         }
 
         /// <summary>
@@ -69,6 +68,8 @@ namespace SystemTools.WebTools.Infrastructure
         public UriBuilder2(string scheme, string host, int port, string pathValue)
         {
             UriBuilder = new UriBuilder(scheme, host, port, pathValue);
+            Path = UriBuilder.Path;
+            Query = UriBuilder.Query;
         }
 
         /// <summary>
@@ -78,6 +79,8 @@ namespace SystemTools.WebTools.Infrastructure
         public UriBuilder2(string scheme, string host, int port, string path, string extraValue)
         {
             UriBuilder = new UriBuilder(scheme, host, port, path, extraValue);
+            Path = UriBuilder.Path;
+            Query = UriBuilder.Query;
         }
 
         #endregion
@@ -87,218 +90,81 @@ namespace SystemTools.WebTools.Infrastructure
             _paths.Add(path);
         }
 
+        public string Path
+        {
+            get { return _paths.Path; }
+            set
+            {
+                _paths.Path = value;
+                _uriBuilder.Path = _paths.Path;
+            }
+        }
+
+        public string Query
+        {
+            get { return _queries.Query; }
+            set
+            {
+                _queries.Query = value;
+                _uriBuilder.Query = _queries.Query;
+            }
+        }
+
+        public string Fragment
+        {
+            get { return _uriBuilder.Fragment; }
+            set { _uriBuilder.Fragment = value; }
+        }
+
+        public string Host
+        {
+            get { return _uriBuilder.Host; }
+            set { _uriBuilder.Host = value; }
+        }
+
+        public string Scheme
+        {
+            get { return _uriBuilder.Scheme; }
+            set { _uriBuilder.Scheme = value; }
+        }
+
+        public int Port
+        {
+            get { return _uriBuilder.Port; }
+            set { _uriBuilder.Port = value; }
+        }
+
+        public string UserName
+        {
+            get { return _uriBuilder.UserName; }
+            set { _uriBuilder.UserName = value; }
+        }
+
+        public string Password
+        {
+            get { return _uriBuilder.Password; }
+            set { _uriBuilder.Password = value; }
+        }
+
         public Uri Uri
         {
-            get
-            {
-                UriBuilder.Path = GeneratePath();
-                UriBuilder.Query = GenerateQuery();
-                return UriBuilder.Uri;
-            }
+            get { return UriBuilder.Uri; }
         }
 
         private string GenerateQuery()
         {
-            throw new NotImplementedException();
+            return _queries.Query;
         }
 
         private string GeneratePath()
         {
-            throw new NotImplementedException();
+            return _paths.Path;
         }
 
         private UriBuilder UriBuilder
         {
             get { return _uriBuilder; }
-            set
-            {
-                _paths.Add(value.Path);
-                _queries.AddRange(GetQueries(value));
-                _uriBuilder = value;
-            }
-        }
-
-        private static IEnumerable<string> GetPaths(UriBuilder uriBuilder)
-        {
-            return uriBuilder.Path.Split('/');
-        }
-
-        private static IEnumerable<string> GetQueries(UriBuilder uriBuilder)
-        {
-            if (string.IsNullOrEmpty(uriBuilder.Query))
-                return new string[] {};
-
-            var query = uriBuilder.Query.Substring(1);
-
-            return query.Split('&');
-        }
-    }
-
-    public class PathCollection : ICollection<string>
-    {
-        const string Pattern = "[^/].+[^/]";
-        private readonly List<string> _paths = new List<string>();
-
-        /// <summary>
-        /// Инициализирует новый экземпляр класса <see cref="T:System.Object"/>.
-        /// </summary>
-        public PathCollection()
-        {
-        }
-
-        public PathCollection(string paths)
-        {
-            Add(paths);
-        }
-
-        /// <summary>
-        /// Возвращает перечислитель, выполняющий итерацию в коллекции.
-        /// </summary>
-        /// <returns>
-        /// Интерфейс <see cref="T:System.Collections.Generic.IEnumerator`1"/>, который может использоваться для перебора элементов коллекции.
-        /// </returns>
-        public IEnumerator<string> GetEnumerator()
-        {
-            return Paths.GetEnumerator();
-        }
-
-        /// <summary>
-        /// Возвращает перечислитель, осуществляющий итерацию в коллекции.
-        /// </summary>
-        /// <returns>
-        /// Объект <see cref="T:System.Collections.IEnumerator"/>, который может использоваться для перебора коллекции.
-        /// </returns>
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        /// <summary>
-        /// Добавляет элемент в коллекцию <see cref="T:System.Collections.Generic.ICollection`1"/>.
-        /// </summary>
-        /// <param name="item">Объект, добавляемый в коллекцию <see cref="T:System.Collections.Generic.ICollection`1"/>.</param><exception cref="T:System.NotSupportedException">Объект <see cref="T:System.Collections.Generic.ICollection`1"/> доступен только для чтения.</exception>
-        public void Add(string item)
-        {
-            var path = SplitPath(item);
-
-            if (path.Length == 0)
-                return;
-
-            if (path.Length > 1)
-                AddRange(path);
-            else
-                Paths.Add(path[0]);
-        }
-
-        private static string[] SplitPath(string item)
-        {
-            var rx = new Regex(Pattern, RegexOptions.IgnoreCase);
-            var path = rx.Match(item).Value.Split('/');
-            return path;
-        }
-
-        private void AddRange(IEnumerable<string> items)
-        {
-            if (items == null) 
-                throw new ArgumentNullException("items");
-
-            foreach (var item in items)
-            {
-                Add(item);
-            }
-        }
-
-        /// <summary>
-        /// Удаляет все элементы из коллекции <see cref="T:System.Collections.Generic.ICollection`1"/>.
-        /// </summary>
-        /// <exception cref="T:System.NotSupportedException">Объект <see cref="T:System.Collections.Generic.ICollection`1"/> доступен только для чтения.</exception>
-        public void Clear()
-        {
-            Paths.Clear();
-        }
-
-        /// <summary>
-        /// Определяет, содержит ли коллекция <see cref="T:System.Collections.Generic.ICollection`1"/> указанное значение.
-        /// </summary>
-        /// <returns>
-        /// Значение true, если параметр <paramref name="item"/> найден в коллекции <see cref="T:System.Collections.Generic.ICollection`1"/>; в противном случае — значение false.
-        /// </returns>
-        /// <param name="item">Объект, который требуется найти в <see cref="T:System.Collections.Generic.ICollection`1"/>.</param>
-        public bool Contains(string item)
-        {
-            var paths = SplitPath(item);
-            if (paths.Length == 0)
-                return false;
-
-            var index = Paths.IndexOf(paths[0]);
-            if (index == -1)
-                return false;
-
-            foreach (var path in paths.Except(new[] {paths[0]}))
-            {
-                if (Paths.IndexOf(path) != -1)
-                    if (Math.Abs(Paths.IndexOf(path) - index) != 1)
-                        return false;
-                    else
-                    {
-                        index = Paths.IndexOf(path);
-                    }
-                else
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        /// Копирует элементы <see cref="T:System.Collections.Generic.ICollection`1"/> в массив <see cref="T:System.Array"/>, начиная с указанного индекса <see cref="T:System.Array"/>.
-        /// </summary>
-        /// <param name="array">Одномерный массив <see cref="T:System.Array"/>, в который копируются элементы из интерфейса <see cref="T:System.Collections.Generic.ICollection`1"/>. Массив <see cref="T:System.Array"/> должен иметь индексацию, начинающуюся с нуля.</param><param name="arrayIndex">Отсчитываемый от нуля индекс в массиве <paramref name="array"/>, указывающий начало копирования.</param><exception cref="T:System.ArgumentNullException">Параметр <paramref name="array"/> имеет значение null.</exception><exception cref="T:System.ArgumentOutOfRangeException">Значение параметра <paramref name="arrayIndex"/> меньше 0.</exception><exception cref="T:System.ArgumentException">Количество элементов в исходной коллекции <see cref="T:System.Collections.Generic.ICollection`1"/> превышает доступное место, начиная с индекса <paramref name="arrayIndex"/> до конца массива назначения <paramref name="array"/>.</exception>
-        public void CopyTo(string[] array, int arrayIndex)
-        {
-            Paths.CopyTo(array, arrayIndex);
-        }
-
-        /// <summary>
-        /// Удаляет первый экземпляр указанного объекта из коллекции <see cref="T:System.Collections.Generic.ICollection`1"/>.
-        /// </summary>
-        /// <returns>
-        /// Значение true, если элемент <paramref name="item"/> успешно удален из <see cref="T:System.Collections.Generic.ICollection`1"/>, в противном случае — значение false. Этот метод также возвращает значение false, если параметр <paramref name="item"/> не найден в исходном интерфейсе <see cref="T:System.Collections.Generic.ICollection`1"/>.
-        /// </returns>
-        /// <param name="item">Объект, который необходимо удалить из коллекции <see cref="T:System.Collections.Generic.ICollection`1"/>.</param><exception cref="T:System.NotSupportedException">Объект <see cref="T:System.Collections.Generic.ICollection`1"/> доступен только для чтения.</exception>
-        public bool Remove(string item)
-        {
-            var paths = SplitPath(item);
-            return paths.All(path => Paths.Remove(path));
-        }
-
-        /// <summary>
-        /// Получает число элементов, содержащихся в интерфейсе <see cref="T:System.Collections.Generic.ICollection`1"/>.
-        /// </summary>
-        /// <returns>
-        /// Число элементов, содержащихся в интерфейсе <see cref="T:System.Collections.Generic.ICollection`1"/>.
-        /// </returns>
-        public int Count
-        {
-            get { return Paths.Count; }
-        }
-
-        /// <summary>
-        /// Получает значение, указывающее, доступна ли <see cref="T:System.Collections.Generic.ICollection`1"/> только для чтения.
-        /// </summary>
-        /// <returns>
-        /// Значение true, если <see cref="T:System.Collections.Generic.ICollection`1"/> доступна только для чтения; в противном случае — значение false.
-        /// </returns>
-        public bool IsReadOnly
-        {
-            get { return false; }
-        }
-
-        private List<string> Paths
-        {
-            get { return _paths; }
+            set { _uriBuilder = value; }
         }
     }
 }

@@ -36,8 +36,6 @@ namespace SystemTools.WebTools.Infrastructure
         {
             var application = ((HttpApplication) sender);
 
-            var signPage = AdditionalConfiguration.Instance.SignPage;
-
             if (application.User.Identity.IsAuthenticated)
             {
                 ApplicationCustomizer.OnAuthenticated(application.User.Identity);
@@ -49,17 +47,6 @@ namespace SystemTools.WebTools.Infrastructure
                 ApplicationCustomizer.OnAuthenticated((ISecurity)application.Session[ApplicationCustomizer.SecurityCookieName]);
                 return;
             }
-
-//            application.Response.RedirectToRoute(new RouteValueDictionary(new {controller = "Logon", action = "Index"}));
-
-            if (signPage == null)
-                throw new LogonException();
-
-            var url = new UriBuilder(application.Request.Url.GetLeftPart(UriPartial.Authority));
-            url.Path = HttpRuntime.AppDomainAppVirtualPath;
-            
-            application.Response.Redirect(url.Uri.PathAndQuery);
-            application.Response.End();
         }
 
         /// <summary>
