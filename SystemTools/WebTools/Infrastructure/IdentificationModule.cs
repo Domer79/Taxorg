@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Routing;
+using System.Web.Security;
 using SystemTools.ConfigSections;
 using SystemTools.Exceptions;
 using SystemTools.Interfaces;
@@ -38,14 +39,16 @@ namespace SystemTools.WebTools.Infrastructure
 
             if (application.User.Identity.IsAuthenticated)
             {
-                ApplicationCustomizer.OnAuthenticated(application.User.Identity);
+//                ApplicationCustomizer.OnAuthenticated(application.User.Identity);
                 return;
             }
 
-            if (application.Request[ApplicationCustomizer.SecurityCookieName] != null)
+            if (application.Request.Cookies[FormsAuthentication.FormsCookieName] != null)
             {
-                ApplicationCustomizer.OnAuthenticated((ISecurity)application.Session[ApplicationCustomizer.SecurityCookieName]);
-                return;
+//                ApplicationCustomizer.OnAuthenticated((ISecurity)application.Session[ApplicationCustomizer.SecurityCookieName]);
+//                return;
+
+                application.Context.User = ApplicationCustomizer.Security.WebPrincipal;
             }
         }
 

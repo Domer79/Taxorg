@@ -20,15 +20,8 @@ namespace TaxOrg
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             ApplicationCustomizer.RegisterErrorLog(ErrorLog.SaveError);
             ApplicationCustomizer.AppVersion = TaxorgTools.AppVersion;
-            ApplicationCustomizer.Authenticated += ApplicationCustomizer_Authenticated;
+            ApplicationCustomizer.Security = Security.Instance;
             ApplicationCustomizer.EnableSecurity = true;
-        }
-
-        void ApplicationCustomizer_Authenticated(SystemTools.EventArgs.AuthenticatedEventArgs args)
-        {
-            var security = new Security(args.Login, args.Password);
-            ApplicationCustomizer.Security = security;
-            HttpContext.Current.Session[ApplicationCustomizer.SecurityCookieName] = security;
         }
 
         public override void Init()

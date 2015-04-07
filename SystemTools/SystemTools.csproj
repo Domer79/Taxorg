@@ -79,11 +79,10 @@
     <Compile Include="Crypto.cs" />
     <Compile Include="CsvReader.cs" />
     <Compile Include="DebugHelper.cs" />
-    <Compile Include="Delegates\AuthenticatedEventHandler.cs" />
-    <Compile Include="EventArgs\AuthenticatedEventArgs.cs" />
     <Compile Include="ExcelColumnAttribute.cs" />
     <Compile Include="ExcelDataStructure.cs" />
     <Compile Include="ExcelSheet.cs" />
+    <Compile Include="Exceptions\LoginEmailOrPasswordInvalidException.cs" />
     <Compile Include="Exceptions\LogonPageNotConfiguredException.cs" />
     <Compile Include="Extensions\AttributeCollectionExtension.cs" />
     <Compile Include="Extensions\ByteArrayExtensions.cs" />
@@ -100,6 +99,7 @@
     <Compile Include="Interfaces\IGroup.cs" />
     <Compile Include="Interfaces\IGroupRepository.cs" />
     <Compile Include="Interfaces\IMember.cs" />
+    <Compile Include="Interfaces\IPrincipal2.cs" />
     <Compile Include="Interfaces\IQueryableCollection.cs" />
     <Compile Include="Interfaces\IRole.cs" />
     <Compile Include="Interfaces\IRoleOfMember.cs" />
@@ -132,6 +132,10 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Delegates\" />
+    <Folder Include="EventArgs\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

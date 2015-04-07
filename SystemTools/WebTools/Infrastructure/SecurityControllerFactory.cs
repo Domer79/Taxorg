@@ -22,6 +22,9 @@ namespace SystemTools.WebTools.Infrastructure
         public override IController CreateController(RequestContext requestContext, string controllerName)
         {
             RouteValueDictionary routeValueDictionary = requestContext.RouteData.Values;
+
+            ApplicationCustomizer.Security.WebPrincipal.IsAccess(routeValueDictionary[])
+
             return base.CreateController(requestContext, controllerName);
         }
 

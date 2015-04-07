@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq;
 
 namespace SystemTools.Extensions
 {
@@ -12,6 +13,11 @@ namespace SystemTools.Extensions
                     typeof (DescriptionAttribute)));
 
             return attr == null ? enumValue.ToString() : attr.Description;
+        }
+
+        public static Enum[] GetFlags(this Enum @enum)
+        {
+            return Enum.GetValues(@enum.GetType()).OfType<Enum>().Where(@enum.HasFlag).ToArray();
         }
     }
 }
