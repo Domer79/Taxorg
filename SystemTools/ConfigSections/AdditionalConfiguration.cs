@@ -33,16 +33,24 @@ namespace SystemTools.ConfigSections
 
         private static object GetSection(string sectionName, string configFilePath)
         {
-//            var config = WebConfigurationManager.OpenWebConfiguration(configFilePath);
+            var config = WebConfigurationManager.OpenWebConfiguration(configFilePath);
 //            var config = ConfigurationManager.OpenExeConfiguration(configFilePath);
 
-            return ConfigurationManager.GetSection(sectionName);
+//            return ConfigurationManager.GetSection(sectionName);
+            return config.GetSection(sectionName);
         }
 
         public static AdditionalConfiguration Instance
         {
             get { return _instance ?? (_instance = new AdditionalConfiguration("/web.config")); }
         }
+
+        public string SecurityConnectionString
+        {
+            get { return ConfigurationManager.AppSettings["SecurityConnectionString"]; }
+        }
+
+        public ErrorInfo ErrorInfo { get; set; }
 
         internal static AdditionalConfiguration GetAdditionalConfiguration(string configFilePath)
         {

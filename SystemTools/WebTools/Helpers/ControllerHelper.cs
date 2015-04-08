@@ -77,5 +77,10 @@ namespace SystemTools.WebTools.Helpers
 
             return query;
         }
+
+        public static string GetActionPath(string controller, string action)
+        {
+            return string.Format("{0}/{1}", controller, action);
+        }
     }
 }

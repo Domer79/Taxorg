@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using SystemTools.ConfigSections;
 using SystemTools.Interfaces;
 
 namespace SystemTools
@@ -50,10 +51,5 @@ namespace SystemTools
 
         public static ISecurity Security { get; set; }
         public static bool EnableSecurity { get; set; }
-
-        public static void OnAuthenticated(ISecurity securityObject)
-        {
-            Security = securityObject;
-        }
     }
 }

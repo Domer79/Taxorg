@@ -3,7 +3,9 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using SystemTools;
+using SystemTools.ConfigSections;
 using SystemTools.WebTools.Infrastructure;
+using Antlr.Runtime.Misc;
 using TaxorgRepository;
 using TaxorgRepository.Repositories;
 using WebSecurity;
@@ -22,21 +24,15 @@ namespace TaxOrg
             ApplicationCustomizer.AppVersion = TaxorgTools.AppVersion;
             ApplicationCustomizer.Security = Security.Instance;
             ApplicationCustomizer.EnableSecurity = true;
+            ApplicationCustomizer.SecurityConnectionString = AdditionalConfiguration.Instance.SecurityConnectionString;
         }
 
-        public override void Init()
+        protected void Application_Error()
         {
-            base.Init();
-        }
-
-        public override string GetVaryByCustomString(HttpContext context, string custom)
-        {
-            return base.GetVaryByCustomString(context, custom);
-        }
-
-        public override string GetOutputCacheProviderName(HttpContext context)
-        {
-            return base.GetOutputCacheProviderName(context);
+            var exception = Server.GetLastError();
+            Server.ClearError();
+            Session["errorObject"] = exception;
+            Response.RedirectToRoute(new{Controller = "Org", Action = "Error"});
         }
     }
 }

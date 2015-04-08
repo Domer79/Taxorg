@@ -105,9 +105,10 @@ namespace TaxOrg.Controllers
             return View();
         }
 
-        public ActionResult Error(string s)
+        public ActionResult Error()
         {
-            return View(s);
+            var error = (Exception)Session["errorObject"];
+            return View(error);
         }
     }
 }

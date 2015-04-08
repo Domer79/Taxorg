@@ -25,12 +25,6 @@ namespace SystemTools.WebTools.Infrastructure
             if (!ApplicationCustomizer.EnableSecurity)
                 return;
             context.PostAuthenticateRequest += context_AuthenticateRequest;
-            context.EndRequest += context_EndRequest;
-        }
-
-        void context_EndRequest(object sender, System.EventArgs e)
-        {
-//            throw new NotImplementedException();
         }
 
         void context_AuthenticateRequest(object sender, System.EventArgs e)
@@ -39,16 +33,13 @@ namespace SystemTools.WebTools.Infrastructure
 
             if (application.User.Identity.IsAuthenticated)
             {
-//                ApplicationCustomizer.OnAuthenticated(application.User.Identity);
+//                application.Context.User = ApplicationCustomizer.Security.GetWindowsPrincipal(application.User.Identity.Name);
                 return;
             }
 
             if (application.Request.Cookies[FormsAuthentication.FormsCookieName] != null)
             {
-//                ApplicationCustomizer.OnAuthenticated((ISecurity)application.Session[ApplicationCustomizer.SecurityCookieName]);
-//                return;
-
-                application.Context.User = ApplicationCustomizer.Security.WebPrincipal;
+                application.Context.User = ApplicationCustomizer.Security.GetWebPrinicipal();
             }
         }
 

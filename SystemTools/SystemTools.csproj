@@ -75,6 +75,7 @@
     <Compile Include="ApplicationCustomizer.cs" />
     <Compile Include="ApplicationSettings.cs" />
     <Compile Include="ConfigSections\AdditionalConfiguration.cs" />
+    <Compile Include="ConfigSections\ErrorInfo.cs" />
     <Compile Include="ConfigSections\SignPage.cs" />
     <Compile Include="Crypto.cs" />
     <Compile Include="CsvReader.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="ExcelColumnAttribute.cs" />
     <Compile Include="ExcelDataStructure.cs" />
     <Compile Include="ExcelSheet.cs" />
+    <Compile Include="Exceptions\ControllerActionAccessDeniedException.cs" />
     <Compile Include="Exceptions\LoginEmailOrPasswordInvalidException.cs" />
     <Compile Include="Exceptions\LogonPageNotConfiguredException.cs" />
     <Compile Include="Extensions\AttributeCollectionExtension.cs" />
@@ -99,7 +101,6 @@
     <Compile Include="Interfaces\IGroup.cs" />
     <Compile Include="Interfaces\IGroupRepository.cs" />
     <Compile Include="Interfaces\IMember.cs" />
-    <Compile Include="Interfaces\IPrincipal2.cs" />
     <Compile Include="Interfaces\IQueryableCollection.cs" />
     <Compile Include="Interfaces\IRole.cs" />
     <Compile Include="Interfaces\IRoleOfMember.cs" />
@@ -107,6 +108,7 @@
     <Compile Include="Interfaces\IRoleRepository.cs" />
     <Compile Include="Interfaces\IRow.cs" />
     <Compile Include="Interfaces\ISecObject.cs" />
+    <Compile Include="Interfaces\ISecObjectRepository.cs" />
     <Compile Include="Interfaces\ISecurity.cs" />
     <Compile Include="Interfaces\IUser.cs" />
     <Compile Include="Interfaces\IUserGroupsDetail.cs" />
@@ -121,6 +123,7 @@
     <Compile Include="WebTools\Infrastructure\LinqExtensions.cs" />
     <Compile Include="WebTools\Infrastructure\PathCollection.cs" />
     <Compile Include="WebTools\Infrastructure\QueryCollection.cs" />
+    <Compile Include="WebTools\Infrastructure\SecurityAccessType.cs" />
     <Compile Include="WebTools\Infrastructure\SecurityControllerFactory.cs" />
     <Compile Include="WebTools\Infrastructure\UriBuilder2.cs" />
     <Compile Include="WebTools\Providers\OdbcSessionStateStore.cs" />

@@ -1,10 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Web.Security;
+using SystemTools.ConfigSections;
+using SystemTools.Exceptions;
+using SystemTools.Interfaces;
+using SystemTools.WebTools.Helpers;
 
 namespace SystemTools.WebTools.Infrastructure
 {
@@ -22,8 +27,38 @@ namespace SystemTools.WebTools.Infrastructure
         public override IController CreateController(RequestContext requestContext, string controllerName)
         {
             RouteValueDictionary routeValueDictionary = requestContext.RouteData.Values;
+            var controller = (string) routeValueDictionary["controller"];
+            var action = (string) routeValueDictionary["action"];
+            var errorController = AdditionalConfiguration.Instance.ErrorInfo.Controller;
+            var errorAction = AdditionalConfiguration.Instance.ErrorInfo.Action;
+            
 
-            ApplicationCustomizer.Security.WebPrincipal.IsAccess(routeValueDictionary[])
+            //Если пользователь не авторизован
+            if (!HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                //Если включена авторизация с помощью форм перенаправляем его на страницу авторизации
+                if (FormsAuthentication.IsEnabled)
+                {
+                    controller = AdditionalConfiguration.Instance.SignPage.Controller;
+                    action = AdditionalConfiguration.Instance.SignPage.Action;
+
+                    routeValueDictionary.Clear();
+                    routeValueDictionary.Add("controller", controller);
+                    routeValueDictionary.Add("action", action);
+
+                    return base.CreateController(requestContext, controller);
+                }
+
+                //Если запрещена идентификация анонимных пользователей, прекращаем работу
+                if (!AnonymousIdentificationModule.Enabled)
+                    throw new ControllerActionAccessDeniedException(controller, action);
+            }
+
+            var isAccess = ApplicationCustomizer.Security.IsAccess(ControllerHelper.GetActionPath(controller, action),
+                HttpContext.Current.User.Identity.Name, SecurityAccessType.Exec);
+
+            if (!isAccess)
+                throw new ControllerActionAccessDeniedException(controller, action);
 
             return base.CreateController(requestContext, controllerName);
         }

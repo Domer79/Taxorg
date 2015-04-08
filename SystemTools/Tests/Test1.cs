@@ -18,7 +18,7 @@ namespace SystemTools.Tests
         public void AdditionalConfigurationTest()
         {
             var conf = AdditionalConfiguration.GetAdditionalConfiguration(@"c:\Projects\Taxorg\TaxOrg\web.config");
-            Debug.WriteLine(conf.SignPage.LogonUrl);
+            Debug.WriteLine(conf.SignPage.Controller, conf.SignPage.Action);
         }
 
         [TestMethod]
