@@ -13,6 +13,11 @@ namespace SystemTools.ConfigSections
         private readonly string _configFilePath;
         private static AdditionalConfiguration _instance;
 
+        public AdditionalConfiguration()
+        {
+            
+        }
+
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="T:System.Object"/>.
         /// </summary>
@@ -21,10 +26,19 @@ namespace SystemTools.ConfigSections
             _configFilePath = configFilePath;
         }
 
+        #region ConfigurationProperty members
+
         public SignPage SignPage
         {
             get { return (SignPage) GetSection("signPage"); }
         }
+
+        public ErrorPage ErrorPage
+        {
+            get { return (ErrorPage) GetSection("errorPage"); }
+        }
+
+        #endregion
 
         private object GetSection(string sectionName)
         {
@@ -49,8 +63,6 @@ namespace SystemTools.ConfigSections
         {
             get { return ConfigurationManager.AppSettings["SecurityConnectionString"]; }
         }
-
-        public ErrorInfo ErrorInfo { get; set; }
 
         internal static AdditionalConfiguration GetAdditionalConfiguration(string configFilePath)
         {

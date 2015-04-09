@@ -29,9 +29,12 @@ namespace SystemTools.WebTools.Infrastructure
             RouteValueDictionary routeValueDictionary = requestContext.RouteData.Values;
             var controller = (string) routeValueDictionary["controller"];
             var action = (string) routeValueDictionary["action"];
-            var errorController = AdditionalConfiguration.Instance.ErrorInfo.Controller;
-            var errorAction = AdditionalConfiguration.Instance.ErrorInfo.Action;
-            
+
+            if (ApplicationCustomizer.IsError)
+            {
+                ApplicationCustomizer.IsError = false;
+                return base.CreateController(requestContext, controllerName);
+            }
 
             //Если пользователь не авторизован
             if (!HttpContext.Current.User.Identity.IsAuthenticated)

@@ -75,7 +75,7 @@
     <Compile Include="ApplicationCustomizer.cs" />
     <Compile Include="ApplicationSettings.cs" />
     <Compile Include="ConfigSections\AdditionalConfiguration.cs" />
-    <Compile Include="ConfigSections\ErrorInfo.cs" />
+    <Compile Include="ConfigSections\ErrorPage.cs" />
     <Compile Include="ConfigSections\SignPage.cs" />
     <Compile Include="Crypto.cs" />
     <Compile Include="CsvReader.cs" />
@@ -117,9 +117,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\Test1.cs" />
     <Compile Include="WebTools\Helpers\ControllerHelper.cs" />
+    <Compile Include="WebTools\HttpModules\IdentificationModule.cs" />
+    <Compile Include="WebTools\HttpModules\ServiceHttpModule.cs" />
     <Compile Include="WebTools\Infrastructure\GridModelBinder.cs" />
     <Compile Include="WebTools\Infrastructure\GridSettings.cs" />
-    <Compile Include="WebTools\Infrastructure\IdentificationModule.cs" />
     <Compile Include="WebTools\Infrastructure\LinqExtensions.cs" />
     <Compile Include="WebTools\Infrastructure\PathCollection.cs" />
     <Compile Include="WebTools\Infrastructure\QueryCollection.cs" />

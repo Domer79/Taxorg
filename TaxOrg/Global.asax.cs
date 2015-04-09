@@ -32,7 +32,8 @@ namespace TaxOrg
             var exception = Server.GetLastError();
             Server.ClearError();
             Session["errorObject"] = exception;
-            Response.RedirectToRoute(new{Controller = "Org", Action = "Error"});
+            ApplicationCustomizer.IsError = true;
+            Response.RedirectToRoute(new {Controller = "Org", Action = "Error"});
         }
     }
 }

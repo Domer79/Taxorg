@@ -1,25 +1,14 @@
-п»їusing System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Net.Mime;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
-using System.Web.Routing;
 using System.Web.Security;
-using SystemTools.ConfigSections;
-using SystemTools.Exceptions;
-using SystemTools.Interfaces;
 
-namespace SystemTools.WebTools.Infrastructure
+namespace SystemTools.WebTools.HttpModules
 {
     public class IdentificationModule : IHttpModule
     {
         /// <summary>
-        /// РРЅРёС†РёР°Р»РёР·РёСЂСѓРµС‚ РјРѕРґСѓР»СЊ Рё РїРѕРґРіРѕС‚Р°РІР»РёРІР°РµС‚ РµРіРѕ РґР»СЏ РѕР±СЂР°Р±РѕС‚РєРё Р·Р°РїСЂРѕСЃРѕРІ.
+        /// Инициализирует модуль и подготавливает его для обработки запросов.
         /// </summary>
-        /// <param name="context">РћР±СЉРµРєС‚ <see cref="T:System.Web.HttpApplication"/>, РїСЂРµРґРѕСЃС‚Р°РІР»СЏСЋС‰РёР№ РґРѕСЃС‚СѓРї Рє РјРµС‚РѕРґР°Рј, СЃРІРѕР№СЃС‚РІР°Рј Рё СЃРѕР±С‹С‚РёСЏРј, СЏРІР»СЏСЋС‰РёРјСЃСЏ РѕР±С‰РёРјРё РґР»СЏ РІСЃРµС… РѕР±СЉРµРєС‚РѕРІ РІ РїСЂРёР»РѕР¶РµРЅРёРё ASP.NET.</param>
+        /// <param name="context">Объект <see cref="T:System.Web.HttpApplication"/>, предоставляющий доступ к методам, свойствам и событиям, являющимся общими для всех объектов в приложении ASP.NET.</param>
         public void Init(HttpApplication context)
         {
             if (!ApplicationCustomizer.EnableSecurity)
@@ -44,7 +33,7 @@ namespace SystemTools.WebTools.Infrastructure
         }
 
         /// <summary>
-        /// РЈРґР°Р»СЏРµС‚ СЂРµСЃСѓСЂСЃС‹ (РєСЂРѕРјРµ РїР°РјСЏС‚Рё), РёСЃРїРѕР»СЊР·СѓРµРјС‹Рµ РјРѕРґСѓР»РµРј, СЂРµР°Р»РёР·СѓСЋС‰РёРј <see cref="T:System.Web.IHttpModule"/>.
+        /// Удаляет ресурсы (кроме памяти), используемые модулем, реализующим <see cref="T:System.Web.IHttpModule"/>.
         /// </summary>
         public void Dispose()
         {

@@ -14,6 +14,11 @@ namespace SystemTools
             return ConfigurationManager.ConnectionStrings[GetConnectionStringName()].ConnectionString;
         }
 
+        private static string GetSecurityConnectionString()
+        {
+            return ConfigurationManager.ConnectionStrings[GetSecurityConnectionStringName()].ConnectionString;
+        }
+
         private static string GetExcelFilePath()
         {
             return ConfigurationManager.AppSettings["ExcelFilePath"];
@@ -22,6 +27,11 @@ namespace SystemTools
         private static string GetConnectionStringName()
         {
             return ConfigurationManager.AppSettings["GetConnectionStringName"]; 
+        }
+
+        private static string GetSecurityConnectionStringName()
+        {
+            return ConfigurationManager.AppSettings["SecurityConnectionString"];
         }
 
         internal static string ExcelFilePath
@@ -58,11 +68,6 @@ namespace SystemTools
         {
             get { return _securityConnectionString ?? (_securityConnectionString = GetSecurityConnectionString());}
             set { _securityConnectionString = value; }
-        }
-
-        private static string GetSecurityConnectionString()
-        {
-            return ConfigurationManager.AppSettings["SecurityConnectionString"];
         }
 
         private static bool GetAppSettings(string parameterName)
