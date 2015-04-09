@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -35,6 +36,9 @@ namespace SystemTools.WebTools.Infrastructure
                 ApplicationCustomizer.IsError = false;
                 return base.CreateController(requestContext, controllerName);
             }
+
+            if (!ApplicationCustomizer.EnableSecurity)
+                return base.CreateController(requestContext, controllerName);
 
             //Если пользователь не авторизован
             if (!HttpContext.Current.User.Identity.IsAuthenticated)
