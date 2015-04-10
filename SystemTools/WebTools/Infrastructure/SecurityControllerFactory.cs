@@ -30,7 +30,7 @@ namespace SystemTools.WebTools.Infrastructure
             RouteValueDictionary routeValueDictionary = requestContext.RouteData.Values;
             var controller = (string) routeValueDictionary["controller"];
             var action = (string) routeValueDictionary["action"];
-
+            
             if (ApplicationCustomizer.IsError)
             {
                 ApplicationCustomizer.IsError = false;

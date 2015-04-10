@@ -22,9 +22,14 @@ namespace TaxOrg
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             ApplicationCustomizer.RegisterErrorLog(ErrorLog.SaveError);
             ApplicationCustomizer.AppVersion = TaxorgTools.AppVersion;
-//            ApplicationCustomizer.Security = Security.Instance;
-//            ApplicationCustomizer.EnableSecurity = true;
-//            ApplicationCustomizer.SecurityConnectionString = AdditionalConfiguration.Instance.SecurityConnectionString;
+
+            #region Enable Security
+
+            ApplicationCustomizer.Security = Security.Instance;
+            ApplicationCustomizer.EnableSecurity = true;
+            ApplicationCustomizer.SecurityConnectionString = AdditionalConfiguration.Instance.SecurityConnectionString;
+
+            #endregion
         }
 
         protected void Application_Error()
