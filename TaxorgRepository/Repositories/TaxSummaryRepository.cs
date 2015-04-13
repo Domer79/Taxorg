@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Globalization;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using SystemTools.WebTools.Helpers;
 using SystemTools.WebTools.Infrastructure;
-using SqlClr;
 using TaxorgRepository.Models;
 
 namespace TaxorgRepository.Repositories
@@ -18,8 +13,8 @@ namespace TaxorgRepository.Repositories
         private static TaxSummaryRepository _repository;
         private readonly string _sessionId;
         private readonly TaxorgContext _context = new TaxorgContext();
-        private static string _currentPeriod;
-        private static string _prevPeriod;
+//        private static string _currentPeriod;
+//        private static string _prevPeriod;
         private readonly object _data;
         private bool? _isIntersect;
 
@@ -117,12 +112,14 @@ namespace TaxorgRepository.Repositories
 
         private static string CurrentPeriod
         {
-            get { return _currentPeriod ?? (_currentPeriod = TaxorgTools.GetCurrentPeriod().ToString()); }
+//            get { return _currentPeriod ?? (_currentPeriod = TaxorgTools.GetCurrentPeriod().ToString()); }
+            get { return TaxorgTools.GetCurrentPeriod().ToString(); }
         }
 
         private static string PrevPeriod
         {
-            get { return _prevPeriod ?? (_prevPeriod = TaxorgTools.GetPrevPeriod().ToString()); }
+//            get { return _prevPeriod ?? (_prevPeriod = TaxorgTools.GetPrevPeriod().ToString()); }
+            get { return TaxorgTools.GetPrevPeriod().ToString(); }
         }
 
         public static TaxSummaryRepository GetRepository(string sessionId, GridSettings gridSettings)

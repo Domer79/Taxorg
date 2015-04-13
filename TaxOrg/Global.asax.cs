@@ -1,11 +1,9 @@
-﻿using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using SystemTools;
 using SystemTools.ConfigSections;
 using SystemTools.WebTools.Infrastructure;
-using Antlr.Runtime.Misc;
 using TaxorgRepository;
 using TaxorgRepository.Repositories;
 using WebSecurity;
@@ -17,7 +15,6 @@ namespace TaxOrg
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
-            ControllerBuilder.Current.SetControllerFactory(new SecurityControllerFactory());
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             ApplicationCustomizer.RegisterErrorLog(ErrorLog.SaveError);
@@ -25,6 +22,7 @@ namespace TaxOrg
 
             #region Enable Security
 
+            ControllerBuilder.Current.SetControllerFactory(new SecurityControllerFactory());
             ApplicationCustomizer.Security = Security.Instance;
             ApplicationCustomizer.EnableSecurity = true;
             ApplicationCustomizer.SecurityConnectionString = AdditionalConfiguration.Instance.SecurityConnectionString;
