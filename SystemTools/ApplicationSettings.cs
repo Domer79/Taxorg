@@ -16,7 +16,9 @@ namespace SystemTools
 
         private static string GetSecurityConnectionString()
         {
-            return ConfigurationManager.ConnectionStrings[GetSecurityConnectionStringName()].ConnectionString;
+            return ConfigurationManager.ConnectionStrings[GetSecurityConnectionStringName()] == null
+                ? null
+                : ConfigurationManager.ConnectionStrings[GetSecurityConnectionStringName()].ConnectionString;
         }
 
         private static string GetExcelFilePath()
@@ -26,7 +28,7 @@ namespace SystemTools
 
         private static string GetConnectionStringName()
         {
-            return ConfigurationManager.AppSettings["GetConnectionStringName"]; 
+            return ConfigurationManager.AppSettings["ConnectionStringName"]; 
         }
 
         private static string GetSecurityConnectionStringName()

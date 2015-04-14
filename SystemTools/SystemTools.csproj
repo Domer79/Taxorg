@@ -101,6 +101,7 @@
     <Compile Include="Interfaces\IGroup.cs" />
     <Compile Include="Interfaces\IGroupRepository.cs" />
     <Compile Include="Interfaces\IMember.cs" />
+    <Compile Include="Interfaces\IPublicRole.cs" />
     <Compile Include="Interfaces\IQueryableCollection.cs" />
     <Compile Include="Interfaces\IRole.cs" />
     <Compile Include="Interfaces\IRoleOfMember.cs" />

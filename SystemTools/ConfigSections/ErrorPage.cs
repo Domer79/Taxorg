@@ -19,14 +19,14 @@ namespace SystemTools.ConfigSections
         [ConfigurationProperty(ControllerName, DefaultValue = null)]
         public string Controller
         {
-            get { return (string) base[ControllerName]; }
+            get { return (string) base[ControllerName] ?? "Error"; }
             set { base[ControllerName] = value; }
         }
 
         [ConfigurationProperty(ActionName, DefaultValue = null)]
         public string Action
         {
-            get { return (string) base[ActionName]; }
+            get { return (string) base[ActionName] ?? "Index"; }
             set { base[ActionName] = value; }
         }
     }

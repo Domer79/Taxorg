@@ -7,5 +7,7 @@
         void Edit(string roleName, string newRoleName);
         void Delete(string roleName);
         void Delete(int idRole);
+        IRole GetRole(int idRole);
+        IRole GetRole(string roleName);
     }
 }

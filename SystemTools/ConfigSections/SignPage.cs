@@ -10,14 +10,14 @@ namespace SystemTools.ConfigSections
         [ConfigurationProperty(ControllerName, IsRequired = true)]
         public string Controller
         {
-            get { return (string)base[ControllerName]; }
+            get { return (string)base[ControllerName] ?? "Logon"; }
             set { base[ControllerName] = value; }
         }
 
         [ConfigurationProperty(ActionName, IsRequired = false)]
         public string Action
         {
-            get { return base[ActionName] == null ? "Index" : (string)base[ActionName]; }
+            get { return (string)base[ActionName] ?? "Index"; }
             set { base[ActionName] = value; }
         }
     }

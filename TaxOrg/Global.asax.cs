@@ -22,21 +22,21 @@ namespace TaxOrg
 
             #region Enable Security
 
-            ControllerBuilder.Current.SetControllerFactory(new SecurityControllerFactory());
-            ApplicationCustomizer.Security = Security.Instance;
-            ApplicationCustomizer.EnableSecurity = true;
-            ApplicationCustomizer.SecurityConnectionString = AdditionalConfiguration.Instance.SecurityConnectionString;
+//            ControllerBuilder.Current.SetControllerFactory(new SecurityControllerFactory());
+//            ApplicationCustomizer.Security = Security.Instance;
+//            ApplicationCustomizer.EnableSecurity = true;
+//            ApplicationCustomizer.SecurityConnectionString = AdditionalConfiguration.Instance.SecurityConnectionString;
 
             #endregion
         }
 
         protected void Application_Error()
         {
-            var exception = Server.GetLastError();
-            Server.ClearError();
-            Session["errorObject"] = exception;
-            ApplicationCustomizer.IsError = true;
-            Response.RedirectToRoute(new {Controller = "Org", Action = "Error"});
+//            var exception = Server.GetLastError();
+//            Server.ClearError();
+//            Session["errorObject"] = exception;
+//            ApplicationCustomizer.IsError = true;
+//            Response.RedirectToRoute(new {Controller = "Org", Action = "Error"});
         }
     }
 }

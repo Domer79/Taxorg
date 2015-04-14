@@ -20,5 +20,10 @@ namespace SystemTools.Extensions
             var values = Enum.GetValues(@enum.GetType());
             return values.OfType<Enum>().Where(@enum.HasFlag).ToArray();
         }
+
+        public static Enum GetSingleFlag(this Enum @enum)
+        {
+            return @enum.GetFlags()[0];
+        }
     }
 }
