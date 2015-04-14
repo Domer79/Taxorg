@@ -1,4 +1,6 @@
+using System;
 using System.Configuration;
+using SystemTools.ConfigSections;
 
 namespace SystemTools
 {
@@ -8,6 +10,7 @@ namespace SystemTools
         private static string _excelFilePath;
         private static bool? _loggingDbContext;
         private static string _securityConnectionString;
+        private static string _securityControllerName;
 
         private static string GetConnectionString()
         {
@@ -56,7 +59,7 @@ namespace SystemTools
             {
                 try
                 {
-                    return (bool) (_loggingDbContext ?? (_loggingDbContext = GetAppSettings("LoggingDbContext")));
+                    return (bool) (_loggingDbContext ?? (_loggingDbContext = GetAppSettings<bool>("LoggingDbContext")));
                 }
                 catch
                 {
@@ -72,11 +75,25 @@ namespace SystemTools
             set { _securityConnectionString = value; }
         }
 
-        private static bool GetAppSettings(string parameterName)
+        public static SignPage SignPage
         {
-            bool logging;
-            bool.TryParse(ConfigurationManager.AppSettings[parameterName], out logging);
-            return logging;
+            get { return AdditionalConfiguration.Instance.SignPage; }
+        }
+
+        public static ErrorPage ErrorPage
+        {
+            get { return AdditionalConfiguration.Instance.ErrorPage; }
+        }
+
+        public static string SecurityControllerName
+        {
+            get { return _securityControllerName ?? (_securityControllerName = GetAppSettings<string>("SecurityControllerName")); }
+        }
+
+        private static T GetAppSettings<T>(string parameterName)
+        {
+            var appSetting = ConfigurationManager.AppSettings[parameterName];
+            return appSetting != null ? (T)Convert.ChangeType(appSetting, typeof(T)) : default(T);
         }
     }
 }

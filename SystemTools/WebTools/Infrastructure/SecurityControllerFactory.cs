@@ -31,12 +31,19 @@ namespace SystemTools.WebTools.Infrastructure
             var controller = (string) routeValueDictionary["controller"];
             var action = (string) routeValueDictionary["action"];
             
+            //Если ошибка
             if (ApplicationCustomizer.IsError)
             {
                 ApplicationCustomizer.IsError = false;
                 return base.CreateController(requestContext, controllerName);
             }
 
+            if (controllerName == ApplicationSettings.SecurityControllerName && ApplicationCustomizer.EnableSecurityAdminPanel)
+            {
+                return base.CreateController(requestContext, controllerName);
+            }
+
+            //Если безопасность отключена
             if (!ApplicationCustomizer.EnableSecurity)
                 return base.CreateController(requestContext, controllerName);
 
@@ -46,8 +53,8 @@ namespace SystemTools.WebTools.Infrastructure
                 //Если включена авторизация с помощью форм перенаправляем его на страницу авторизации
                 if (FormsAuthentication.IsEnabled)
                 {
-                    controller = AdditionalConfiguration.Instance.SignPage.Controller;
-                    action = AdditionalConfiguration.Instance.SignPage.Action;
+                    controller = ApplicationSettings.SignPage.Controller;
+                    action = ApplicationSettings.SignPage.Action;
 
                     routeValueDictionary.Clear();
                     routeValueDictionary.Add("controller", controller);
@@ -61,11 +68,15 @@ namespace SystemTools.WebTools.Infrastructure
                     throw new ControllerActionAccessDeniedException(controller, action);
             }
 
+            #region Проверка прав пользователя
+
             var isAccess = ApplicationCustomizer.Security.IsAccess(ControllerHelper.GetActionPath(controller, action),
                 HttpContext.Current.User.Identity.Name, SecurityAccessType.Exec);
 
             if (!isAccess)
                 throw new ControllerActionAccessDeniedException(controller, action);
+
+            #endregion
 
             return base.CreateController(requestContext, controllerName);
         }

@@ -133,5 +133,15 @@ namespace SystemTools.Tests
         }
 
         #endregion
+
+        [TestMethod]
+        public void TypesDefaultValueTest()
+        {
+            var defaultString = default(string);
+            var defaultInt = default(int);
+
+            Debug.WriteLine(defaultString);
+            Debug.WriteLine(defaultInt);
+        }
     }
 }
