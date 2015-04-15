@@ -1,6 +1,6 @@
 namespace SystemTools.Interfaces
 {
-    public interface IUser
+    public interface IUser : IMember
     {
         int IdUser { get; set; }
 
