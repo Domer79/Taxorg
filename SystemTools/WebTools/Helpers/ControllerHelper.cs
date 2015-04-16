@@ -8,7 +8,7 @@ namespace SystemTools.WebTools.Helpers
 {
     public static class ControllerHelper
     {
-        public static object GetData<TEntity>(GridSettings grid, IQueryable<TEntity> repository, string keyName) where TEntity : class
+        public static object GetData<TEntity>(GridSettings grid, IQueryable<TEntity> repository, string keyName = null) where TEntity : class
         {
             try
             {
@@ -69,8 +69,11 @@ namespace SystemTools.WebTools.Helpers
                 }
             }
 
+            //Сортировка
 //            query = query.OrderBy(string.IsNullOrEmpty(grid.SortColumn) ? sortColumn : grid.SortColumn, grid.SortOrder);
-            query = query.OrderBy(sortColumn, sortOrder);
+            if (!string.IsNullOrEmpty(sortColumn))
+                query = query.OrderBy(sortColumn, sortOrder);
+
             query = query.Skip(offset).Take(count);
 //                .Skip((grid.PageIndex - 1)*grid.PageSize)
 //                .Take(grid.PageSize);
