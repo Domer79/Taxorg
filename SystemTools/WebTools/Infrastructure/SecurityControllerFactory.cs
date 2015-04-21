@@ -38,7 +38,7 @@ namespace SystemTools.WebTools.Infrastructure
                 return base.CreateController(requestContext, controllerName);
             }
 
-            if (controllerName == ApplicationSettings.SecurityControllerName && ApplicationCustomizer.EnableSecurityAdminPanel)
+            if (controllerName.ToLower() == ApplicationSettings.SecurityControllerName.ToLower() && ApplicationCustomizer.EnableSecurityAdminPanel)
             {
                 return base.CreateController(requestContext, controllerName);
             }
