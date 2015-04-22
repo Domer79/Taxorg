@@ -51,5 +51,6 @@ namespace SystemTools.Interfaces
         void SetAccessTypes<T1, T2, T3, T4>();
 
         IPublicRole PublicRole { get; }
+        void AddUser(string userName, string password);
     }
 }
