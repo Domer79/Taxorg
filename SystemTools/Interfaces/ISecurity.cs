@@ -51,6 +51,11 @@ namespace SystemTools.Interfaces
         void SetAccessTypes<T1, T2, T3, T4>();
 
         IPublicRole PublicRole { get; }
-        void AddUser(string userName, string password);
+
+        void AddUser(string userName, string password, string email, string displayName, string sid);
+
+        void AddGroup(string groupName, string description);
+
+        void AddRole(string roleName, string description);
     }
 }

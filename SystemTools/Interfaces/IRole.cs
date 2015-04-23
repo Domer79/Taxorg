@@ -5,5 +5,7 @@ namespace SystemTools.Interfaces
         int IdRole { get; set; }
 
         string RoleName { get; set; }
+
+        string Description { get; set; }
     }
 }

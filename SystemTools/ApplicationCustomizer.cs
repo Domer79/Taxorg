@@ -67,5 +67,13 @@ namespace SystemTools
                 _enableSecurityAdminPanel = value;
             }
         }
+
+        public static ApplicationType ApplicationType { get; set; }
+    }
+
+    public enum ApplicationType
+    {
+        Windows,
+        Web
     }
 }
