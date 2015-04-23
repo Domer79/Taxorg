@@ -1,5 +1,6 @@
 using System;
 using System.Configuration;
+using System.Data.SqlClient;
 using SystemTools.ConfigSections;
 
 namespace SystemTools
@@ -94,6 +95,15 @@ namespace SystemTools
         {
             var appSetting = ConfigurationManager.AppSettings[parameterName];
             return appSetting != null ? (T)Convert.ChangeType(appSetting, typeof(T)) : default(T);
+        }
+
+        public static string DatabaseName
+        {
+            get
+            {
+                var connectionStringBuilder = new SqlConnectionStringBuilder(ConnectionString);
+                return connectionStringBuilder.InitialCatalog;
+            }
         }
     }
 }

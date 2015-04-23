@@ -57,5 +57,9 @@ namespace SystemTools.Interfaces
         void AddGroup(string groupName, string description);
 
         void AddRole(string roleName, string description);
+
+        void AddController(string path);
+
+        void AddTable(string tableName);
     }
 }
