@@ -25,22 +25,13 @@ namespace SystemTools.Interfaces
         bool IsAccess(string objectName, string userName, SecurityAccessType accessType);
 
         /// <summary>
-        /// Предоставляет права роли <see cref="role"/> для запуска действия контроллера 
+        /// Предоставляет права для роли <see cref="roleName"/> для объекта <see cref="objectName"/>
         /// </summary>
-        /// <param name="controller">Имя контроллера</param>
-        /// <param name="action">Имя дествия</param>
-        /// <param name="role">Имя роли</param>
+        /// <param name="roleName">Имя роли</param>
+        /// <param name="objectName">имя объекта</param>
+        /// <param name="accessType">Тип доступа</param>
         /// <exception cref="ArgumentException">Возникает в случае отсутствия значений какого-либо из входных параметров в базе данных</exception>
-        void GrantActionToRole(string controller, string action, string role);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="entity"></param>
-        /// <param name="role"></param>
-        /// <param name="accessType"></param>
-        /// <exception cref="ArgumentException">Возникает в случае отсутствия значений какого-либо из входных параметров в базе данных</exception>
-        void GrantEntityToRole(string entity, string role, SecurityAccessType accessType);
+        void Grant(string roleName, string objectName, SecurityAccessType accessType);
 
         void SetAccessTypes<T>();
 
