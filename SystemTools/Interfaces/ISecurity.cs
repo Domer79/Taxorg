@@ -54,5 +54,10 @@ namespace SystemTools.Interfaces
         void AddTable(string tableName);
         void SetRole(string roleName, string memberName);
         void SetGroup(string groupName, string login);
+        void DeleteMemberFromRole(string memberName, string roleName);
+        void DeleteUserFromGroup(string userName, string groupName);
+        void DeleteGroup(string groupName);
+        void DeleteController(string controllerName);
+        void DeleteTable(string tableName);
     }
 }

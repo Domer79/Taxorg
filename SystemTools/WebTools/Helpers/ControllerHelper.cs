@@ -8,6 +8,8 @@ namespace SystemTools.WebTools.Helpers
 {
     public static class ControllerHelper
     {
+        private static ControllerCollection _controllerCollection;
+
         public static object GetData<TEntity>(GridSettings grid, IQueryable<TEntity> repository, string keyName = null) where TEntity : class
         {
             try
@@ -84,6 +86,11 @@ namespace SystemTools.WebTools.Helpers
         public static string GetActionPath(string controller, string action)
         {
             return string.Format("{0}/{1}", controller, action);
+        }
+
+        public static ControllerCollection ControllerCollection
+        {
+            get { return _controllerCollection ?? (_controllerCollection = new ControllerCollection()); }
         }
     }
 }

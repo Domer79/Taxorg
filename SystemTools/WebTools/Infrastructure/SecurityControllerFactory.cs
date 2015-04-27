@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
 using System.Text;
@@ -27,9 +28,11 @@ namespace SystemTools.WebTools.Infrastructure
         /// <param name="requestContext">Контекст HTTP-запроса, включающий в себя контекст HTTP и данные маршрута.</param><param name="controllerName">Имя контроллера.</param><exception cref="T:System.ArgumentNullException">Параметр <paramref name="requestContext"/> равен null.</exception><exception cref="T:System.ArgumentException">Параметр <paramref name="controllerName"/> имеет значение null или пуст.</exception>
         public override IController CreateController(RequestContext requestContext, string controllerName)
         {
-            RouteValueDictionary routeValueDictionary = requestContext.RouteData.Values;
+            var routeValueDictionary = requestContext.RouteData.Values;
             var controller = (string) routeValueDictionary["controller"];
             var action = (string) routeValueDictionary["action"];
+            var controllerType = GetControllerType(requestContext, controllerName);
+            var controllerInfo = ControllerHelper.ControllerCollection.GetControllerInfo(controllerType, action);
             
             //Если ошибка
             if (ApplicationCustomizer.IsError)
@@ -38,7 +41,7 @@ namespace SystemTools.WebTools.Infrastructure
                 return base.CreateController(requestContext, controllerName);
             }
 
-            if (controllerName.ToLower() == ApplicationSettings.SecurityControllerName.ToLower() && ApplicationCustomizer.EnableSecurityAdminPanel)
+            if (String.Equals(controllerName, ApplicationSettings.SecurityControllerName, StringComparison.CurrentCultureIgnoreCase) && ApplicationCustomizer.EnableSecurityAdminPanel)
             {
                 return base.CreateController(requestContext, controllerName);
             }
@@ -70,7 +73,7 @@ namespace SystemTools.WebTools.Infrastructure
 
             #region Проверка прав пользователя
 
-            var isAccess = ApplicationCustomizer.Security.IsAccess(ControllerHelper.GetActionPath(controller, action),
+            var isAccess = ApplicationCustomizer.Security.IsAccess(controllerInfo.Alias,
                 HttpContext.Current.User.Identity.Name, SecurityAccessType.Exec);
 
             if (!isAccess)
