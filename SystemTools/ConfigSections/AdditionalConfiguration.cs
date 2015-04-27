@@ -56,7 +56,7 @@ namespace SystemTools.ConfigSections
 
         public static AdditionalConfiguration Instance
         {
-            get { return _instance ?? (_instance = new AdditionalConfiguration("/web.config")); }
+            get { return _instance ?? (_instance = new AdditionalConfiguration(ApplicationSettings.WebConfigVirtualFilePath)); }
         }
 
         public string SecurityConnectionString

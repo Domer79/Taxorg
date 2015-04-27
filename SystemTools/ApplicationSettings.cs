@@ -1,6 +1,8 @@
 using System;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.Text.RegularExpressions;
+using System.Web;
 using SystemTools.ConfigSections;
 
 namespace SystemTools
@@ -12,6 +14,7 @@ namespace SystemTools
         private static bool? _loggingDbContext;
         private static string _securityConnectionString;
         private static string _securityControllerName;
+        private static string _applicationName;
 
         private static string GetConnectionString()
         {
@@ -74,6 +77,51 @@ namespace SystemTools
         {
             get { return _securityConnectionString ?? (_securityConnectionString = GetSecurityConnectionString());}
             set { _securityConnectionString = value; }
+        }
+
+        public static string ApplicationName
+        {
+            get
+            {
+                return _applicationName ?? (_applicationName = GetApplicationName() ?? "/");
+            }
+            set { _applicationName = value; }
+        }
+
+        public static string ApplicationVirtualPath
+        {
+            get
+            {
+                return ApplicationName == "/" ? "/" : string.Format("/{0}/", ApplicationName);
+            }
+        }
+
+        public static string WebConfigVirtualFilePath
+        {
+            get
+            {
+                return string.Format("{0}web.config", ApplicationVirtualPath);
+            }
+        }
+
+        private static string GetApplicationName()
+        {
+            return ConfigurationManager.AppSettings["AppName"] ?? GetApplicationNameFromHttpRuntime();
+        }
+
+        private static string GetApplicationNameFromHttpRuntime()
+        {
+            const string pattern = @"(?<appname>[\w]+)|/$";
+            if (HttpRuntime.AppDomainAppVirtualPath == null)
+                return "/";
+
+            var input = HttpRuntime.AppDomainAppVirtualPath;
+
+            var rx = new Regex(pattern);
+            if (!rx.IsMatch(input))
+                return "/";
+
+            return rx.Match(input).ToString();
         }
 
         public static SignPage SignPage
