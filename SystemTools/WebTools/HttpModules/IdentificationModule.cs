@@ -16,38 +16,22 @@ namespace SystemTools.WebTools.HttpModules
             if (!ApplicationCustomizer.EnableSecurity)
                 return;
             context.PostAuthenticateRequest += PostAuthenticateRequest;
-            context.AuthenticateRequest += context_AuthenticateRequest;
-        }
-
-        void context_AuthenticateRequest(object sender, EventArgs e)
-        {
-            var application = ((HttpApplication)sender);
-
-            if (application.User.Identity.IsAuthenticated)
-            {
-                application.Context.User = ApplicationCustomizer.Security.GetWindowsPrincipal(application.User.Identity.Name);
-                return;
-            }
-
-            if (application.Request.Cookies[FormsAuthentication.FormsCookieName] != null)
-            {
-                application.Context.User = ApplicationCustomizer.Security.GetWebPrinicipal();
-            }
         }
 
         void PostAuthenticateRequest(object sender, System.EventArgs e)
         {
             var application = ((HttpApplication) sender);
 
+            if (FormsAuthentication.IsEnabled)
+            {
+                application.Context.User = ApplicationCustomizer.Security.GetWebPrinicipal();
+                return;
+            }
+
             if (application.User.Identity.IsAuthenticated)
             {
                 application.Context.User = ApplicationCustomizer.Security.GetWindowsPrincipal(application.User.Identity.Name);
                 return;
-            }
-
-            if (application.Request.Cookies[FormsAuthentication.FormsCookieName] != null)
-            {
-                application.Context.User = ApplicationCustomizer.Security.GetWebPrinicipal();
             }
         }
 

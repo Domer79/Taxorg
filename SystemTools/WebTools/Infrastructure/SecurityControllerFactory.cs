@@ -33,7 +33,11 @@ namespace SystemTools.WebTools.Infrastructure
             var action = (string) routeValueDictionary["action"];
             var controllerType = GetControllerType(requestContext, controllerName);
             var controllerInfo = ControllerHelper.ControllerCollection.GetControllerInfo(controllerType, action);
-            
+
+            if (string.Equals(requestContext.HttpContext.Request.HttpMethod, "POST",
+                StringComparison.InvariantCultureIgnoreCase))
+                return base.CreateController(requestContext, controllerName);
+
             //Если ошибка
             if (ApplicationCustomizer.IsError)
             {
