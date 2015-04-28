@@ -1,5 +1,7 @@
+ using System;
  using System.Web;
-using System.Web.Security;
+ using System.Web.Caching;
+ using System.Web.Security;
 
 namespace SystemTools.WebTools.HttpModules
 {
@@ -13,16 +15,33 @@ namespace SystemTools.WebTools.HttpModules
         {
             if (!ApplicationCustomizer.EnableSecurity)
                 return;
-            context.PostAuthenticateRequest += context_AuthenticateRequest;
+            context.PostAuthenticateRequest += PostAuthenticateRequest;
+            context.AuthenticateRequest += context_AuthenticateRequest;
         }
 
-        void context_AuthenticateRequest(object sender, System.EventArgs e)
+        void context_AuthenticateRequest(object sender, EventArgs e)
+        {
+            var application = ((HttpApplication)sender);
+
+            if (application.User.Identity.IsAuthenticated)
+            {
+                application.Context.User = ApplicationCustomizer.Security.GetWindowsPrincipal(application.User.Identity.Name);
+                return;
+            }
+
+            if (application.Request.Cookies[FormsAuthentication.FormsCookieName] != null)
+            {
+                application.Context.User = ApplicationCustomizer.Security.GetWebPrinicipal();
+            }
+        }
+
+        void PostAuthenticateRequest(object sender, System.EventArgs e)
         {
             var application = ((HttpApplication) sender);
 
             if (application.User.Identity.IsAuthenticated)
             {
-//                application.Context.User = ApplicationCustomizer.Security.GetWindowsPrincipal(application.User.Identity.Name);
+                application.Context.User = ApplicationCustomizer.Security.GetWindowsPrincipal(application.User.Identity.Name);
                 return;
             }
 
