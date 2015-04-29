@@ -1,30 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using SystemTools;
+using TaxOrg.Models;
 
 namespace TaxOrg.Controllers
 {
     public class LogonController : Controller
     {
         // GET: Logon
-        [HttpGet]
         public ActionResult Index()
         {
-            return View();
+            return View(new LoginView());
         }
 
         [HttpPost]
-        public ActionResult Index(string login, string password)
+        public ActionResult Index(LoginView loginView)
         {
-            if (ApplicationCustomizer.Security.Sign(login, password))
+            if (ModelState.IsValid)
             {
-                ApplicationCustomizer.Security.CreateCookie(login);
-                RedirectToAction("Index", "Org");
+                if (!ApplicationCustomizer.Security.Sign(loginView.Login, loginView.Password))
+                {
+                    ModelState["Login"].Errors.Add("Пользователь не прошел проверку подлинности");
+                    return View(loginView);
+                }
             }
-            return View();
+
+            ApplicationCustomizer.Security.CreateCookie(loginView.Login);
+            return RedirectToAction("Index", "Ph");
         }
     }
 }

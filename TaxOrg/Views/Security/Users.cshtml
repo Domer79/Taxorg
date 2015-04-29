@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "Пользователи";
+    Layout = "~/Views/Shared/_SecurityLayout.cshtml";
+}
+
+<table id="tUsers"></table>
+<div id="usersPage"></div>
+
+@section FooterScripts {
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#tUsers").jqGrid({
+                
+            });
+        });
+    </script>
+}

@@ -59,11 +59,6 @@ namespace SystemTools.ConfigSections
             get { return _instance ?? (_instance = new AdditionalConfiguration(ApplicationSettings.WebConfigVirtualFilePath)); }
         }
 
-        public string SecurityConnectionString
-        {
-            get { return ConfigurationManager.AppSettings["SecurityConnectionString"]; }
-        }
-
         internal static AdditionalConfiguration GetAdditionalConfiguration(string configFilePath)
         {
             return _instance = new AdditionalConfiguration(configFilePath);

@@ -1,10 +1,33 @@
-﻿
+﻿@model TaxOrg.Models.LoginView
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Идентификация пользователя";
 }
 
-<h2>Идентификация</h2>
+@section Styles
+{
+    <link href="~/Content/signin.css" rel="stylesheet" />
+}
 
-
+@*<form class="form-signin">*@
+@using (Html.BeginForm("Index", "Logon", FormMethod.Post, new { @class = "form-signin" }))
+{
+    <fieldset>
+        @*    <h2 class="form-signin-heading">Пожалуйста, войдите на сайт</h2>*@
+        <label for="login" class="sr-only">Имя входа</label>
+@*        <input type="text" id="login" name="login" class="form-control" placeholder="Имя входа" required autofocus>*@
+        @Html.TextBox("login", @Model.Login, new{@class = "form-control", placeholder="Имя входа", required = true, autofocus = true})
+        <label for="password" class="sr-only">Пароль</label>
+        <input type="password" id="password" name="password" class="form-control" placeholder="Пароль" required>
+        @*    <div class="checkbox">*@
+        @*        <label>*@
+        @*            <input type="checkbox" value="remember-me"> Сохранить меня*@
+        @*        </label>*@
+        @*    </div>*@
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Вход</button>
+        <div class="alert alert-danger text-center" role="alert">
+            @Html.ValidationMessage("Login")
+        </div>
+    </fieldset>
+}
+@*</form>*@
 

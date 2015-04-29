@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Data.Entity;
+using System.Linq;
+using SystemTools.Extensions;
 using DataRepository;
 using TaxorgRepository.Models;
 
@@ -23,11 +25,16 @@ namespace TaxorgRepository.Repositories
         {
             var error = Set.Create();
             error.TypeError = e.GetType().FullName;
-            error.Message = e.Message;
+            error.Message = e.GetErrorMessage();
             error.StackTrace = e.StackTrace;
 
             Set.Add(error);
             SaveChanges();
+        }
+
+        public string GetLastError()
+        {
+            return Set.OrderByDescending(e => e.TimeLabel).First().Message;
         }
 
         private ErrorRepository()

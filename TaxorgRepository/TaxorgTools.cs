@@ -1,4 +1,5 @@
 ﻿using SqlClr;
+using TaxorgRepository.Repositories;
 using TaxorgRepository.Tools;
 
 namespace TaxorgRepository
@@ -40,6 +41,11 @@ namespace TaxorgRepository
         {
             get { return InnerTools.IsMaintenance; }
             set { InnerTools.IsMaintenance = value; }
+        }
+
+        public static string GetLastError()
+        {
+            return ErrorRepository.Errors.GetLastError();
         }
     }
 }
