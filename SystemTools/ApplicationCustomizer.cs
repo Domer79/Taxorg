@@ -10,7 +10,6 @@ namespace SystemTools
     public static class ApplicationCustomizer
     {
         private static string _appVersion = "1.0.0.0";
-        private static bool _enableSecurityAdminPanel;
 
         [DebuggerHidden]
         public static string ConnectionString
@@ -58,13 +57,13 @@ namespace SystemTools
 
         public static bool EnableSecurityAdminPanel
         {
-            get { return _enableSecurityAdminPanel; }
+            get { return ApplicationSettings.EnableSecurityAdminPanel; }
             set
             {
                 if (value && string.IsNullOrEmpty(ApplicationSettings.SecurityControllerName))
                     throw new InvalidOperationException("Параметр SecurityControllerName не объявлен в файле web.config.");
 
-                _enableSecurityAdminPanel = value;
+                ApplicationSettings.EnableSecurityAdminPanel = value;
             }
         }
 

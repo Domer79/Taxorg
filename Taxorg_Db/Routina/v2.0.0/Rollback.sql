@@ -40,6 +40,10 @@ GO
 /****** Object:  View [sec].[Groups]    Script Date: 29.04.2015 10:02:18 ******/
 DROP VIEW [sec].[Groups]
 GO
+DROP VIEW [sec].[UsersGrant]
+GO
+DROP VIEW [sec].[GroupsGrant]
+GO
 /****** Object:  Table [sec].[UserGroups]    Script Date: 29.04.2015 10:02:18 ******/
 DROP TABLE [sec].[UserGroups]
 GO

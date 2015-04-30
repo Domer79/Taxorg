@@ -15,6 +15,7 @@ namespace SystemTools
         private static string _securityConnectionString;
         private static string _securityControllerName;
         private static string _applicationName;
+        private static bool _enableSecurityAdminPanel;
 
         private static string GetConnectionString()
         {
@@ -30,17 +31,17 @@ namespace SystemTools
 
         private static string GetExcelFilePath()
         {
-            return ConfigurationManager.AppSettings["ExcelFilePath"];
+            return GetAppSettings<string>("ExcelFilePath");
         }
 
         private static string GetConnectionStringName()
         {
-            return ConfigurationManager.AppSettings["ConnectionStringName"]; 
+            return GetAppSettings<string>("ConnectionStringName");
         }
 
         private static string GetSecurityConnectionStringName()
         {
-            return ConfigurationManager.AppSettings["SecurityConnectionString"];
+            return GetAppSettings<string>("SecurityConnectionString");
         }
 
         internal static string ExcelFilePath
@@ -152,6 +153,17 @@ namespace SystemTools
                 var connectionStringBuilder = new SqlConnectionStringBuilder(ConnectionString);
                 return connectionStringBuilder.InitialCatalog;
             }
+        }
+
+        public static bool EnableSecurityAdminPanel
+        {
+            get { return _enableSecurityAdminPanel = GetEnableSecurityAdminPanel(); }
+            set { _enableSecurityAdminPanel = value; }
+        }
+
+        private static bool GetEnableSecurityAdminPanel()
+        {
+            return GetAppSettings<bool>("EnableSecurityAdminPanel");
         }
     }
 }

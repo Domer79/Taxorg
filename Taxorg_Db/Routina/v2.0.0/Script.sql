@@ -777,10 +777,53 @@ on
 on
 	mr.idMember = m.idMember
 
-
-
-
 GO
+
+create view sec.UsersGrant
+as
+select 
+	m.idMember,
+	g.idSecObject,
+	rm.idRole,
+	g.idAccessType,
+	m.name,
+	g.ObjectName,
+	rm.roleName,
+	g.accessName
+from 
+	sec.Members m inner join sec.RoleOfMember rm 
+on 
+	m.idMember = rm.idMember inner join sec.Grants g 
+on 
+	rm.idRole = g.idRole 
+where
+	m.isUser = 1
+
+go
+
+create view sec.GroupsGrant
+as
+select 
+	m.idMember,
+	g.idSecObject,
+	rm.idRole,
+	g.idAccessType,
+	m.name,
+	g.ObjectName,
+	rm.roleName,
+	g.accessName
+from 
+	sec.Members m inner join sec.RoleOfMember rm 
+on 
+	m.idMember = rm.idMember inner join sec.Grants g 
+on 
+	rm.idRole = g.idRole 
+where
+	m.isUser = 0
+
+go
+
+
 /****** Object:  Index [UQ_Group_idMember]    Script Date: 14.04.2015 11:08:44 ******/
 CREATE UNIQUE NONCLUSTERED INDEX [UQ_Group_idMember] ON [sec].[_Group]
 (

@@ -59,5 +59,8 @@ namespace SystemTools.Interfaces
         void DeleteGroup(string groupName);
         void DeleteController(string controllerName);
         void DeleteTable(string tableName);
+        void SetPassword(string login, string password);
+        void DeleteGrant(string roleName, string objectName, SecurityAccessType accessType);
+        void DeleteUser(string userName);
     }
 }

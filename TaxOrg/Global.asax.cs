@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
@@ -47,6 +48,11 @@ namespace TaxOrg
             Session["errorObject"] = exception;
             ApplicationCustomizer.IsError = true;
             Response.RedirectToRoute(new { AdditionalConfiguration.Instance.ErrorPage.Controller, AdditionalConfiguration.Instance.ErrorPage.Action });
+        }
+
+        protected void Application_BeginRequest(object sender, EventArgs e)
+        {
+            Security.RenewContext();
         }
     }
 }

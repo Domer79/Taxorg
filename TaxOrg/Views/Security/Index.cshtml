@@ -6,11 +6,74 @@
     Layout = "~/Views/Shared/_SecurityLayout.cshtml";
 }
 
-<div class="panel panel-default" style="margin-top:30px">
+@section Styles {
+    <style type="text/css">
+        .list-group-item {
+            cursor: pointer;
+        }
+        .list-group-item:hover {
+            background-color: #87cefa;
+        }
+    </style>
+}
+
+<div class="panel panel-default">
     <div class="panel panel-heading">
         sdfsadf
     </div>
     <div class="panel panel-body">
-        body
+        <div id="bodyContainer" class="container" style="height: 700px; overflow: hidden">
+            <div class="panel panel-default" style="width: 300px;overflow:auto; height:inherit">
+                <ul id="userList" class="list-group">
+                    <li class="list-group-item">item</li>
+                    <li class="list-group-item">item</li>
+                    <li class="list-group-item">item</li>
+                    <li class="list-group-item">item</li>
+                    <li class="list-group-item">item</li>
+                    <li class="list-group-item">item</li>
+                    <li class="list-group-item">item</li>
+                    <li class="list-group-item">item</li>
+                    <li class="list-group-item">item</li>
+                    <li class="list-group-item">item</li>
+                    <li class="list-group-item">item</li>
+                    <li class="list-group-item">item</li>
+                    <li class="list-group-item">item</li>
+                    <li class="list-group-item">item</li>
+                    <li class="list-group-item">item</li>
+                    <li class="list-group-item">item</li>
+                    <li class="list-group-item">item</li>
+                    <li class="list-group-item">item</li>
+                    <li class="list-group-item">item</li>
+                    <li class="list-group-item">item</li>
+                    <li class="list-group-item">item</li>
+                    <li class="list-group-item">item</li>
+                    <li class="list-group-item">item</li>
+                    <li class="list-group-item">item</li>
+                    <li class="list-group-item">item</li>
+                    <li class="list-group-item">item</li>
+                    <li class="list-group-item">item</li>
+                    <li class="list-group-item">item</li>
+                    <li class="list-group-item">item</li>
+                    <li class="list-group-item">item</li>
+                    <li class="list-group-item">item</li>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
+
+@section FooterScripts {
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var screenHeight = $("body").height() - 200;
+
+            $("#bodyContainer").height(screenHeight);
+
+            $("#userList li").click(function() {
+                $("#userList li").removeClass("active");
+                $(this).addClass("active");
+            });
+
+        });
+    </script>
+}
