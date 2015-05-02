@@ -101,7 +101,7 @@
 
                 var commandSend = function (command) {
                     $.ajax({
-                        url: '@Url.Action("CmdRun")',
+                        url: '@Url.Action("CmdRun", "Security")',
                         data: { command: command },
                         //                    dataType: "JSON",
                         type: "POST",
@@ -163,10 +163,10 @@
                 });
 
                 $("#command").autocomplete({
-                    //                source: '@Url.Action("Intellisense")',
+                    //                source: '@Url.Action("Intellisense", "Security")',
                     source: function (request, response) {
                         $.ajax({
-                            url: '@Url.Action("Intellisense")',
+                            url: '@Url.Action("Intellisense", "Security")',
                             cache: false,
                             async: true,
                             data: { term: request.term },
