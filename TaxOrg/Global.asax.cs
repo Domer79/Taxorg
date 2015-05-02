@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Controllers;
+using System.Web.Http.Dispatcher;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using SystemTools;
 using SystemTools.ConfigSections;
+using SystemTools.WebTools.Helpers;
 using SystemTools.WebTools.Infrastructure;
 using DataRepository.Infrastructure;
 using TaxOrg.Controllers;
@@ -27,6 +32,7 @@ namespace TaxOrg
             ApplicationCustomizer.AppVersion = TaxorgTools.AppVersion;
             ContextInfo.ContextInfoCollection.Add(typeof(TaxorgContext));
             ControllerCollection.Assemblies.Add(typeof(OrgController).Assembly);
+            ControllerHelper.ControllerCollection.Add<MvcFileUploader.MvcFileUploadController>();
 
             #region Enable Security
 

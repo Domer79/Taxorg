@@ -37,10 +37,29 @@ namespace SystemTools.WebTools.Infrastructure
 
         private void Init()
         {
-            var methods = Assemblies.SelectMany(a => a.GetTypes()).Where(t => t.GetInterface("IController") != null).SelectMany(type => type.GetMethods().Where(mi => mi.ReturnType.Is<ActionResult>()));
-            foreach (var methodInfo in methods)
+            var types = Assemblies.SelectMany(a => a.GetTypes()).Where(t => t.GetInterface("IController") != null);
+
+            foreach (var type in types)
             {
-                Add(methodInfo);
+                Add(type);
+            }
+        }
+
+        private static IEnumerable<MethodInfo> GetControllerMethods(Type type)
+        {
+            return type.GetMethods().Where(mi => mi.ReturnType.Is<ActionResult>());
+        }
+
+        public void Add<TController>() where TController : class, IController
+        {
+            Add(typeof(TController));
+        }
+
+        public void Add(Type controllerType)
+        {
+            foreach (var controllerMethod in GetControllerMethods(controllerType))
+            {
+                Add(controllerMethod);
             }
         }
 

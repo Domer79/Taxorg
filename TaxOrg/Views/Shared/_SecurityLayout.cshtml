@@ -2,209 +2,175 @@
 @using SystemTools
 
 @{
-    Layout = null;
+    Layout = "_LayoutBase.cshtml";
 }
 
-<!DOCTYPE html>
+@section HeaderScripts
+{
+    @RenderSection("HeaderScrips", false)
+}
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
-    @Scripts.Render("~/scripts/jquery")
-    @Scripts.Render("~/scripts/bootstrap")
-    @Styles.Render("~/Content/themes/overcast/css")
-    @Styles.Render("~/bootstrap/css")
-    @RenderSection("HeaderScripts", false)
+@section Styles
+{
     @RenderSection("Styles", false)
-</head>
-    <body>
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">@ViewBag.Title</a>
-                </div>
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-                        <li><a href="#">Link</a></li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something else here</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">Separated link</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">One more separated link</a></li>
-                            </ul>
-                        </li>
+}
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">@ViewBag.Title</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+                <li><a href="#">Link</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">One more separated link</a></li>
                     </ul>
-                    <div class="navbar-form navbar-left" role="textbox">
-                        <div class="input-group" title="Введите команду" style="width: 1200px">
-                            <input id="command" type="text" class="form-control" placeholder="Введите команду" aria-hidden="True" />
-                            <div class="input-group-btn">
-                                <button id="eraseCommand" class="btn btn-default">x</button>
-                                <button id="cmdGo" class="btn btn-default">Отправить</button>
-                            </div>
-                        </div>
+                </li>
+            </ul>
+            <div class="navbar-form navbar-left" role="textbox">
+                <div class="input-group" title="Введите команду" style="width: 1200px">
+                    <input id="command" type="text" class="form-control" placeholder="Введите команду" aria-hidden="True" />
+                    <div class="input-group-btn">
+                        <button id="eraseCommand" class="btn btn-default">x</button>
+                        <button id="cmdGo" class="btn btn-default">Отправить</button>
                     </div>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">Link</a></li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something else here</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">Separated link</a></li>
-                            </ul>
-                        </li>
+                </div>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Link</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
                     </ul>
-                </div><!-- /.navbar-collapse -->
-            </div><!-- /.container-fluid -->
-        </nav>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
 
             
-        <div class="container">
-            @RenderBody() 
-        </div>
-        @RenderSection("FooterScripts", false)
-        
-        <script type="text/javascript">
-            $(document).ready(function () {
-                var getLastServerError = function () {
-                    var lastError = "Извините произошла какая-то ошибка, а какая узнать не удалось!";
-                    var uri = '@ApplicationSettings.ApplicationVirtualPath' + 'api/SecurityApi/PostLastError';
-                    $.ajax({
-                        url: uri,
-                        type: "POST",
-                        async: false,
-                        cache: false,
-                        success: function (data) {
-                            lastError = data;
-                        }
-                    });
+<div class="container">
+    @RenderBody() 
+</div>
 
-                    return lastError;
-                };
+@section FooterScripts
+{
+    @RenderSection("FooterScripts", false)
+}
 
-                var commandSend = function (command) {
-                    $.ajax({
-                        url: '@Url.Action("CmdRun", "Security")',
-                        data: { command: command },
-                        //                    dataType: "JSON",
-                        type: "POST",
-                        cache: false,
-                        async: false,
-                        success: function () {
-                            //Удаляем классы ошибки
-                            $("#infoPanel").removeClass("alert-danger");
-                            $("#infoMessage").removeClass("text-danger");
+<script type="text/javascript">
+    $(document).ready(function () {
+        var commandSend = function (command) {
+            query.doQuery({
+                url: '@Url.Action("CmdRun", "Security")',
+                data: { command: command },
+                //                    dataType: "JSON",
+                type: "POST",
+                cache: false,
+                async: false,
+                success: function () {
+                    //Удаляем классы ошибки
+                    $("#infoPanel").removeClass("alert-danger");
+                    $("#infoMessage").removeClass("text-danger");
 
-                            //Добавляем классы успешного выполнения
-                            $("#infoPanel").addClass("alert-success");
-                            $("#infoMessage").addClass("text-success");
+                    //Добавляем классы успешного выполнения
+                    $("#infoPanel").addClass("alert-success");
+                    $("#infoMessage").addClass("text-success");
 
-                            //Выводим текст об успешном выполнении
-                            $("#infoMessage").text("Команда выполнена успешно");
+                    //Выводим текст об успешном выполнении
+                    $("#infoMessage").text("Команда выполнена успешно");
 
-                            //Скрываем панель сообщения через 5 секунд
-                            var timeout = setTimeout(function () {
-                                $("#infoPanel").collapse('hide');
-                            }, 5000);
+                    //Скрываем панель сообщения через 5 секунд
+                    var timeout = setTimeout(function () {
+                        $("#infoPanel").collapse('hide');
+                    }, 5000);
 
-                            //Открываем панель сообщения
-                            $("#infoPanel").collapse('show');
+                    //Открываем панель сообщения
+                    $("#infoPanel").collapse('show');
 
-                            //Удаляем текст команды
-                            $("#command").val("");
-                        },
-                        error: function (jqXhr, textStatus, errorThrown) {
-                            //                        if (textStatus == "parsererror")
-                            //                            return;
-                            $("#infoPanel").removeClass("alert-success");
-                            $("#infoMessage").removeClass("text-success");
-
-                            //Добавляем классы успешного выполнения
-                            $("#infoPanel").addClass("alert-danger");
-                            $("#infoMessage").addClass("text-danger");
-
-                            $("#infoMessage").text(getLastServerError());
-                            //                        var timeout = setTimeout(function() {
-                            //                            $("#infoPanel").collapse('hide');
-                            //                        }, 5000);
-                            $("#infoPanel").collapse('show');
-                        }
-                    });
-                };
-
-                $("#command").keypress(function (event) {
-                    if (event.which == 13)
-                        commandSend($("#command").val());
-                });
-
-                $("#cmdGo").click(function () {
-                    commandSend($("#command").val());
-                });
-
-                $("#eraseCommand").click(function () {
+                    //Удаляем текст команды
                     $("#command").val("");
-                });
+                },
+            });
+        };
 
-                $("#command").autocomplete({
-                    //                source: '@Url.Action("Intellisense", "Security")',
-                    source: function (request, response) {
-                        $.ajax({
-                            url: '@Url.Action("Intellisense", "Security")',
-                            cache: false,
-                            async: true,
-                            data: { term: request.term },
-                            success: function (data) {
-                                response(data);
-                            }
-                        });
-                    },
-                    minLength: 0,
-                    delay: 0,
-                    select: function (event, ui) {
-                        var terms = this.value.split(/\s+/);
-                        terms.pop();
-                        terms.push(ui.item.value);
+        $("#command").keypress(function (event) {
+            if (event.which == 13)
+                commandSend($("#command").val());
+        });
 
-                        this.value = terms.join(" ");
-                        return false;
-                    },
-                    focus: function () {
-                        return false;
+        $("#cmdGo").click(function () {
+            commandSend($("#command").val());
+        });
+
+        $("#eraseCommand").click(function () {
+            $("#command").val("");
+        });
+
+        $("#command").autocomplete({
+            //                source: '@Url.Action("Intellisense", "Security")',
+            source: function (request, response) {
+                $.ajax({
+                    url: '@Url.Action("Intellisense", "Security")',
+                    cache: false,
+                    async: true,
+                    data: { term: request.term },
+                    success: function (data) {
+                        response(data);
                     }
                 });
-            });
-        </script>
-        
-        <nav class="navbar navbar-default navbar-fixed-bottom">
-            <div class="navbar navbar-collapse navbar-right">
-                
-                <div class="panel panel-collapse" id="panel">
-                    <div class="alert alert-danger fade collapse" role="alert" aria-hidden="true" id="infoPanel">
-                        <button type="button" class="close" aria-label="Close" data-toggle="collapse" data-target="#infoPanel" aria-controls="infoPanel" aria-expanded="false">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <div class="panel-body text-center"><span class="text-danger" id="infoMessage">sdfgdfg</span></div>
-                    </div>
-                </div>
+            },
+            minLength: 0,
+            delay: 0,
+            select: function (event, ui) {
+                var terms = this.value.split(/\s+/);
+                terms.pop();
+                terms.push(ui.item.value);
 
+                this.value = terms.join(" ");
+                return false;
+            },
+            focus: function () {
+                return false;
+            }
+        });
+    });
+</script>
+        
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="navbar navbar-collapse">
+                
+        <div class="panel panel-collapse" id="panel">
+            <div class="alert alert-danger fade collapse" role="alert" aria-hidden="true" id="infoPanel">
+                <button type="button" class="close" aria-label="Close" data-toggle="collapse" data-target="#infoPanel" aria-controls="infoPanel" aria-expanded="false">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="panel-body text-center"><span class="text-danger" id="infoMessage">sdfgdfg</span></div>
             </div>
-        </nav>
-    </body>
-</html>
+        </div>
+
+    </div>
+</nav>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Principal;
 using SystemTools.WebTools.Infrastructure;
@@ -62,5 +63,6 @@ namespace SystemTools.Interfaces
         void SetPassword(string login, string password);
         void DeleteGrant(string roleName, string objectName, SecurityAccessType accessType);
         void DeleteUser(string userName);
+        IEnumerable<IUser> GetUsers();
     }
 }

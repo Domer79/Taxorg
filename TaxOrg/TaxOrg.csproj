@@ -656,6 +656,7 @@
     <Content Include="Scripts\mvcfileupload\blueimp\tmpl.min.js" />
     <Content Include="Scripts\mvcfileupload\vendor\bootstrap.min.js" />
     <Content Include="Scripts\mvcfileupload\vendor\jquery.ui.widget.js" />
+    <Content Include="Scripts\Service.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -669,6 +670,8 @@
     <Content Include="Views\Security\Index.cshtml" />
     <Content Include="Views\Security\Users.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutBase.cshtml" />
+    <Content Include="Scripts\Service.coffee" />
     <None Include="Документы\test.csv" />
     <Content Include="Views\Settings\Index.cshtml" />
     <Content Include="Views\Org\Maintenance.cshtml" />
