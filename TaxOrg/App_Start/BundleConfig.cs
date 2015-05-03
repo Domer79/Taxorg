@@ -59,10 +59,10 @@ namespace TaxOrg
                     "~/scripts/modernizr-2.6.2.js"
                 ));
 
-            bundles.Add(new ScriptBundle("~/scripts/bootstrap").Include(
-                    "~/Scripts/mvcfileupload/vendor/bootstrap.min.js"
-//                    "~/Scripts/bootstrap-3.3.4-dist/js/bootstrap.js"
-                ));
+//            bundles.Add(new ScriptBundle("~/scripts/bootstrap").Include(
+//                    "~/Scripts/mvcfileupload/vendor/bootstrap.min.js"
+////                    "~/Scripts/bootstrap-3.3.4-dist/js/bootstrap.js"
+//                ));
 
             bundles.Add(new StyleBundle("~/Content/blueimp").Include(
                     "~/Content/mvcfileupload/blueimp/jquery.fileupload.css",

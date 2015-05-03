@@ -46,6 +46,11 @@ var showDialog = function(message) {
 
     $("#messageDialogTitle").text("Ошибка!");
     $("#messageDialogText").text(message);
+
+    messageDialog = messageDialog.clone().appendTo($("body"));
+    messageDialog.on("hidden.bs.modal", function (e) {
+        $(this).remove();
+    });
     messageDialog.modal();
 };
 

@@ -22,8 +22,11 @@
 
 }
 
-@Scripts.Render("~/jqgrid")
-@Scripts.Render("~/scripts/jqgridlocale")
+@section HeaderScripts
+{
+    @Scripts.Render("~/jqgrid")
+    @Scripts.Render("~/scripts/jqgridlocale")
+}
 
 @section main
 {
@@ -190,7 +193,8 @@
 
         $("#hideSameRows").click(function() {
             var result = false;
-            $.ajax({
+//            $.ajax({
+            query.doQuery({
                 type: "POST",
                 url: "@Url.Action("IsNotLoadSameTaxOnOff", "Sys")",
                 async: false,
@@ -200,9 +204,9 @@
                     $("#hideSameRows").val(data ? "Добавить записи" : "Скрыть записи");
                     $("#tOrg").trigger("reloadGrid");
                 },
-                error: function(jqXhr, textStatus, errorThrown) {
-                    alert("Не удалось установить значение параметра. " + textStatus + ". Обратитесь к системному администратору");
-                }
+//                error: function(jqXhr, textStatus, errorThrown) {
+//                    alert("Не удалось установить значение параметра. " + textStatus + ". Обратитесь к системному администратору");
+//                }
             });
         });
 
