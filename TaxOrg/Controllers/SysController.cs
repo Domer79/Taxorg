@@ -17,7 +17,6 @@ namespace TaxOrg.Controllers
         {
             try
             {
-                throw new Exception("Test exception");
                 TaxorgTools.IsNotSameTaxLoad = !TaxorgTools.IsNotSameTaxLoad;
                 return Json(TaxorgTools.IsNotSameTaxLoad);
 //                return new HttpStatusCodeResult(HttpStatusCode.OK);

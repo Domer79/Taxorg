@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure.Interception;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
@@ -9,6 +10,7 @@ using SystemTools.WebTools.Infrastructure;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SqlClr;
 using TaxorgRepository;
+using TaxorgRepository.Infrastructure;
 using TaxorgRepository.Models;
 using TaxorgRepository.Repositories;
 using SystemTools;
@@ -26,6 +28,7 @@ namespace TaxOrg.Tests
         public TaxorgContextTest()
         {
             ApplicationCustomizer.ConnectionString = "data source=.;initial catalog=Taxorg;User Id=developer;Password=sppdeveloper;MultipleActiveResultSets=True;App=EntityFramework";
+            DbInterception.Add(new Interceptor());
         }
 
         [TestMethod]
@@ -176,6 +179,26 @@ namespace TaxOrg.Tests
             {
                 Debug.WriteLine(taxType.IdTaxType, taxType.Code);
             }
+        }
+
+        [TestMethod]
+        public void ContextSelectTest()
+        {
+            var repo = new SettingsRepository();
+            foreach (var settings in repo)
+            {
+                Debug.WriteLine(settings);
+            }
+
+            Debug.WriteLine("");
+            Debug.WriteLine(repo.First());
+        }
+
+        [TestMethod]
+        public void GetTableNamesTest()
+        {
+            var context = new TaxorgContext();
+            Debug.WriteLine(context.GetTableNames().Aggregate((current, next) => string.Format("{0}, {1}", current, next)));
         }
 
         private static void SetSessionTestValues(TaxorgContext context, bool sessionIsAdd)

@@ -31,8 +31,6 @@ namespace TaxOrg
             ApplicationCustomizer.RegisterErrorLog(ErrorLog.SaveError);
             ApplicationCustomizer.AppVersion = TaxorgTools.AppVersion;
             ContextInfo.ContextInfoCollection.Add(typeof(TaxorgContext));
-            ControllerCollection.Assemblies.Add(typeof(OrgController).Assembly);
-            ControllerHelper.ControllerCollection.Add<MvcFileUploader.MvcFileUploadController>();
 
             #region Enable Security
 
@@ -43,6 +41,8 @@ namespace TaxOrg
 //            ApplicationCustomizer.SecurityConnectionString = AdditionalConfiguration.Instance.SecurityConnectionString;
             ApplicationCustomizer.SecurityConnectionString = ApplicationSettings.SecurityConnectionString;
             ApplicationCustomizer.EnableSecurityAdminPanel = true;
+            ControllerCollection.Assemblies.Add(typeof(OrgController).Assembly);
+            ControllerHelper.ControllerCollection.Add<MvcFileUploader.MvcFileUploadController>();
 
             #endregion
         }

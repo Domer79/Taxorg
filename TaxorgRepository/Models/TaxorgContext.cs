@@ -1,12 +1,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Common;
-using System.Data.Entity.Core.Common;
-using System.Data.Entity.Infrastructure.Interception;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
-using TaxorgRepository.Infrastructure;
+using DataRepository;
 using TaxorgRepository.Tools;
 using SystemTools;
 
@@ -15,7 +12,8 @@ namespace TaxorgRepository.Models
     using System;
     using System.Data.Entity;
 
-    public sealed class TaxorgContext : DbContext
+//    public sealed class TaxorgContext : DbContext
+    public sealed class TaxorgContext : RepositoryDataContext
     {
         private static TaxorgContext _context;
 

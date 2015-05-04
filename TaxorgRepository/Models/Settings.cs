@@ -20,5 +20,16 @@ namespace TaxorgRepository.Models
         public string Value { get; set; }
         public string Description { get; set; }
         public bool Visible { get; set; }
+
+        /// <summary>
+        /// Возвращает строку, которая представляет текущий объект.
+        /// </summary>
+        /// <returns>
+        /// Строка, представляющая текущий объект.
+        /// </returns>
+        public override string ToString()
+        {
+            return string.Format("{0}:{1}", Name, Value);
+        }
     }
 }
