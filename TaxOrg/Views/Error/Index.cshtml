@@ -1,4 +1,5 @@
-﻿@model Exception
+﻿@using SystemTools.Extensions
+@model Exception
 @{
     ViewBag.Title = "Ошибка!";
     var isHttpException = Model as HttpException != null;
@@ -8,6 +9,6 @@
 <div class="alert alert-danger" role="alert">
     <h1>Код ошибки: @httpCode</h1>
     <div class="container">
-        <p>@Model.Message</p>
+        <p>@Model.GetErrorMessage()</p>
     </div>
 </div>
