@@ -55,7 +55,7 @@ namespace TaxorgRepository.Repositories
             return taxType;
         }
 
-        protected override DbContext GetContext()
+        protected override RepositoryDataContext GetContext()
         {
             return new TaxorgContext();
         }

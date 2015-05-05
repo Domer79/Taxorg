@@ -46,7 +46,7 @@ namespace TaxorgRepository.Repositories
             get { return _instance ?? (_instance = new ErrorRepository()); }
         }
 
-        protected override DbContext GetContext()
+        protected override RepositoryDataContext GetContext()
         {
             return new TaxorgContext();
         }

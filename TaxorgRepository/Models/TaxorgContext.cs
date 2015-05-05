@@ -1,26 +1,19 @@
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
-using System.Linq;
-using System.Linq.Expressions;
 using DataRepository;
-using TaxorgRepository.Tools;
 using SystemTools;
+using System.Data.Entity;
 
 namespace TaxorgRepository.Models
 {
-    using System;
-    using System.Data.Entity;
 
-//    public sealed class TaxorgContext : DbContext
     public sealed class TaxorgContext : RepositoryDataContext
     {
         private static TaxorgContext _context;
 
         public static TaxorgContext Context
         {
-            get { return _context ?? (_context = new TaxorgContext(ApplicationSettings.ConnectionString)); }
-//            get { return _context ?? (_context = new TaxorgContext("Data Source=.;Initial Catalog=Taxorg;Integrated Security=true")); }
+            get { return _context ?? (_context = new TaxorgContext()); }
         }
 
         public TaxorgContext()
@@ -105,13 +98,6 @@ namespace TaxorgRepository.Models
                 .WillCascadeOnDelete();
 
             #endregion
-
-//            modelBuilder.Entity<Organization>().MapToStoredProcedures(c =>
-//            {
-//                c.Insert(i => i.HasName("AddOrganization").Result(r => r.IdOrganization, "generated_blog_identity"));
-//                c.Update(u => u.HasName("ModifyOrganization"));
-//                c.Delete(d => d.HasName("DeleteOrganization"));
-//            });
 
             #region Tax
 
@@ -238,56 +224,5 @@ namespace TaxorgRepository.Models
             #endregion
 
         }
-
-        public string GetKeyName<TEntity>() where TEntity : class
-        {
-            if (_entityInfos.Keys.Contains(typeof (TEntity)))
-                return ((EntityInfo<TEntity>)_entityInfos[typeof (TEntity)]).KeyName;
-
-            var entityInfo = new EntityInfo<TEntity>(this);
-            _entityInfos.Add(typeof(TEntity), entityInfo);
-
-            return entityInfo.KeyName;
-        }
-
-        public Expression<Func<TEntity, TKey>> GetExpression<TEntity, TKey>() where TEntity : class
-        {
-            return GetExpression<TEntity, TKey>(null);
-        }
-
-        public Expression<Func<TEntity, TKey>> GetExpression<TEntity, TKey>(string columnName) where TEntity : class
-        {
-            if (_entityInfos.Keys.Contains(typeof(TEntity)))
-                return ((EntityInfo<TEntity>)_entityInfos[typeof(TEntity)]).GetMemberAccess<TKey>(columnName);
-
-            var entityInfo = new EntityInfo<TEntity>(this);
-            _entityInfos.Add(typeof(TEntity), entityInfo);
-
-            return entityInfo.GetMemberAccess<TKey>(columnName);
-        }
-
-        public Expression<Func<TEntity, object>> GetExpression<TEntity>(string columnName) where TEntity : class
-        {
-            if (_entityInfos.Keys.Contains(typeof(TEntity)))
-                return ((EntityInfo<TEntity>)_entityInfos[typeof(TEntity)]).GetMemberAccess(columnName);
-
-            var entityInfo = new EntityInfo<TEntity>(this);
-            _entityInfos.Add(typeof(TEntity), entityInfo);
-
-            return entityInfo.GetMemberAccess(columnName);
-        }
-
-        public EntityInfo<TEntity> GetEntityInfo<TEntity>() where TEntity : class
-        {
-            if (_entityInfos.Keys.Contains(typeof(TEntity)))
-                return ((EntityInfo<TEntity>)_entityInfos[typeof(TEntity)]);
-
-            var entityInfo = new EntityInfo<TEntity>(this);
-            _entityInfos.Add(typeof(TEntity), entityInfo);
-
-            return entityInfo;
-        }
-
-        private readonly Dictionary<Type, object> _entityInfos = new Dictionary<Type, object>();
     }
 }

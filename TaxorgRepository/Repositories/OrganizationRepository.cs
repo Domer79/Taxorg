@@ -51,7 +51,7 @@ namespace TaxorgRepository.Repositories
             return organization;
         }
 
-        protected override DbContext GetContext()
+        protected override RepositoryDataContext GetContext()
         {
             return new TaxorgContext();
         }

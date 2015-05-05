@@ -52,7 +52,6 @@
   <ItemGroup>
     <Compile Include="Exceptions\SaveTaxException.cs" />
     <Compile Include="Exceptions\SliceTaxInsertOrUpdateException.cs" />
-    <Compile Include="Infrastructure\Interceptor.cs" />
     <Compile Include="Interfaces\IOrganization.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Models\Bug.cs" />
@@ -81,7 +80,6 @@
     <Compile Include="Repositories\TaxSummaryRepository.cs" />
     <Compile Include="Repositories\TaxTypeRepository.cs" />
     <Compile Include="TaxorgTools.cs" />
-    <Compile Include="Tools\EntityInfo.cs" />
     <Compile Include="Tools\InnerTools.cs" />
     <Compile Include="Tools\SystemLogs.cs" />
   </ItemGroup>
@@ -90,6 +88,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Infrastructure\" />
     <Folder Include="TestModel\" />
   </ItemGroup>
   <ItemGroup>

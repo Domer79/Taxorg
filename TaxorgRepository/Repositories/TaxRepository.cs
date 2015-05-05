@@ -38,6 +38,7 @@ namespace TaxorgRepository.Repositories
             var db = Context.Database;
             try
             {
+                
                 db.ExecuteSqlCommand("exec SaveTax @p0, @p1, @p2, @p3", inn, taxCode, ((YearMonth)dateLoad).ToString(), taxSum);
             }
             catch (Exception e)
@@ -47,7 +48,7 @@ namespace TaxorgRepository.Repositories
             }
         }
 
-        protected override DbContext GetContext()
+        protected override RepositoryDataContext GetContext()
         {
             return new TaxorgContext();
         }

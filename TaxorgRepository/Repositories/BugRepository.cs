@@ -42,7 +42,7 @@ namespace TaxorgRepository.Repositories
             get { return Set.Where(e => !e.Accept).Expression; }
         }
 
-        protected override DbContext GetContext()
+        protected override RepositoryDataContext GetContext()
         {
             return new TaxorgContext();
         }

@@ -1,19 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
 using System.Data.Entity.Infrastructure.Interception;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
-using System.Net.Mime;
+using System.Web.Mvc;
+using SystemTools.WebTools.Helpers;
 using SystemTools.WebTools.Infrastructure;
+using DataRepository.Infrastructure;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SqlClr;
+using TaxOrg.Controllers;
 using TaxorgRepository;
-using TaxorgRepository.Infrastructure;
 using TaxorgRepository.Models;
 using TaxorgRepository.Repositories;
 using SystemTools;
+using WebSecurity;
 
 namespace TaxOrg.Tests
 {
@@ -29,6 +30,17 @@ namespace TaxOrg.Tests
         {
             ApplicationCustomizer.ConnectionString = "data source=.;initial catalog=Taxorg;User Id=developer;Password=sppdeveloper;MultipleActiveResultSets=True;App=EntityFramework";
             DbInterception.Add(new Interceptor());
+
+            #region Enable security
+            ApplicationCustomizer.SecurityConnectionString = ApplicationCustomizer.ConnectionString;
+            ApplicationCustomizer.EnableSecurity = true;
+            ApplicationSettings.EnableSecurityAdminPanel = true;
+            ApplicationCustomizer.Security = Security.Instance;
+            ControllerBuilder.Current.SetControllerFactory(new SecurityControllerFactory());
+            Security.Instance.SetAccessTypes<SecurityAccessType>();
+            ControllerCollection.Assemblies.Add(typeof(OrgController).Assembly);
+            ControllerHelper.ControllerCollection.Add<MvcFileUploader.MvcFileUploadController>();
+            #endregion
         }
 
         [TestMethod]

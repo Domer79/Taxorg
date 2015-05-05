@@ -12,7 +12,7 @@ namespace TaxorgRepository.Repositories
             Set.Add(item);
         }
 
-        protected override DbContext GetContext()
+        protected override RepositoryDataContext GetContext()
         {
             return new TaxorgContext();
         }

@@ -12,7 +12,7 @@ namespace TaxorgRepository.Repositories
     public class Repository<TEntity> : RepositoryBase<TEntity> 
         where TEntity : ModelBase
     {
-        protected override DbContext GetContext()
+        protected override RepositoryDataContext GetContext()
         {
             return new TaxorgContext();
         }

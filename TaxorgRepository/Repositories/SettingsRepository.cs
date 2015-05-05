@@ -13,7 +13,7 @@ namespace TaxorgRepository.Repositories
             get { return Set.Where(e => e.Visible).Expression; }
         }
 
-        protected override DbContext GetContext()
+        protected override RepositoryDataContext GetContext()
         {
             return new TaxorgContext();
         }

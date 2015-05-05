@@ -24,15 +24,14 @@ namespace SystemTools.WebTools.HttpModules
 
             if (FormsAuthentication.IsEnabled)
             {
-                application.Context.User = ApplicationCustomizer.Security.GetWebPrinicipal();
-                return;
+                ApplicationCustomizer.Security.Principal = ApplicationCustomizer.Security.GetWebPrinicipal();
+            }
+            else if (application.User.Identity.IsAuthenticated)
+            {
+                ApplicationCustomizer.Security.Principal = ApplicationCustomizer.Security.GetWindowsPrincipal(application.User.Identity.Name);
             }
 
-            if (application.User.Identity.IsAuthenticated)
-            {
-                application.Context.User = ApplicationCustomizer.Security.GetWindowsPrincipal(application.User.Identity.Name);
-                return;
-            }
+            application.Context.User = ApplicationCustomizer.Security.Principal;
         }
 
         /// <summary>
