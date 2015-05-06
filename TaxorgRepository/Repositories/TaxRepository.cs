@@ -1,8 +1,13 @@
 using System;
 using System.Data.Entity;
 using System.Linq;
+using System.Net.Mime;
+using SystemTools;
 using SystemTools.Extensions;
+using SystemTools.WebTools.Infrastructure;
 using DataRepository;
+using DataRepository.Exceptions;
+using DataRepository.Infrastructure;
 using SqlClr;
 using TaxorgRepository.Exceptions;
 using TaxorgRepository.Models;
@@ -38,7 +43,6 @@ namespace TaxorgRepository.Repositories
             var db = Context.Database;
             try
             {
-                
                 db.ExecuteSqlCommand("exec SaveTax @p0, @p1, @p2, @p3", inn, taxCode, ((YearMonth)dateLoad).ToString(), taxSum);
             }
             catch (Exception e)

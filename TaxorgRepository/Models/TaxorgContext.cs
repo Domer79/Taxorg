@@ -9,13 +9,6 @@ namespace TaxorgRepository.Models
 
     public sealed class TaxorgContext : RepositoryDataContext
     {
-        private static TaxorgContext _context;
-
-        public static TaxorgContext Context
-        {
-            get { return _context ?? (_context = new TaxorgContext()); }
-        }
-
         public TaxorgContext()
             : this(ApplicationSettings.ConnectionString)
         {

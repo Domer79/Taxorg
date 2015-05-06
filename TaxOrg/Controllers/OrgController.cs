@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.SessionState;
 using SystemTools.Extensions;
+using SystemTools.WebTools.Attributes;
 using SystemTools.WebTools.Helpers;
 using SystemTools.WebTools.Infrastructure;
 using TaxOrg.Tools;
@@ -26,7 +27,7 @@ namespace TaxOrg.Controllers
         {
         }
 
-//        [Authorize]
+        [ActionAlias("OrganizationTax", "Сгруппированные данные по налогам организации")]
         public ActionResult Index(GridSettings grid)
         {
             if (TaxorgTools.IsMaintenance)
@@ -39,6 +40,7 @@ namespace TaxOrg.Controllers
             return View();
         }
 
+        [ActionAlias("GetOrganizationTax", "Возвращает сгруппированные данные по налогам организации, по запросу Ajax")]
         public JsonResult GetData(GridSettings grid)
         {
             _repository = new TaxSummaryRepository(Session.SessionID, grid);
@@ -57,6 +59,7 @@ namespace TaxOrg.Controllers
             return jsonData;
         }
 
+        [ActionAlias("OrganizationEdit", "Редактирование данных о организации")]
         public ActionResult Edit(TaxSummary editObject)
         {
             var orgRepository = new OrganizationRepository();
@@ -81,6 +84,7 @@ namespace TaxOrg.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
+        [ActionAlias("OrganizationDelete", "Удаление организации")]
         public ActionResult Delete(int id)
         {
             try

@@ -86,6 +86,7 @@
     <Compile Include="Exceptions\ControllerActionAccessDeniedException.cs" />
     <Compile Include="Exceptions\LoginEmailOrPasswordInvalidException.cs" />
     <Compile Include="Exceptions\LogonPageNotConfiguredException.cs" />
+    <Compile Include="Exceptions\SecurityException2.cs" />
     <Compile Include="Extensions\AttributeCollectionExtension.cs" />
     <Compile Include="Extensions\ByteArrayExtensions.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />

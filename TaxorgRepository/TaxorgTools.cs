@@ -47,5 +47,10 @@ namespace TaxorgRepository
         {
             return ErrorRepository.Errors.GetLastError();
         }
+
+        public static void CheckSaveTaxAccess()
+        {
+            InnerTools.CheckSaveTaxAccess();
+        }
     }
 }

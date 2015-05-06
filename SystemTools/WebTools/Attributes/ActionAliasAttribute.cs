@@ -43,6 +43,7 @@ namespace SystemTools.WebTools.Attributes
         }
     }
 
+    [AttributeUsage(AttributeTargets.Class)]
     public class EntityAliasAttribute : AliasAttributeBase
     {
         public EntityAliasAttribute(string alias) 

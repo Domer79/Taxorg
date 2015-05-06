@@ -60,6 +60,7 @@ namespace MvcFileUploader
 
                 status = viewDataUploadFileResult;   
 
+
                 mvcFile.File.SaveAs(fullPath);
             }
             catch (Exception exc)

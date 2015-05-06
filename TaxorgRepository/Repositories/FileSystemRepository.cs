@@ -13,19 +13,19 @@ namespace TaxorgRepository.Repositories
 {
     public static class FileSystemRepository
     {
-        private static readonly TaxorgContext Context = TaxorgContext.Context;
-
         public static IQueryable<FileSystem> GetObjects()
         {
-            return Context.FileSystems;
+            var context = new TaxorgContext();
+            return context.FileSystems;
         }
 
         public static void InsertOrUpdate(FileSystem item)
         {
-            var fs = Context.FileSystems.FirstOrDefault(f => f.IdFileSystem == item.IdFileSystem);
+            var context = new TaxorgContext();
+            var fs = context.FileSystems.FirstOrDefault(f => f.IdFileSystem == item.IdFileSystem);
             if (fs != null)
             {
-                Context.Entry(item).State = EntityState.Modified;
+                context.Entry(item).State = EntityState.Modified;
                 return;
             }
 
@@ -34,7 +34,7 @@ namespace TaxorgRepository.Repositories
             fs.RemoteHostFileName = item.RemoteHostFileName;
             fs.IsCompressed = item.IsCompressed;
 
-            Context.FileSystems.Add(fs);
+            context.FileSystems.Add(fs);
         }
 
         public static void FileSave(HttpPostedFileBase file, string fullPath)
@@ -58,29 +58,30 @@ namespace TaxorgRepository.Repositories
 
         public static void SaveMetadata(FileSystem fileInstance)
         {
-            var fileSystem = Context.FileSystems.SingleOrDefault(fs => fs.IdFileSystem == fileInstance.IdFileSystem);
+            var context = new TaxorgContext();
+            var fileSystem = context.FileSystems.SingleOrDefault(fs => fs.IdFileSystem == fileInstance.IdFileSystem);
 
             if (fileSystem == null)
             {
-                Context.FileSystems.Add(fileInstance);
-                Context.SaveChanges();
+                context.FileSystems.Add(fileInstance);
+                context.SaveChanges();
             }
             else
             {
-                Context.Entry(fileInstance).State = EntityState.Modified;
+                context.Entry(fileInstance).State = EntityState.Modified;
 
             }
-            var fsFile = Context.FsFiles.SingleOrDefault(f => f.IdFileSystem == fileInstance.IdFileSystem);
+            var fsFile = context.FsFiles.SingleOrDefault(f => f.IdFileSystem == fileInstance.IdFileSystem);
             if (fsFile == null)
             {
-                Context.FsFiles.Add(new FsFile {IdFileSystem = fileInstance.IdFileSystem});
+                context.FsFiles.Add(new FsFile {IdFileSystem = fileInstance.IdFileSystem});
             }
             else
             {
-                Context.Entry(fsFile).State = EntityState.Modified;
+                context.Entry(fsFile).State = EntityState.Modified;
             }
 
-            Context.SaveChanges();
+            context.SaveChanges();
         }
 
         private static void PrepareRow(int idFileSystem)

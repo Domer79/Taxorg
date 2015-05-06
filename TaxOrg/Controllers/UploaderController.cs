@@ -4,6 +4,9 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using SystemTools.Extensions;
+using SystemTools.WebTools.Infrastructure;
+using DataRepository.Exceptions;
+using DataRepository.Infrastructure;
 using MvcFileUploader;
 using MvcFileUploader.Models;
 using TaxOrg.Tools;
@@ -12,6 +15,7 @@ using TaxorgRepository.Exceptions;
 using TaxorgRepository.Models;
 using TaxorgRepository.Repositories;
 using SystemTools;
+using TaxorgRepository.Tools;
 using Organization = TaxOrg.Tools.Organization;
 
 namespace TaxOrg.Controllers
@@ -84,19 +88,23 @@ namespace TaxOrg.Controllers
                         throw new InvalidOperationException(
                             "Произошла ошибка во время сохранения файла. Путь к файлу не инициализирован!");
 
-                    var csvReader = new CsvReader<Organization>(excelPath, (e, row) =>
-                    {
-                        Buges.SaveBugRow(row, e.Message); 
-                        e.SaveError();
-                    });
+                    TaxorgTools.CheckSaveTaxAccess();
 
-                    var taxRepository = new TaxRepository();
-                    foreach (var organization in csvReader)
+                    using (var csvReader = new CsvReader<Organization>(excelPath, (e, row) =>
+                                                                                            {
+                                                                                                Buges.SaveBugRow(row, e.Message);
+                                                                                                e.SaveError();
+                                                                                            }))
                     {
-                        taxRepository.SaveTaxToDb(organization.Inn, organization.TaxCode, organization.Date,
-                            organization.Tax);
+                        var taxRepository = new TaxRepository();
+
+                        foreach (var organization in csvReader)
+                        {
+                            taxRepository.SaveTaxToDb(organization.Inn, organization.TaxCode, organization.Date,
+                                organization.Tax);
+                        }
+
                     }
-
                 }
                 catch (Exception e)
                 {

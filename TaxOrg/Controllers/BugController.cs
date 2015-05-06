@@ -9,6 +9,7 @@ using SystemTools.WebTools.Helpers;
 using SystemTools.WebTools.Infrastructure;
 using Microsoft.Ajax.Utilities;
 using TaxOrg.Tools;
+using TaxorgRepository;
 using TaxorgRepository.Exceptions;
 using TaxorgRepository.Models;
 using TaxorgRepository.Repositories;
@@ -55,6 +56,7 @@ namespace TaxOrg.Controllers
                     var taxRepository = new TaxRepository();
                     try
                     {
+                        TaxorgTools.CheckSaveTaxAccess();
                         taxRepository.SaveTaxToDb(org.Inn, org.TaxCode, org.Date, org.Tax);
                         bug.Accept = true;
                     }
