@@ -1,11 +1,14 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using SystemTools.WebTools.Attributes;
 using DataRepository;
 
 namespace TaxorgRepository.Models
 {
     [Table("Errors")]
+    [EntityAlias("Error", "Хранит сведения об ошибке")]
+    [AuthorizeSkip]
     public class Error : ModelBase
     {
         [Key]
