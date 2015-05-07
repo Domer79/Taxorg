@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -51,8 +52,13 @@ namespace TaxOrg.Controllers
                         sessionTaxType.IdTaxType = idTaxType;
                         repoStt.InsertOrUpdate(sessionTaxType);
                         repoStt.SaveChanges();
-                        if(Session["stt"] == null)
-                            Session.Add("stt", idTaxType);
+                        if (Session["stt"] == null)
+                            Session.Add("stt", new List<int>{idTaxType});
+                        else
+                        {
+                            var list = (List<int>) Session["stt"];
+                            list.Add(idTaxType);
+                        }
                         return new HttpStatusCodeResult(HttpStatusCode.OK);
                     }
 

@@ -31,8 +31,9 @@ namespace SystemTools.Interfaces
         /// <param name="roleName">Имя роли</param>
         /// <param name="objectName">имя объекта</param>
         /// <param name="accessType">Тип доступа</param>
+        /// <param name="skipError">Если True метод пропускает возникшие ошибки и продолжает работу</param>
         /// <exception cref="ArgumentException">Возникает в случае отсутствия значений какого-либо из входных параметров в базе данных</exception>
-        void Grant(string roleName, string objectName, SecurityAccessType accessType);
+        void Grant(string roleName, string objectName, SecurityAccessType accessType, bool skipError = false);
 
         void SetAccessTypes<T>();
 

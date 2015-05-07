@@ -18,41 +18,63 @@
     @RenderSection("HeaderScripts", false)
     @RenderSection("Styles", false)
     <script type="text/javascript" src="../../Scripts/Service.js"></script>
-</head>
-    <body>
-        <script type="text/javascript">
-            var securityApiUri = '@ApplicationSettings.ApplicationVirtualPath' + 'api/SecurityApi/';
-            query.errorUrl = securityApiUri + "PostLastError";
-        </script>
-        <div>
-            @RenderBody() 
-        </div>
+    <style type="text/css">
+        .downloadModalBase {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1100;
+        }
 
-        @RenderSection("FooterScripts", false)
-    
-        <div id="globalHidden" class="hidden">
-        </div>
-    
-        <div id="messageDialog" class="modal fade in">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 id="messageDialogTitle" class="modal-title">Modal title</h4>
-                    </div>
-                    <div class="modal-body">
-                        <h4>
-                            <span id="messageDialogText" class="text-danger">
-                                dsfsadfsf
-                            </span>
-                        </h4>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
+        .ui-progressbar {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <script type="text/javascript">
+        var securityApiUri = '@ApplicationSettings.ApplicationVirtualPath' + 'api/SecurityApi/';
+        query.errorUrl = securityApiUri + "PostLastError";
+    </script>
+    <div>
+        @RenderBody()
+    </div>
+
+    @RenderSection("FooterScripts", false)
+
+    <div id="globalHidden" class="hidden">
+        <div class="downloadModalBase">
+            <div id="progressbar" style="position: relative; width: 300px; height: 30px; top: 50%; left: 50%; margin-left: -150px; margin-top: -15px">
+                <div style="position: absolute; left: 50%; top: 4px; font-weight: bold; text-shadow: 1px 1px 0 #fff; margin-left: -40px; z-index: 1101;">
+                    Загрузка...
                 </div>
             </div>
         </div>
+    </div>
 
-    </body>
+    <div id="messageDialog" class="modal fade in">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 id="messageDialogTitle" class="modal-title">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    <h4>
+                        <span id="messageDialogText" class="text-danger">
+                            dsfsadfsf
+                        </span>
+                    </h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
 </html>

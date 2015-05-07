@@ -44,7 +44,7 @@ namespace TaxOrg.Controllers
         public JsonResult GetData(GridSettings grid)
         {
             _repository = new TaxSummaryRepository(Session.SessionID, grid);
-            var jsonData = Json(_repository.Data);
+            var jsonData = Json(_repository.Data, JsonRequestBehavior.AllowGet);
             
 //            HttpContext.Response.Cache.SetCacheability(HttpCacheability.NoCache);
 //            HttpContext.Response.Cache.SetNoServerCaching();

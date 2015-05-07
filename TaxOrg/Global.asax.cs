@@ -9,6 +9,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using SystemTools;
 using SystemTools.ConfigSections;
+using SystemTools.Extensions;
 using SystemTools.WebTools.Helpers;
 using SystemTools.WebTools.Infrastructure;
 using DataRepository.Infrastructure;
@@ -49,6 +50,7 @@ namespace TaxOrg
         protected void Application_Error()
         {
             var exception = Server.GetLastError();
+            exception.SaveError();
             Server.ClearError();
             Session["errorObject"] = exception;
             ApplicationCustomizer.IsError = true;

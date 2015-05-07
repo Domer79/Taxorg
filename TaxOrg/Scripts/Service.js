@@ -21,9 +21,14 @@ query.doQuery = function (url, options) {
         contentType: contentType,
         data: data,
         method: method,
+        beforeSend: function () {
+            $(".downloadModalBase").clone().appendTo("body")
+            sadfasdfasdfasdfsadfsadf
+            $("#progressbar").progressbar({ value: false });
+        },
         error: function(jqXhr, textStatus, errorThrown) {
             if (error == undefined || typeof (error) != "function") {
-                showDialog(getErrorMessage(errorUrl, textStatus, errorThrown));
+                showDialog("Ошибка!", getErrorMessage(errorUrl, textStatus, errorThrown));
                 return;
             }
 
@@ -39,12 +44,12 @@ query.doQuery = function (url, options) {
 
 query.errorUrl = undefined;
 
-var showDialog = function(message) {
+var showDialog = function(title, message) {
     var messageDialog = $("#messageDialog");
     if (messageDialog.length == 0)
         return;
 
-    $("#messageDialogTitle").text("Ошибка!");
+    $("#messageDialogTitle").text(title);
     $("#messageDialogText").text(message);
 
     messageDialog = messageDialog.clone().appendTo($("body"));
@@ -68,3 +73,11 @@ var getErrorMessage = function (url, textStatus, errorThrown) {
 
     return lastError;
 };
+
+(function ($) {
+
+    $(document).ready(function () {
+//        $("#progressbar").progressbar({ value: false });
+    });
+    
+})(jQuery);

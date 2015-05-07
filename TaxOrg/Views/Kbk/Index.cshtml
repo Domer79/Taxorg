@@ -1,16 +1,28 @@
-﻿@using System.Web.Optimization
-@model IEnumerable<TaxorgRepository.Models.TaxType>
+﻿@model IEnumerable<TaxorgRepository.Models.TaxType>
 
 @{
     ViewBag.Title = "KbkList";
-    Layout = "";
+    Layout = "../Shared/_LayoutBase.cshtml";
 }
 
-@Scripts.Render("~/jquery")
-@Scripts.Render("~/jquery-ui")
-@Scripts.Render("~/scripts/bootstrap")
-@Styles.Render("~/Content/themes/overcast/css")
-@Styles.Render("~/bootstrap/css")
+@*@Scripts.Render("~/jquery")*@
+@*@Scripts.Render("~/jquery-ui")*@
+@*@Scripts.Render("~/scripts/bootstrap")*@
+@*@Styles.Render("~/Content/themes/overcast/css")*@
+@*@Styles.Render("~/bootstrap/css")*@
+
+@functions {
+
+
+    private string IsChecked(int idTaxType) {
+        if (Session["stt"] == null)
+            return string.Empty;
+        
+        var list = (List<int>)Session["stt"];
+        return list.Any(id => id == idTaxType) ? "checked" : string.Empty;
+    }
+
+}
 
 <div class="panel panel-collapse">
     <div class="alert alert-danger fade collapse" role="alert" aria-hidden="true" id="errorPanel">
@@ -26,9 +38,10 @@
                 <div class="col-lg-6">
                     <div class="input-group">
                         <span class="input-group-addon">
-                            <input type="checkbox" aria-label="@taxType.Name" value="@taxType.IdTaxType">
+                            <input type="checkbox" aria-label="@taxType.Name" value="@taxType.IdTaxType" @IsChecked(taxType.IdTaxType)>
                         </span>
-                        <span class="form-control">@taxType.Code</span>
+                        <span class="input-group-addon" style="width: 200px">@taxType.Code</span>
+                        <span class="form-control">@taxType.Name</span>
                     </div><!-- /input-group -->
                 </div><!-- /.col-lg-6 -->
             </div>
@@ -39,20 +52,19 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $(":checkbox").change(function(event) {
-            $.ajax({
+            query.doQuery({
                 type: "POST",
                 url: "@Url.Action("SetStt")",
                 async: true,
                 cache: false,
-                dataType: "json",
                 data: {idTaxType: $(this).val(), added: $(this).prop("checked")},
-                error: function (jqXhr, textStatus, errorThrown) {
-                    if (textStatus == "parsererror")
-                        return;
-
-                    $("#errorMessage").text(errorThrown);
-                    $("#errorPanel").collapse('show');
-                }
+//                error: function (jqXhr, textStatus, errorThrown) {
+//                    if (textStatus == "parsererror")
+//                        return;
+//
+//                    $("#errorMessage").text(errorThrown);
+//                    $("#errorPanel").collapse('show');
+//                }
             });
         });
     });
