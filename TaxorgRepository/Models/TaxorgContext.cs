@@ -216,6 +216,14 @@ namespace TaxorgRepository.Models
 
             #endregion
 
+            #region Sessions
+
+            modelBuilder.Entity<Session>().Property(e => e.Created).HasColumnType("smalldatetime");
+            modelBuilder.Entity<Session>().Property(e => e.Expires).HasColumnType("smalldatetime");
+            modelBuilder.Entity<Session>().Property(e => e.LockDate).HasColumnType("smalldatetime");
+
+            #endregion
+
         }
     }
 }

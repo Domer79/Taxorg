@@ -30,6 +30,16 @@
             z-index: 1100;
         }
 
+        .downloadbar {
+            position: relative; 
+            width: 300px; 
+            height: 30px; 
+            top: 50%; 
+            left: 50%; 
+            margin-left: -150px; 
+            margin-top: -15px
+        }
+
         .ui-progressbar {
             position: relative;
         }
@@ -48,7 +58,7 @@
 
     <div id="globalHidden" class="hidden">
         <div class="downloadModalBase">
-            <div id="progressbar" style="position: relative; width: 300px; height: 30px; top: 50%; left: 50%; margin-left: -150px; margin-top: -15px">
+            <div id="progressbar" class="downloadbar">
                 <div style="position: absolute; left: 50%; top: 4px; font-weight: bold; text-shadow: 1px 1px 0 #fff; margin-left: -40px; z-index: 1101;">
                     Загрузка...
                 </div>

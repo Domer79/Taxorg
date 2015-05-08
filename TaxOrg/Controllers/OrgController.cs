@@ -45,17 +45,6 @@ namespace TaxOrg.Controllers
         {
             _repository = new TaxSummaryRepository(Session.SessionID, grid);
             var jsonData = Json(_repository.Data, JsonRequestBehavior.AllowGet);
-            
-//            HttpContext.Response.Cache.SetCacheability(HttpCacheability.NoCache);
-//            HttpContext.Response.Cache.SetNoServerCaching();
-//            HttpContext.Response.Cache.SetNoStore();
-//            HttpContext.Response.Cache.SetMaxAge(new TimeSpan(0, 0, 0, 5));
-//            HttpContext.Response.Cache.SetProxyMaxAge(new TimeSpan(0, 0, 0, 5));
-//            HttpContext.Response.Cache.SetOmitVaryStar(true);
-//            var now = DateTime.Now;
-//            HttpContext.Response.Cache.SetExpires(new DateTime(now.Ticks + 50000000));
-//            HttpContext.Response.Cache.SetNoTransforms();
-
             return jsonData;
         }
 

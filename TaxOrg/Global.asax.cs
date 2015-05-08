@@ -57,6 +57,10 @@ namespace TaxOrg
             Response.RedirectToRoute(new { AdditionalConfiguration.Instance.ErrorPage.Controller, AdditionalConfiguration.Instance.ErrorPage.Action });
         }
 
+        protected void Session_Start()
+        {
+        }
+
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
             Security.RenewContext();

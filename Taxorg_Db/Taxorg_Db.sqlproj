@@ -70,6 +70,7 @@
     <Folder Include="Routina" />
     <Folder Include="Routina\v1.1.2" />
     <Folder Include="Routina\v2.0.0" />
+    <Folder Include="Routina\v2.1.0" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Organization.sql" />
@@ -112,6 +113,7 @@
     <None Include="Routina\v1.1.2\rollback.sql" />
     <None Include="Routina\v2.0.0\Script.sql" />
     <None Include="Routina\v2.0.0\Rollback.sql" />
+    <None Include="Routina\v2.1.0\Script.sql" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

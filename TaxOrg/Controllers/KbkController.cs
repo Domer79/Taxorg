@@ -30,18 +30,11 @@ namespace TaxOrg.Controllers
             {
                 var sessionId = Session.SessionID;
                 var repoStt = new Repository<SessionTaxType>();
-                var repoSessions = new SessionRepository();
-
-                if (!repoSessions.Any(s => s.SessionId == sessionId))
-                {
-                    repoSessions.InsertOrUpdate(new Session(sessionId));
-                    repoSessions.SaveChanges();
-                }
 
                 SessionTaxType sessionTaxType = null;
                 //Если требуется добавить код КБК,
                 if(added)
-                    //а он уже есть для этой сессии прерываем операцию и говорим, что операция прошла успешно.
+                    //а он уже есть для этой сессии, прерываем операцию и говорим, что операция прошла успешно.
                     if (repoStt.Any(stt => stt.SessionId == sessionId && stt.IdTaxType == idTaxType))
                         return new HttpStatusCodeResult(HttpStatusCode.OK);
                     //Иначе добавляем его в эту сессию

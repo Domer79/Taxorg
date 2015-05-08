@@ -5,6 +5,9 @@ query.doQuery = function (url, options) {
         options = url;
         url = options.url;
     }
+
+    //#region Options
+
     var async = options.async || true;
     var cache = options.cache || true;
     var contentType = options.contextType || "application/x-www-form-urlencoded; charset=UTF-8";
@@ -15,6 +18,25 @@ query.doQuery = function (url, options) {
     var uri = url || options.url;
     var errorUrl = options.errorUrl || query.errorUrl;
 
+    //#endregion
+
+    //#region Variables
+
+    var downloadBar;
+
+    //#endregion
+
+    //#region private functions
+
+    function downloadBarDestroy() {
+        if (downloadBar != undefined) {
+            downloadBar.children("#progressbar").progressbar({ value: false });
+            downloadBar.remove();
+        }
+    }
+
+    //#endregion
+
     $.ajax(uri, {
         async: async,
         cache: cache,
@@ -22,27 +44,34 @@ query.doQuery = function (url, options) {
         data: data,
         method: method,
         beforeSend: function () {
-            $(".downloadModalBase").clone().appendTo("body")
-            sadfasdfasdfasdfsadfsadf
-            $("#progressbar").progressbar({ value: false });
+            downloadBar = $(".downloadModalBase").clone().appendTo($("body")).attr("id", "downloadBar");
+            downloadBar.children("#progressbar").progressbar({ value: false });
         },
-        error: function(jqXhr, textStatus, errorThrown) {
-            if (error == undefined || typeof (error) != "function") {
-                showDialog("Ошибка!", getErrorMessage(errorUrl, textStatus, errorThrown));
-                return;
-            }
+        error: function (jqXhr, textStatus, errorThrown) {
+            try {
+                if (error == undefined || typeof (error) != "function") {
+                    showDialog("Ошибка!", getErrorMessage(errorUrl, textStatus, errorThrown));
+                    return;
+                }
 
-            error(jqXhr, textStatus, errorThrown);
+                error(jqXhr, textStatus, errorThrown);
+            } finally {
+                downloadBarDestroy();
+            }
         },
         success: function(ajaxData, textStatus, jqXhr) {
-            if (success != undefined && typeof (success) == "function") {
-                success(ajaxData, textStatus, jqXhr);
-            }
+                if (success != undefined && typeof (success) == "function") {
+                    success(ajaxData, textStatus, jqXhr);
+                }
+        },
+        complete: function() {
+            downloadBarDestroy();
         }
     });
 };
 
 query.errorUrl = undefined;
+
 
 var showDialog = function(title, message) {
     var messageDialog = $("#messageDialog");
