@@ -26,24 +26,24 @@ namespace TaxorgRepository.Models
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public string SessionId { get; set; }
 
-        [Required]
-        public DateTime Created { get; set; }
-
-        [Required]
-        public DateTime Expires { get; set; }
-
-        [Required]
-        public DateTime LockDate { get; set; }
-
-        [Required]
-        public int LockId { get; set; }
-
-        [Required]
-        public bool Locked { get; set; }
-
-        public byte[] ItemContent { get; set; }
-
-        [Required]
+//        [Required]
+//        public DateTime Created { get; set; }
+//
+//        [Required]
+//        public DateTime Expires { get; set; }
+//
+//        [Required]
+//        public DateTime LockDate { get; set; }
+//
+//        [Required]
+//        public int LockId { get; set; }
+//
+//        [Required]
+//        public bool Locked { get; set; }
+//
+//        public byte[] ItemContent { get; set; }
+//
+//        [Required]
         public int UserId { get; set; }
 
         public ICollection<SessionTaxType> SessionTaxTypes { get; set; }

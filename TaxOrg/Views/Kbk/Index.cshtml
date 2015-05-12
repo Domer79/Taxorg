@@ -15,10 +15,7 @@
 
 
     private string IsChecked(int idTaxType) {
-        if (Session["stt"] == null)
-            return string.Empty;
-        
-        var list = (List<int>)Session["stt"];
+        var list = (List<int>)ViewBag.TaxTypeCollection;
         return list.Any(id => id == idTaxType) ? "checked" : string.Empty;
     }
 

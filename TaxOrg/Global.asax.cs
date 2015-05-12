@@ -59,6 +59,15 @@ namespace TaxOrg
 
         protected void Session_Start()
         {
+            var user = ((UserIdentity) Security.Instance.Principal.Identity).User;
+            Session["User"] = user;
+            var repo = new SessionRepository();
+            var session = new Session();
+            session.SessionId = Session.SessionID;
+            session.UserId = user.IdUser;
+            repo.InsertOrUpdate(session);
+            repo.SaveChanges();
+            ApplicationCustomizer.CurrentSessionId = session.SessionId;
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)

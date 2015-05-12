@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using SystemTools.Extensions;
 using SystemTools.WebTools.Attributes;
@@ -47,7 +48,22 @@ namespace SystemTools.WebTools.Infrastructure
 
         private static IEnumerable<MethodInfo> GetControllerMethods(Type type)
         {
-            return type.GetMethods().Where(mi => mi.ReturnType.Is<ActionResult>());
+            return type.GetMethods().Where(mi => mi.ReturnType.Is<ActionResult>() || IsTaskActionResult(mi.ReturnType));
+        }
+
+        private static bool IsTaskActionResult(Type returnType)
+        {
+            if (returnType.IsInterface)
+                return false;
+            check |= returnType.IsGenericTypeDefinition;
+            if (check)
+                check |= returnType.GetGenericTypeDefinition() != typeof (Task<>);
+
+            check |= returnType.GetGenericArguments()[0].Is<ActionResult>();
+//            if (returnType.IsGenericTypeDefinition && returnType.GetGenericTypeDefinition() != typeof (Task<>))
+//                return false;
+
+            return check;
         }
 
         public void Add<TController>() where TController : class, IController

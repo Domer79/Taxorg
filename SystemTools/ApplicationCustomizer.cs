@@ -68,6 +68,7 @@ namespace SystemTools
         }
 
         public static ApplicationType ApplicationType { get; set; }
+        public static string CurrentSessionId { get; set; }
     }
 
     public enum ApplicationType

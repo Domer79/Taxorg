@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using SystemTools.Extensions;
 using TaxorgRepository.Models;
@@ -12,10 +13,30 @@ namespace TaxOrg.Controllers
     public class KbkController : Controller
     {
         // GET: Kbk
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             var taxTypeRepository = new TaxTypeRepository();
+            ViewBag.TaxTypeCollection = await GetTaxTypeCollectionTaskAsync(); 
             return View(taxTypeRepository);
+        }
+
+        private void SetTaxTypeCollection()
+        {
+            var taxTypeCollection =
+
+            ViewBag.TaxTypeCollection = GetTaxTypeCollectionTaskAsync(); 
+        }
+
+        private async Task<IEnumerable<int>> GetTaxTypeCollectionTaskAsync()
+        {
+            var collection = await Task.Run(() => GetTaxTypeCollection());
+            return collection;
+        }
+
+        private IEnumerable<int> GetTaxTypeCollection()
+        {
+            var repo = new Repository<SessionTaxType>();
+            return repo.Where(stt => stt.SessionId == Session.SessionID).Select(stt => stt.IdTaxType);
         }
 
         /// <summary>
@@ -45,13 +66,13 @@ namespace TaxOrg.Controllers
                         sessionTaxType.IdTaxType = idTaxType;
                         repoStt.InsertOrUpdate(sessionTaxType);
                         repoStt.SaveChanges();
-                        if (Session["stt"] == null)
-                            Session.Add("stt", new List<int>{idTaxType});
-                        else
-                        {
-                            var list = (List<int>) Session["stt"];
-                            list.Add(idTaxType);
-                        }
+//                        if (Session["stt"] == null)
+//                            Session.Add("stt", new List<int>{idTaxType});
+//                        else
+//                        {
+//                            var list = (List<int>) Session["stt"];
+//                            list.Add(idTaxType);
+//                        }
                         return new HttpStatusCodeResult(HttpStatusCode.OK);
                     }
 
