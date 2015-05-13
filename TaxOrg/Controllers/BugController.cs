@@ -57,7 +57,7 @@ namespace TaxOrg.Controllers
                     try
                     {
                         TaxorgTools.CheckSaveTaxAccess();
-                        taxRepository.SaveTaxToDb(org.Inn, org.TaxCode, org.Date, org.Tax);
+                        taxRepository.SaveTaxToDb(org.Inn, org.TaxCode, org.TaxName, org.Date, org.Tax);
                         bug.Accept = true;
                     }
                     catch (Exception e)

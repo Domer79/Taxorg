@@ -38,12 +38,26 @@ namespace TaxorgRepository.Repositories
             return tax;
         }
 
-        public void SaveTaxToDb(string inn, string taxCode, DateTime dateLoad, decimal taxSum)
+        public void SaveTaxToDb(string inn, string taxCode, string taxName, DateTime dateLoad, decimal taxSum)
         {
             var db = Context.Database;
             try
             {
-                db.ExecuteSqlCommand("exec SaveTax @p0, @p1, @p2, @p3", inn, taxCode, ((YearMonth)dateLoad).ToString(), taxSum);
+                db.ExecuteSqlCommand("exec SaveTax @p0, @p1, @p2, @p3, @p4", inn, taxCode, taxName, ((YearMonth)dateLoad).ToString(), taxSum);
+            }
+            catch (Exception e)
+            {
+                e.SaveError();
+                throw new SaveTaxException(e.Message);
+            }
+        }
+
+        public void DeletePeriod(DateTime period)
+        {
+            var db = Context.Database;
+            try
+            {
+                db.ExecuteSqlCommand("delete from Tax where period = @p0", ((YearMonth)period).ToString());
             }
             catch (Exception e)
             {

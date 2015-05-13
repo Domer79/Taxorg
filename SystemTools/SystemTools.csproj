@@ -124,6 +124,7 @@
     <Compile Include="WebTools\HttpModules\IdentificationModule.cs" />
     <Compile Include="WebTools\HttpModules\ServiceHttpModule.cs" />
     <Compile Include="WebTools\Infrastructure\ControllerCollection.cs" />
+    <Compile Include="WebTools\Infrastructure\ControllerInfo.cs" />
     <Compile Include="WebTools\Infrastructure\GridModelBinder.cs" />
     <Compile Include="WebTools\Infrastructure\GridSettings.cs" />
     <Compile Include="WebTools\Infrastructure\LinqExtensions.cs" />

@@ -102,6 +102,7 @@
     <Build Include="dbo\Programming\Functions\GetSimpleTax.sql" />
     <Build Include="dbo\Tables\ModifyProcedureWork.sql" />
     <None Include="Routina\v1.1.2\script.sql" />
+    <None Include="Routina\SecuritySevice_Important.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Taxorg_Db.publish.xml" />
@@ -109,7 +110,7 @@
     <None Include="Taxorg_Db.To_Vmssqlserver.publish.xml" />
     <None Include="Routina\Script v1.1.sql" />
     <None Include="Routina\v1.1.1.0.sql" />
-    <None Include="Routina\Service.sql" />
+    <None Include="Routina\Service_Important.sql" />
     <None Include="Routina\v1.1.2\rollback.sql" />
     <None Include="Routina\v2.0.0\Script.sql" />
     <None Include="Routina\v2.0.0\Rollback.sql" />

@@ -48,8 +48,8 @@ namespace TaxOrg.Controllers
                         //note how we are adding an additional value to be posted with delete request
                         //and giving it the same value posted with upload
                         x.DeleteUrl = Url.Action("DeleteFile", new {entityId = entityId});
-                    x.StorageDirectory = Server.MapPath("~/Content/uploads");
-                    x.UrlPrefix = "/Content/uploads";// this is used to generate the relative url of the file
+                        x.StorageDirectory = Server.MapPath("~/Content/uploads");
+                        x.UrlPrefix = "/Content/uploads"; // this is used to generate the relative url of the file
 //                        x.UrlPrefix = ApplicationCustomizer.ExcelFilePath;
                         // this is used to generate the relative url of the file
 //                        x.StorageDirectory = ApplicationCustomizer.ExcelFilePath;
@@ -97,10 +97,12 @@ namespace TaxOrg.Controllers
                                                                                             }))
                     {
                         var taxRepository = new TaxRepository();
+                        var firstOrg = csvReader.First();
+                        taxRepository.DeletePeriod(firstOrg.Date);
 
                         foreach (var organization in csvReader)
                         {
-                            taxRepository.SaveTaxToDb(organization.Inn, organization.TaxCode, organization.Date,
+                            taxRepository.SaveTaxToDb(organization.Inn, organization.TaxCode, organization.TaxName, organization.Date,
                                 organization.Tax);
                         }
 

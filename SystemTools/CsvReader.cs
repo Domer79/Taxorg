@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Permissions;
 using System.Text;
+using System.Text.RegularExpressions;
 using SystemTools.Interfaces;
 
 namespace SystemTools
@@ -55,10 +57,7 @@ namespace SystemTools
                 var s = str.ReadLine();
                 do
                 {
-                    _hash.Add(new CsvRow<T>(
-                        //TODO Оставить просто s
-                        new StringBuilder(s).ToString())
-                        );
+                    _hash.Add(new CsvRow<T>(s));
                     s = str.ReadLine();
                 } while (s != null);
             }
@@ -98,7 +97,7 @@ namespace SystemTools
 
         private string[] Row
         {
-            get { return _row = (_row = Split()); }
+            get { return _row = (_row = Split2()); }
         }
 
         private string[] Split()
@@ -111,6 +110,34 @@ namespace SystemTools
             {
                 return _strRow.Split(new[] { ',' });
             }
+        }
+
+#if DEBUG
+        private string _splited2Row;
+#endif
+
+        private string[] Split2()
+        {
+            var rx = new Regex(@"^(?<period>\d{2}\.\d{2}\.\d{4});(?<inn>\d{10});(?<kbk>\d{17,20});(?<kbkname>.+);(?<balance>.+)");
+            var match = rx.Match(_strRow);
+
+            if (!match.Success)
+                throw new InvalidOperationException("CsvRow. Входная строка имеет неверный формат");
+
+            var result = new[]
+            {
+                match.Groups["period"].Value, 
+                match.Groups["inn"].Value, 
+                match.Groups["kbk"].Value,
+                match.Groups["kbkname"].Value, 
+                match.Groups["balance"].Value
+            };
+
+#if DEBUG
+            _splited2Row = result.Aggregate((c, n) => c + "|" + n);
+#endif
+
+            return result;
         }
 
         public T GetObject(CsvReaderErrorHandler errorHandler)

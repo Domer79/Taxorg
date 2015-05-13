@@ -1,7 +1,4 @@
 using System;
-using System.Linq;
-using TaxorgRepository.Models;
-using TaxorgRepository.Repositories;
 using SystemTools;
 
 namespace TaxOrg.Tools
@@ -17,7 +14,10 @@ namespace TaxOrg.Tools
         [ExcelColumn(3, "КБК")]
         public string TaxCode { get; set; }
 
-        [ExcelColumn(4, "Сумма долга")]
+        [ExcelColumn(4, "Наименование КБК")]
+        public string TaxName { get; set; }
+
+        [ExcelColumn(5, "Сумма долга")]
         public decimal Tax { get; set; }
 
         public override string ToString()

@@ -20,13 +20,6 @@ namespace TaxOrg.Controllers
             return View(taxTypeRepository);
         }
 
-        private void SetTaxTypeCollection()
-        {
-            var taxTypeCollection =
-
-            ViewBag.TaxTypeCollection = GetTaxTypeCollectionTaskAsync(); 
-        }
-
         private async Task<IEnumerable<int>> GetTaxTypeCollectionTaskAsync()
         {
             var collection = await Task.Run(() => GetTaxTypeCollection());
@@ -36,7 +29,7 @@ namespace TaxOrg.Controllers
         private IEnumerable<int> GetTaxTypeCollection()
         {
             var repo = new Repository<SessionTaxType>();
-            return repo.Where(stt => stt.SessionId == Session.SessionID).Select(stt => stt.IdTaxType);
+            return repo.Where(stt => stt.SessionId == Session.SessionID).Select(stt => stt.IdTaxType).ToList();
         }
 
         /// <summary>

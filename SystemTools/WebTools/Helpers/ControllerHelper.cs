@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using SystemTools.Extensions;
 using SystemTools.WebTools.Infrastructure;
 
@@ -90,7 +92,28 @@ namespace SystemTools.WebTools.Helpers
 
         public static ControllerCollection ControllerCollection
         {
-            get { return _controllerCollection ?? (_controllerCollection = new ControllerCollection()); }
+            get
+            {
+                if (_controllerCollection == null)
+                    InitControllerCollection();
+
+                return _controllerCollection;
+            }
+        }
+
+        public static void InitControllerCollection()
+        {
+            lock (LockObject)
+            {
+                _controllerCollection = GetControllerCollectionTaskAsync().Result;
+            }
+        }
+
+        private static readonly object LockObject = new object();
+
+        private async static Task<ControllerCollection> GetControllerCollectionTaskAsync()
+        {
+            return await Task.Run(() => new ControllerCollection());
         }
     }
 }

@@ -3,12 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using SystemTools.Extensions;
-using SystemTools.WebTools.Attributes;
-using SystemTools.WebTools.Helpers;
 
 namespace SystemTools.WebTools.Infrastructure
 {
@@ -36,14 +33,32 @@ namespace SystemTools.WebTools.Infrastructure
             get { return _controllerInfoList; }
         }
 
+        private async void InitAsync()
+        {
+            var types = GetControllerTypes();
+
+            await Task.Run(() =>
+            {
+                foreach (var type in types)
+                {
+                    Add(type);
+                }
+            });
+        }
+
         private void Init()
         {
-            var types = Assemblies.SelectMany(a => a.GetTypes()).Where(t => t.GetInterface("IController") != null);
+            var types = GetControllerTypes();
 
             foreach (var type in types)
             {
                 Add(type);
             }
+        }
+
+        private static IEnumerable<Type> GetControllerTypes()
+        {
+            return Assemblies.SelectMany(a => a.GetTypes()).Where(t => t.GetInterface("IController") != null);
         }
 
         private static IEnumerable<MethodInfo> GetControllerMethods(Type type)
@@ -55,15 +70,17 @@ namespace SystemTools.WebTools.Infrastructure
         {
             if (returnType.IsInterface)
                 return false;
-            check |= returnType.IsGenericTypeDefinition;
-            if (check)
-                check |= returnType.GetGenericTypeDefinition() != typeof (Task<>);
 
-            check |= returnType.GetGenericArguments()[0].Is<ActionResult>();
-//            if (returnType.IsGenericTypeDefinition && returnType.GetGenericTypeDefinition() != typeof (Task<>))
-//                return false;
+            if (!returnType.IsGenericType)
+                return false;
 
-            return check;
+            if (returnType.GetGenericTypeDefinition() != typeof (Task<>))
+                return  false;
+
+            if (!returnType.GetGenericArguments()[0].Is<ActionResult>())
+                return false;
+
+            return true;
         }
 
         public void Add<TController>() where TController : class, IController
@@ -125,101 +142,6 @@ namespace SystemTools.WebTools.Infrastructure
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
-        }
-    }
-
-    public class ControllerInfo
-    {
-        private readonly MethodInfo _methodInfo;
-
-        /// <summary>
-        /// Инициализирует новый экземпляр класса <see cref="T:System.Object"/>.
-        /// </summary>
-        public ControllerInfo()
-        {
-        }
-
-        /// <summary>
-        /// Инициализирует новый экземпляр класса <see cref="T:System.Object"/>.
-        /// </summary>
-        public ControllerInfo(MethodInfo methodInfo)
-        {
-            if (methodInfo == null) 
-                throw new ArgumentNullException("methodInfo");
-
-            if (methodInfo.DeclaringType == null)
-                throw new InvalidOperationException("У метода отсутствует объявляющий его тип");
-
-            _methodInfo = methodInfo;
-        }
-
-        public string Controller
-        {
-            get
-            {
-                const string pattern = @"(?i)(?<name>\w+)(controller)";
-
-                if (!ControllerFullName.RxIsMatch(pattern))
-                    throw new InvalidOperationException("Имя контроллера не соответствует соглашению");
-
-                var rx = new Regex(pattern);
-                return rx.Match(ControllerFullName).Groups["name"].Value;
-
-            }
-        }
-
-        internal string ControllerFullName
-        {
-// ReSharper disable once PossibleNullReferenceException
-            get { return MethodInfo.DeclaringType.Name; }
-        }
-
-        public string Action
-        {
-            get { return MethodInfo.Name; }
-        }
-
-        public string Alias
-        {
-            get
-            {
-                return ActionAliasAttribute != null ? ActionAliasAttribute.Alias : ControllerActionName;
-            }
-        }
-
-        private string ControllerActionName
-        {
-            get { return string.Format("{0}{1}", Controller, Action); }
-        }
-
-        public AliasAttributeBase ActionAliasAttribute
-        {
-            get
-            {
-                var aliasAttribute = ((ActionAliasAttribute) Attribute.GetCustomAttribute(MethodInfo, typeof (ActionAliasAttribute)));
-                return aliasAttribute ?? new ActionAliasAttribute(ControllerActionName);
-            }
-        }
-
-        public string Description
-        {
-            get { return ActionAliasAttribute != null ? ActionAliasAttribute.Description : null; }
-        }
-
-        public MethodInfo MethodInfo
-        {
-            get { return _methodInfo; }
-        }
-
-        /// <summary>
-        /// Возвращает строку, которая представляет текущий объект.
-        /// </summary>
-        /// <returns>
-        /// Строка, представляющая текущий объект.
-        /// </returns>
-        public override string ToString()
-        {
-            return ControllerHelper.GetActionPath(Controller, Action);
         }
     }
 }
