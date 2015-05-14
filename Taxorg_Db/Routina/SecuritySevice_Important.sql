@@ -1,91 +1,116 @@
-﻿use Taxorg
-go
-
-/******************   DROP   **********************/
+﻿/******************   DROP   **********************/
 
 /****** Object:  View [sec].[GroupsGrant]    Script Date: 13.05.2015 16:30:25 ******/
-DROP VIEW [sec].[GroupsGrant]
+if Exists(select 1 from INFORMATION_SCHEMA.VIEWS where TABLE_SCHEMA = 'sec' and table_name = 'GroupsGrant')
+	DROP VIEW [sec].[GroupsGrant]
 GO
 /****** Object:  View [sec].[UsersGrant]    Script Date: 13.05.2015 16:30:25 ******/
-DROP VIEW [sec].[UsersGrant]
+if Exists(select 1 from INFORMATION_SCHEMA.VIEWS where TABLE_SCHEMA = 'sec' and table_name = 'UsersGrant')
+	DROP VIEW [sec].[UsersGrant]
 GO
 /****** Object:  View [sec].[RoleOfMember]    Script Date: 13.05.2015 16:30:25 ******/
-DROP VIEW [sec].[RoleOfMember]
+if Exists(select 1 from INFORMATION_SCHEMA.VIEWS where TABLE_SCHEMA = 'sec' and table_name = 'RoleOfMember')
+	DROP VIEW [sec].[RoleOfMember]
 GO
 /****** Object:  View [sec].[Members]    Script Date: 13.05.2015 16:30:25 ******/
-DROP VIEW [sec].[Members]
+if Exists(select 1 from INFORMATION_SCHEMA.VIEWS where TABLE_SCHEMA = 'sec' and table_name = 'Members')
+	DROP VIEW [sec].[Members]
 GO
 /****** Object:  View [sec].[Grants]    Script Date: 13.05.2015 16:30:25 ******/
-DROP VIEW [sec].[Grants]
+if Exists(select 1 from INFORMATION_SCHEMA.VIEWS where TABLE_SCHEMA = 'sec' and table_name = 'Grants')
+	DROP VIEW [sec].[Grants]
 GO
 /****** Object:  View [sec].[UserGroupsDetail]    Script Date: 13.05.2015 16:30:25 ******/
-DROP VIEW [sec].[UserGroupsDetail]
+if Exists(select 1 from INFORMATION_SCHEMA.VIEWS where TABLE_SCHEMA = 'sec' and table_name = 'UserGroupsDetail')
+	DROP VIEW [sec].[UserGroupsDetail]
 GO
 /****** Object:  View [sec].[Users]    Script Date: 13.05.2015 16:30:25 ******/
-DROP VIEW [sec].[Users]
+if Exists(select 1 from INFORMATION_SCHEMA.VIEWS where TABLE_SCHEMA = 'sec' and table_name = 'Users')
+	DROP VIEW [sec].[Users]
 GO
 /****** Object:  View [sec].[Groups]    Script Date: 13.05.2015 16:30:25 ******/
-DROP VIEW [sec].[Groups]
+if Exists(select 1 from INFORMATION_SCHEMA.VIEWS where TABLE_SCHEMA = 'sec' and table_name = 'Groups')
+	DROP VIEW [sec].[Groups]
 GO
 /****** Object:  UserDefinedFunction [sec].[IsAllowByName]    Script Date: 13.05.2015 16:30:25 ******/
-DROP FUNCTION [sec].[IsAllowByName]
+if Exists(select 1 from sys.objects where type_desc = 'SQL_SCALAR_FUNCTION' and schema_id = SCHEMA_ID(N'sec') and name = 'IsAllowByName')
+	DROP FUNCTION [sec].[IsAllowByName]
 GO
 /****** Object:  UserDefinedFunction [sec].[IsAllowById]    Script Date: 13.05.2015 16:30:25 ******/
-DROP FUNCTION [sec].[IsAllowById]
+if Exists(select * from sys.objects where type_desc = 'SQL_SCALAR_FUNCTION' and schema_id = SCHEMA_ID(N'sec') and name = 'IsAllowById')
+	DROP FUNCTION [sec].[IsAllowById]
 GO
 /****** Object:  UserDefinedFunction [sec].[GetSettings]    Script Date: 13.05.2015 16:30:25 ******/
-DROP FUNCTION [sec].[GetSettings]
+if Exists(select 1 from sys.objects where type_desc = 'SQL_SCALAR_FUNCTION' and schema_id = SCHEMA_ID(N'sec') and name = 'GetSettings')
+	DROP FUNCTION [sec].[GetSettings]
 GO
 /****** Object:  UserDefinedFunction [sec].[GetIdentificationMode]    Script Date: 13.05.2015 16:30:25 ******/
-DROP FUNCTION [sec].[GetIdentificationMode]
+if Exists(select 1 from sys.objects where type_desc = 'SQL_SCALAR_FUNCTION' and schema_id = SCHEMA_ID(N'sec') and name = 'GetIdentificationMode')
+	DROP FUNCTION [sec].[GetIdentificationMode]
 GO
 /****** Object:  StoredProcedure [sec].[UpdateUserGroup]    Script Date: 13.05.2015 16:30:25 ******/
-DROP PROCEDURE [sec].[UpdateUserGroup]
+if Exists(select 1 from sys.procedures where schema_id = SCHEMA_ID(N'sec') and type_desc = 'SQL_STORED_PROCEDURE' and name = 'UpdateUserGroup')
+	DROP PROCEDURE [sec].[UpdateUserGroup]
 GO
 /****** Object:  StoredProcedure [sec].[UpdateUser]    Script Date: 13.05.2015 16:30:25 ******/
-DROP PROCEDURE [sec].[UpdateUser]
+if Exists(select 1 from sys.procedures where schema_id = SCHEMA_ID(N'sec') and type_desc = 'SQL_STORED_PROCEDURE' and name = 'UpdateUser')
+	DROP PROCEDURE [sec].[UpdateUser]
 GO
 /****** Object:  StoredProcedure [sec].[UpdateMemberRole]    Script Date: 13.05.2015 16:30:25 ******/
-DROP PROCEDURE [sec].[UpdateMemberRole]
+if Exists(select 1 from sys.procedures where schema_id = SCHEMA_ID(N'sec') and type_desc = 'SQL_STORED_PROCEDURE' and name = 'UpdateMemberRole')
+	DROP PROCEDURE [sec].[UpdateMemberRole]
 GO
 /****** Object:  StoredProcedure [sec].[UpdateGroup]    Script Date: 13.05.2015 16:30:25 ******/
-DROP PROCEDURE [sec].[UpdateGroup]
+if Exists(select 1 from sys.procedures where schema_id = SCHEMA_ID(N'sec') and type_desc = 'SQL_STORED_PROCEDURE' and name = 'UpdateGroup')
+	DROP PROCEDURE [sec].[UpdateGroup]
 GO
 /****** Object:  StoredProcedure [sec].[UpdateGrant]    Script Date: 13.05.2015 16:30:25 ******/
-DROP PROCEDURE [sec].[UpdateGrant]
+if Exists(select 1 from sys.procedures where schema_id = SCHEMA_ID(N'sec') and type_desc = 'SQL_STORED_PROCEDURE' and name = 'UpdateGrant')
+	DROP PROCEDURE [sec].[UpdateGrant]
 GO
 /****** Object:  StoredProcedure [sec].[SetIdentificationMode]    Script Date: 13.05.2015 16:30:25 ******/
-DROP PROCEDURE [sec].[SetIdentificationMode]
+if Exists(select 1 from sys.procedures where schema_id = SCHEMA_ID(N'sec') and type_desc = 'SQL_STORED_PROCEDURE' and name = 'SetIdentificationMode')
+	DROP PROCEDURE [sec].[SetIdentificationMode]
 GO
 /****** Object:  StoredProcedure [sec].[DeleteUserFromGroup]    Script Date: 13.05.2015 16:30:25 ******/
-DROP PROCEDURE [sec].[DeleteUserFromGroup]
+if Exists(select 1 from sys.procedures where schema_id = SCHEMA_ID(N'sec') and type_desc = 'SQL_STORED_PROCEDURE' and name = 'DeleteUserFromGroup')
+	DROP PROCEDURE [sec].[DeleteUserFromGroup]
 GO
 /****** Object:  StoredProcedure [sec].[DeleteUser]    Script Date: 13.05.2015 16:30:25 ******/
-DROP PROCEDURE [sec].[DeleteUser]
+if Exists(select 1 from sys.procedures where schema_id = SCHEMA_ID(N'sec') and type_desc = 'SQL_STORED_PROCEDURE' and name = 'DeleteUser')
+	DROP PROCEDURE [sec].[DeleteUser]
 GO
 /****** Object:  StoredProcedure [sec].[DeleteMemberRole]    Script Date: 13.05.2015 16:30:25 ******/
-DROP PROCEDURE [sec].[DeleteMemberRole]
+if Exists(select 1 from sys.procedures where schema_id = SCHEMA_ID(N'sec') and type_desc = 'SQL_STORED_PROCEDURE' and name = 'DeleteMemberRole')
+	DROP PROCEDURE [sec].[DeleteMemberRole]
 GO
 /****** Object:  StoredProcedure [sec].[DeleteGroup]    Script Date: 13.05.2015 16:30:25 ******/
-DROP PROCEDURE [sec].[DeleteGroup]
+if Exists(select 1 from sys.procedures where schema_id = SCHEMA_ID(N'sec') and type_desc = 'SQL_STORED_PROCEDURE' and name = 'DeleteGroup')
+	DROP PROCEDURE [sec].[DeleteGroup]
 GO
 /****** Object:  StoredProcedure [sec].[DeleteGrant]    Script Date: 13.05.2015 16:30:25 ******/
-DROP PROCEDURE [sec].[DeleteGrant]
+if Exists(select 1 from sys.procedures where schema_id = SCHEMA_ID(N'sec') and type_desc = 'SQL_STORED_PROCEDURE' and name = 'DeleteGrant')
+	DROP PROCEDURE [sec].[DeleteGrant]
 GO
 /****** Object:  StoredProcedure [sec].[AddUserToGroup]    Script Date: 13.05.2015 16:30:25 ******/
-DROP PROCEDURE [sec].[AddUserToGroup]
+if Exists(select 1 from sys.procedures where schema_id = SCHEMA_ID(N'sec') and type_desc = 'SQL_STORED_PROCEDURE' and name = 'AddUserToGroup')
+	DROP PROCEDURE [sec].[AddUserToGroup]
 GO
 /****** Object:  StoredProcedure [sec].[AddUser]    Script Date: 13.05.2015 16:30:25 ******/
-DROP PROCEDURE [sec].[AddUser]
+if Exists(select 1 from sys.procedures where schema_id = SCHEMA_ID(N'sec') and type_desc = 'SQL_STORED_PROCEDURE' and name = 'AddUser')
+	DROP PROCEDURE [sec].[AddUser]
 GO
 /****** Object:  StoredProcedure [sec].[AddMemberRole]    Script Date: 13.05.2015 16:30:25 ******/
-DROP PROCEDURE [sec].[AddMemberRole]
+if Exists(select 1 from sys.procedures where schema_id = SCHEMA_ID(N'sec') and type_desc = 'SQL_STORED_PROCEDURE' and name = 'AddMemberRole')
+	DROP PROCEDURE [sec].[AddMemberRole]
 GO
 /****** Object:  StoredProcedure [sec].[AddGroup]    Script Date: 13.05.2015 16:30:25 ******/
-DROP PROCEDURE [sec].[AddGroup]
+if Exists(select 1 from sys.procedures where schema_id = SCHEMA_ID(N'sec') and type_desc = 'SQL_STORED_PROCEDURE' and name = 'AddGroup')
+	DROP PROCEDURE [sec].[AddGroup]
 GO
 /****** Object:  StoredProcedure [sec].[AddGrant]    Script Date: 13.05.2015 16:30:25 ******/
-DROP PROCEDURE [sec].[AddGrant]
+if Exists(select 1 from sys.procedures where schema_id = SCHEMA_ID(N'sec') and type_desc = 'SQL_STORED_PROCEDURE' and name = 'AddGrant')
+	DROP PROCEDURE [sec].[AddGrant]
 GO
 
 /******************   DROP   **********************/

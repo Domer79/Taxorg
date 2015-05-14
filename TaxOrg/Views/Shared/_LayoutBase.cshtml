@@ -17,7 +17,7 @@
     @Styles.Render("~/bootstrap/css")
     @RenderSection("HeaderScripts", false)
     @RenderSection("Styles", false)
-    <script type="text/javascript" src="../../Scripts/Service.js"></script>
+    @Scripts.Render("~/scripts/service")
     <style type="text/css">
         .downloadModalBase {
             position: fixed;
@@ -86,5 +86,15 @@
             </div>
         </div>
     </div>
+    
+    <script type="text/javascript">
+        $(function () {
+            var bsTooltip = $.fn.tooltip.noConflict();
+            $.fn.bsTooltip = bsTooltip;
+
+            $(document).tooltip();
+
+        });
+    </script>
 </body>
 </html>

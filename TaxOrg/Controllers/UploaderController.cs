@@ -73,7 +73,7 @@ namespace TaxOrg.Controllers
                     catch (Exception e)
                     {
                         e.SaveError();
-                        return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, e.Message);
+                        return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, e.Message + ". " + st.error);
                     }
 
                 }
@@ -143,7 +143,6 @@ namespace TaxOrg.Controllers
             if (Request.Headers["Accept"] != null && !Request.Headers["Accept"].Contains("application/json"))
                 viewresult.ContentType = "text/javascript";
 
-            //		    return RedirectToAction("Index", "Org");
             return viewresult;
         }
 

@@ -6,6 +6,9 @@ go
 
 alter table Sessions
 add userId int not null
+
+alter table Sessions
+add timeLabel datetime not null default(getdate())
 go
 
 alter table TaxType

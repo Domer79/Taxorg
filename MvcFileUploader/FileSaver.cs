@@ -75,7 +75,6 @@ namespace MvcFileUploader
                                  size = file.ContentLength,
                                  type = file.ContentType 
                              };
-
             }
 
             return status;

@@ -38,7 +38,7 @@
                             <input type="checkbox" aria-label="@taxType.Name" value="@taxType.IdTaxType" @IsChecked(taxType.IdTaxType)>
                         </span>
                         <span class="input-group-addon" style="width: 200px">@taxType.Code</span>
-                        <span class="form-control">@taxType.Name</span>
+                        <span class="form-control" data-toggle="tooltip" title="@taxType.Name">@taxType.Name</span>
                     </div><!-- /input-group -->
                 </div><!-- /.col-lg-6 -->
             </div>

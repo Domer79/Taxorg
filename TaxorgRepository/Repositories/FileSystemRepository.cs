@@ -6,6 +6,7 @@ using System.Data.SqlTypes;
 using System.IO;
 using System.Linq;
 using System.Web;
+using DataRepository.Infrastructure;
 using TaxorgRepository.Models;
 using SystemTools;
 
@@ -42,6 +43,8 @@ namespace TaxorgRepository.Repositories
             var fs = new FileSystem();
             fs.FileName = fullPath;
             fs.ContentType = file.ContentType;
+
+            SystemLogs.SaveLog(string.Format("FileName: [{0}]", fs.FileName));
             FileSave(file.InputStream, fs);
         }
 

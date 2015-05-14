@@ -10,6 +10,7 @@ using System.Web.Routing;
 using SystemTools;
 using SystemTools.ConfigSections;
 using SystemTools.Extensions;
+using SystemTools.Interfaces;
 using SystemTools.WebTools.Helpers;
 using SystemTools.WebTools.Infrastructure;
 using DataRepository.Infrastructure;
@@ -61,13 +62,8 @@ namespace TaxOrg
         {
             var user = ((UserIdentity) Security.Instance.Principal.Identity).User;
             Session["User"] = user;
-            var repo = new SessionRepository();
-            var session = new Session();
-            session.SessionId = Session.SessionID;
-            session.UserId = user.IdUser;
-            repo.InsertOrUpdate(session);
-            repo.SaveChanges();
-            ApplicationCustomizer.CurrentSessionId = session.SessionId;
+            SessionRepository.AddNewSession(Session.SessionID, user);
+            ApplicationCustomizer.CurrentSessionId = Session.SessionID;
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)

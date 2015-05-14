@@ -6,6 +6,10 @@ namespace TaxOrg
     {
         public static void RegisterBundles(BundleCollection bundles)
         {
+            bundles.Add(new ScriptBundle("~/scripts/service").Include(
+                "~/scripts/service.js"
+                ));
+
             bundles.Add(new ScriptBundle("~/scripts/jquery").Include(
                 "~/scripts/jquery-2.1.3.min.js",
                 "~/scripts/jquery-ui.min-1.11.1.js"

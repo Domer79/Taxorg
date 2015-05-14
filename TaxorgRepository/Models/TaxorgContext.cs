@@ -3,7 +3,7 @@ using System.Diagnostics;
 using DataRepository;
 using SystemTools;
 using System.Data.Entity;
-using TaxorgRepository.Tools;
+using DataRepository.Infrastructure;
 
 namespace TaxorgRepository.Models
 {
