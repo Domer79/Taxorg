@@ -88,12 +88,12 @@
     </div>
     
     <script type="text/javascript">
-        $(function () {
+        $(document).ready(function () {
             var bsTooltip = $.fn.tooltip.noConflict();
             $.fn.bsTooltip = bsTooltip;
 
-            $(document).tooltip();
-
+            if (myApplication.enableTooltip)
+                $(document).tooltip();
         });
     </script>
 </body>

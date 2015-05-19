@@ -1,5 +1,10 @@
 ﻿var query = {};
 
+var myApplication = {};
+
+myApplication.enableTooltip = true;
+
+
 query.doQuery = function (url, options) {
     if (typeof (url) == "object") {
         options = url;
