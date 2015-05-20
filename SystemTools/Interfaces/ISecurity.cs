@@ -66,5 +66,6 @@ namespace SystemTools.Interfaces
         void DeleteGrant(string roleName, string objectName, SecurityAccessType accessType);
         void DeleteUser(string userName);
         IEnumerable<IUser> GetUsers();
+        IEnumerable<IGroup> GetGroups();
     }
 }

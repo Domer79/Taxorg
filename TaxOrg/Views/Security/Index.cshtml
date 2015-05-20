@@ -1,5 +1,4 @@
-﻿@using SystemTools
-@model dynamic
+﻿@model dynamic
 
 @{
     ViewBag.Title = "Настройка безопасности";
@@ -11,9 +10,10 @@
         .list-group-item {
             cursor: pointer;
         }
-        .list-group-item:hover {
-            background-color: #87cefa;
-        }
+
+            .list-group-item:hover {
+                background-color: #87cefa;
+            }
     </style>
 }
 
@@ -22,11 +22,45 @@
         sdfsadf
     </div>
     <div class="panel panel-body">
-        <div id="bodyContainer" class="container" style="height: 700px; overflow: hidden">
-            <div class="panel panel-default" style="width: 300px;overflow:auto; height:inherit">
-                <ul id="userList" class="list-group">
-                    
-                </ul>
+        <div id="bodyContainer" class="container" style="height: 700px;">
+            <div class="row">
+                <div class="col-md-3">
+                    <ul class="nav nav-tabs" role="tablist" id="memberTab">
+                        <li role="presentation"><a id="usersLink" href="#usersTab" aria-controls="usersTab" role="tab" data-toggle="tab" listname="users">Пользователи</a></li>
+                        <li role="presentation"><a id="groupsLink" href="#groupsTab" aria-controls="groupsTab" role="tab" data-toggle="tab" listname="groups">Группы</a></li>
+                    </ul>
+
+
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade active" id="usersTab">
+                            <div class="panel panel-default" style="overflow: auto; height: inherit">
+                                <ul id="userList" class="list-group"></ul>
+                            </div>
+
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="groupsTab">
+                            <div class="panel panel-default" style="overflow: auto; height: inherit">
+                                <ul id="groupList" class="list-group"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <ul class="nav nav-tabs" role="tablist" id="myTab">
+                        <li role="presentation" class="active"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Профиль</a></li>
+                        <li role="presentation"><a href="#roles" aria-controls="roles" role="tab" data-toggle="tab">Роли</a></li>
+                        <li role="presentation"><a href="#userGroups" aria-controls="userGroups" role="tab" data-toggle="tab">Участники</a></li>
+                    </ul>
+
+
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade active" id="profile">
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade active" id="roles">
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade active" id="userGroups">
+                        </div>
+                </div>
             </div>
         </div>
     </div>
@@ -34,23 +68,44 @@
 
 @section FooterScripts {
     <script type="text/javascript">
-        $(document).ready(function() {
-            var screenHeight = $("body").height() - 200;
+        var memberListLoad = function($element, hashData, listName) {
+            if (hashData.memberList != undefined)
+                return;
 
-            $("#bodyContainer").height(screenHeight);
+            $element.empty();
 
-            query.doQuery(securityApiUri + 'GetUserList', {
+            query.doQuery(securityApiUri + 'GetMemberList/' + listName, {
                 async: true,
-                success: function (ajaxData) {
-                    ajaxData.forEach(function (item, index, array) {
-                        var userName = item.Login;
-                        $("div.hidden li.list-group-item").text(userName).clone().appendTo($("#userList")).click(function () {
-                            $("#userList li").removeClass("active");
+                success: function(ajaxData) {
+                    hashData.memberList = ajaxData;
+
+                    hashData.memberList.forEach(function(item, index, array) {
+                        var memberName = item.Name;
+                        $("div.hidden li.list-group-item").text(memberName).clone().appendTo($element).click(function() {
+                            $element.children("li").removeClass("active");
                             $(this).addClass("active");
                         });
                     });
                 }
             });
+        };
+
+        $(document).ready(function() {
+            var screenHeight = $("body").height() - 200;
+            var userList = {};
+            var groupList = {};
+
+            $("#bodyContainer").height(screenHeight);
+
+            $("#usersLink").on("show.bs.tab", function() {
+                memberListLoad($("#userList"), userList, $(this).attr("listname"));
+            });
+
+            $("#groupsLink").on("show.bs.tab", function () {
+                memberListLoad($("#groupList"), groupList, $(this).attr("listname"));
+            });
+
+            $('#memberTab a:first').tab('show');
         });
     </script>
 }
