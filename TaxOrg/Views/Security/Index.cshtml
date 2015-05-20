@@ -19,37 +19,42 @@
 
 <div class="panel panel-default">
     <div class="panel panel-heading">
-        sdfsadf
+        Панель администрирования системы безопасности
     </div>
     <div class="panel panel-body">
-        <div id="bodyContainer" class="container" style="height: 700px;">
+        <div id="bodyContainer" class="container" style="height: 700px;overflow: hidden">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <ul class="nav nav-tabs" role="tablist" id="memberTab">
-                        <li role="presentation"><a id="usersLink" href="#usersTab" aria-controls="usersTab" role="tab" data-toggle="tab" listname="users">Пользователи</a></li>
-                        <li role="presentation"><a id="groupsLink" href="#groupsTab" aria-controls="groupsTab" role="tab" data-toggle="tab" listname="groups">Группы</a></li>
+                        <li role="presentation"><a id="userLink" href="#userTab" aria-controls="userTab" role="tab" data-toggle="tab" listname="users">Пользователи</a></li>
+                        <li role="presentation"><a id="groupLink" href="#groupTab" aria-controls="groupTab" role="tab" data-toggle="tab" listname="groups">Группы</a></li>
+                        <li role="presentation"><a id="roleLink" href="#roleTab" aria-controls="roleTab" role="tab" data-toggle="tab" listname="roles">Роли</a></li>
                     </ul>
 
 
                     <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane fade active" id="usersTab">
+                        <div role="tabpanel" class="tab-pane fade active" id="userTab">
                             <div class="panel panel-default" style="overflow: auto; height: inherit">
                                 <ul id="userList" class="list-group"></ul>
                             </div>
-
                         </div>
-                        <div role="tabpanel" class="tab-pane fade" id="groupsTab">
+                        <div role="tabpanel" class="tab-pane fade" id="groupTab">
                             <div class="panel panel-default" style="overflow: auto; height: inherit">
                                 <ul id="groupList" class="list-group"></ul>
                             </div>
                         </div>
+                        <div role="tabpanel" class="tab-pane fade" id="roleTab">
+                            <div class="panel panel-default" style="overflow: auto; height: inherit">
+                                <ul id="roleList" class="list-group"></ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-7">
                     <ul class="nav nav-tabs" role="tablist" id="myTab">
-                        <li role="presentation" class="active"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Профиль</a></li>
-                        <li role="presentation"><a href="#roles" aria-controls="roles" role="tab" data-toggle="tab">Роли</a></li>
-                        <li role="presentation"><a href="#userGroups" aria-controls="userGroups" role="tab" data-toggle="tab">Участники</a></li>
+                        <li id="profileItem" role="presentation" class="active"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Профиль</a></li>
+                        <li id="rolesItem" role="presentation"><a href="#roles" aria-controls="roles" role="tab" data-toggle="tab">Роли</a></li>
+                        <li id="userGroupsItem" role="presentation"><a href="#userGroups" aria-controls="userGroups" role="tab" data-toggle="tab">Участники</a></li>
                     </ul>
 
 
@@ -60,15 +65,15 @@
                         </div>
                         <div role="tabpanel" class="tab-pane fade active" id="userGroups">
                         </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 @section FooterScripts {
     <script type="text/javascript">
-        var memberListLoad = function($element, hashData, listName) {
+        var memberListLoad = function ($element, hashData, listName) {
             if (hashData.memberList != undefined)
                 return;
 
@@ -76,33 +81,62 @@
 
             query.doQuery(securityApiUri + 'GetMemberList/' + listName, {
                 async: true,
-                success: function(ajaxData) {
+                success: function (ajaxData) {
                     hashData.memberList = ajaxData;
 
-                    hashData.memberList.forEach(function(item, index, array) {
+                    hashData.memberList.forEach(function (item, index, array) {
                         var memberName = item.Name;
-                        $("div.hidden li.list-group-item").text(memberName).clone().appendTo($element).click(function() {
+                        $("div.hidden li.list-group-item").text(memberName).clone().appendTo($element).click(function () {
                             $element.children("li").removeClass("active");
                             $(this).addClass("active");
+
                         });
                     });
                 }
             });
         };
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             var screenHeight = $("body").height() - 200;
-            var userList = {};
-            var groupList = {};
-
             $("#bodyContainer").height(screenHeight);
 
-            $("#usersLink").on("show.bs.tab", function() {
+
+            var userList = {};
+            var groupList = {};
+            var roleList = {};
+
+            var userLink = document.getElementById("userLink");
+            var groupLink = document.getElementById("groupLink");
+            var roleLink = document.getElementById("roleLink");
+
+            userLink.prepareTabs = function () {
+                $("#userGroupsItem a").text("Группы");
+                $("#rolesItem").removeClass("hidden");
+            };
+
+            groupLink.prepareTabs = function () {
+                $("#userGroupsItem a").text("Пользователи");
+                $("#rolesItem").removeClass("hidden");
+            };
+
+            roleLink.prepareTabs = function () {
+                $("#userGroupsItem a").text("Участники");
+                $("#rolesItem").addClass("hidden");
+            };
+
+            $(userLink).on("show.bs.tab", function () {
                 memberListLoad($("#userList"), userList, $(this).attr("listname"));
+                userLink.prepareTabs();
             });
 
-            $("#groupsLink").on("show.bs.tab", function () {
+            $(groupLink).on("show.bs.tab", function () {
                 memberListLoad($("#groupList"), groupList, $(this).attr("listname"));
+                groupLink.prepareTabs();
+            });
+
+            $(roleLink).on("show.bs.tab", function () {
+                memberListLoad($("#roleList"), roleList, $(this).attr("listname"));
+                roleLink.prepareTabs();
             });
 
             $('#memberTab a:first').tab('show');

@@ -27,10 +27,15 @@ namespace TaxOrg.Controllers
 //                if (!ApplicationCustomizer.EnableSecurityAdminPanel && !Security.Instance.IsAccess("SecurityApiGetUserList", HttpContext.Current.User.Identity.Name, SecurityAccessType.Exec))
 //                    throw new ControllerActionAccessDeniedException("SecurityApi", "GetMemberList");
 
-                if (id.ToLower() == "users")
-                    return Ok(ApplicationCustomizer.Security.GetUsers().Select(u => new {u.IdMember, u.Name}));
-                if (id.ToLower() == "groups")
-                    return Ok(ApplicationCustomizer.Security.GetGroups().Select(u => new { u.IdMember, u.Name }));
+                switch (id.ToLower())
+                {
+                    case "users":
+                        return Ok(ApplicationCustomizer.Security.GetUsers().Select(u => new {Id = u.IdMember, u.Name}));
+                    case "groups":
+                        return Ok(ApplicationCustomizer.Security.GetGroups().Select(u => new { Id = u.IdMember, u.Name }));
+                    case "roles":
+                        return Ok(ApplicationCustomizer.Security.GetRoles().Select(r => new { Id = r.IdRole, Name = r.RoleName }));
+                }
 
                 throw new ArgumentException(id);
             }

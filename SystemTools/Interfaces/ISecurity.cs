@@ -67,5 +67,6 @@ namespace SystemTools.Interfaces
         void DeleteUser(string userName);
         IEnumerable<IUser> GetUsers();
         IEnumerable<IGroup> GetGroups();
+        IEnumerable<IRole> GetRoles();
     }
 }
