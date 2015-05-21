@@ -68,5 +68,8 @@ namespace SystemTools.Interfaces
         IEnumerable<IUser> GetUsers();
         IEnumerable<IGroup> GetGroups();
         IEnumerable<IRole> GetRoles();
+        IEnumerable<IUserGroupsDetail> GetUserGroups();
+        IEnumerable<IRole> GetUserRoles(int id);
+        IEnumerable<IRoleOfMember> GetMembersByRole(int idRole);
     }
 }

@@ -52,9 +52,10 @@
                 </div>
                 <div class="col-md-7">
                     <ul class="nav nav-tabs" role="tablist" id="myTab">
-                        <li id="profileItem" role="presentation" class="active"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Профиль</a></li>
+                        <li id="profileItem" role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Профиль</a></li>
                         <li id="rolesItem" role="presentation"><a href="#roles" aria-controls="roles" role="tab" data-toggle="tab">Роли</a></li>
                         <li id="userGroupsItem" role="presentation"><a href="#userGroups" aria-controls="userGroups" role="tab" data-toggle="tab">Участники</a></li>
+                        <li id="grantsItem" role="presentation"><a href="#grants" aria-controls="grants" role="tab" data-toggle="tab">Разрешения</a></li>
                     </ul>
 
 
@@ -62,8 +63,13 @@
                         <div role="tabpanel" class="tab-pane fade active" id="profile">
                         </div>
                         <div role="tabpanel" class="tab-pane fade active" id="roles">
+                            <ul id="memberRoleList" class="list-group"></ul>
                         </div>
                         <div role="tabpanel" class="tab-pane fade active" id="userGroups">
+                            <ul id="userGroupList" class="list-group"></ul>
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade active" id="grants">
+                            <ul id="grantList" class="list-group"></ul>
                         </div>
                     </div>
                 </div>
@@ -73,70 +79,270 @@
 </div>
 @section FooterScripts {
     <script type="text/javascript">
-        var memberListLoad = function ($element, hashData, listName) {
-            if (hashData.memberList != undefined)
+        var memberListLoad = function($element, dataList, listName) {
+            if (dataList.memberList != undefined)
                 return;
 
             $element.empty();
 
             query.doQuery(securityApiUri + 'GetMemberList/' + listName, {
                 async: true,
-                success: function (ajaxData) {
-                    hashData.memberList = ajaxData;
+                success: function(ajaxData) {
+                    dataList.memberList = ajaxData;
 
-                    hashData.memberList.forEach(function (item, index, array) {
+                    dataList.memberList.forEach(function(item, index, array) {
                         var memberName = item.Name;
-                        $("div.hidden li.list-group-item").text(memberName).clone().appendTo($element).click(function () {
-                            $element.children("li").removeClass("active");
-                            $(this).addClass("active");
-
-                        });
+                        $("div.hidden li.list-group-item")
+                            .text(memberName)
+                            .attr("marker", item.Marker)
+                            .attr("itemId", index)
+                            .clone()
+                            .appendTo($element)
+                            .click(function() {
+                                $element.children("li").removeClass("active");
+                                var $this = $(this);
+                                $this.addClass("active");
+                                dataList.onActive($this.attr("itemId"));
+                            });
                     });
                 }
             });
         };
 
-        $(document).ready(function () {
+
+        $(document).ready(function() {
             var screenHeight = $("body").height() - 200;
             $("#bodyContainer").height(screenHeight);
-
 
             var userList = {};
             var groupList = {};
             var roleList = {};
 
+            //Обработчик списка пользователей
+            userList.onActive = function(index) {
+                var $profile = $("#profile");
+                $profile.empty();
+                $("<div>")
+                    .addClass("jumbotron")
+                    .html("<p> Id: " + this.memberList[index].Id + "</p>" +
+                        "<p> Логин: " + this.memberList[index].Name + "</p>" +
+                        "<p> Отображаемое имя: " + this.memberList[index].DisplayName + "</p>" +
+                        "<p> Email: " + this.memberList[index].Email + "</p>")
+                    .appendTo($profile);
+
+                $("#profileItem a").tab("show");
+
+                //Подгрузка групп
+                var $userGroupList = $("#userGroupList");
+                query.doQuery(securityApiUri + 'GetUserGroups/' + this.memberList[index].Id, {
+                    async: false,
+                    beforeSend: function() {
+                        $userGroupList.empty();
+                    },
+                    success: function(data) {
+                        data.forEach(function(item, index, array) {
+                            var memberName = item.GroupName + (item.Description == null ? "" : " | " + item.Description);
+                            $("div.hidden li.list-group-item")
+                                .text(memberName)
+                                .clone()
+                                .appendTo($userGroupList)
+                                .click(function() {
+                                    $userGroupList.children("li").removeClass("active");
+                                    var $this = $(this);
+                                    $this.addClass("active");
+                                });
+                        });
+                    }
+                });
+
+                //Подгрузка ролей
+                var $memberRoleList = $("#memberRoleList");
+                query.doQuery(securityApiUri + 'GetMemberRoles/' + this.memberList[index].Id, {
+                    async: false,
+                    beforeSend: function() {
+                        $memberRoleList.empty();
+                    },
+                    success: function(data) {
+                        data.forEach(function(item, index, array) {
+                            var memberName = item.RoleName + " | " + item.Description;
+                            $("div.hidden li.list-group-item")
+                                .text(memberName)
+                                .clone()
+                                .appendTo($memberRoleList)
+                                .click(function() {
+                                    $memberRoleList.children("li").removeClass("active");
+                                    var $this = $(this);
+                                    $this.addClass("active");
+                                });
+                        });
+                    }
+                });
+            };
+
+            //Обработчик списка групп
+            groupList.onActive = function(index) {
+                var $profile = $("#profile");
+                $profile.empty();
+                $("<div>")
+                    .addClass("jumbotron")
+                    .html("<p> Id: " + this.memberList[index].Id + "</p>" +
+                        "<p> Имя: " + this.memberList[index].Name + "</p>" +
+                        "<p> Описание: " + this.memberList[index].Description + "</p>")
+                    .appendTo($profile);
+
+                $("#profileItem a").tab("show");
+
+                //Подгрузка пользователей
+                var $userGroupList = $("#userGroupList");
+                query.doQuery(securityApiUri + 'GetGroupUsers/' + this.memberList[index].Id, {
+                    async: false,
+                    beforeSend: function () {
+                        $userGroupList.empty();
+                    },
+                    success: function (data) {
+                        data.forEach(function (item, index, array) {
+                            var memberName = item.Login + (item.DisplayName == null ? "" : " | " + item.DisplayName);
+                            $("div.hidden li.list-group-item")
+                                .text(memberName)
+                                .clone()
+                                .appendTo($userGroupList)
+                                .click(function () {
+                                    $userGroupList.children("li").removeClass("active");
+                                    var $this = $(this);
+                                    $this.addClass("active");
+                                });
+                        });
+                    }
+                });
+
+                //Подгрузка ролей
+                var $memberRoleList = $("#memberRoleList");
+                query.doQuery(securityApiUri + 'GetMemberRoles/' + this.memberList[index].Id, {
+                    async: false,
+                    beforeSend: function () {
+                        $memberRoleList.empty();
+                    },
+                    success: function (data) {
+                        data.forEach(function (item, index, array) {
+                            var memberName = item.RoleName + " | " + item.Description;
+                            $("div.hidden li.list-group-item")
+                                .text(memberName)
+                                .clone()
+                                .appendTo($memberRoleList)
+                                .click(function () {
+                                    $memberRoleList.children("li").removeClass("active");
+                                    var $this = $(this);
+                                    $this.addClass("active");
+                                });
+                        });
+                    }
+                });
+            };
+
+            //Обработчик списка ролей
+            roleList.onActive = function(index) {
+                var $profile = $("#profile");
+                $profile.empty();
+                $("<div>")
+                    .addClass("jumbotron")
+                    .html("<p> Id: " + this.memberList[index].Id + "</p>" +
+                        "<p> Имя: " + this.memberList[index].Name + "</p>" +
+                        "<p> Описание: " + this.memberList[index].Description + "</p>")
+                    .appendTo($profile);
+
+                $("#profileItem a").tab("show");
+
+                //Подгрузка участников роли
+                var $userGroupList = $("#userGroupList");
+                query.doQuery(securityApiUri + 'GetMembers/' + this.memberList[index].Id, {
+                    async: false,
+                    beforeSend: function () {
+                        $("#userGroupList").empty();
+                    },
+                    success: function (data) {
+                        data.forEach(function (item, index, array) {
+                            var memberName = item.Name + (item.IsUser ? "" : " | Группа");
+                            $("div.hidden li.list-group-item")
+                                .text(memberName)
+                                .clone()
+                                .appendTo($userGroupList)
+                                .click(function () {
+                                    $userGroupList.children("li").removeClass("active");
+                                    var $this = $(this);
+                                    $this.addClass("active");
+                                });
+                        });
+                    }
+                });
+
+                //Подгрузка списка разрешений
+                var $grantList = $("#grantList");
+                query.doQuery(securityApiUri + 'GetGrants/' + this.memberList[index].Id, {
+                    async: false,
+                    beforeSend: function () {
+                        $grantList.empty();
+                    },
+                    success: function (data) {
+                        data.forEach(function (item, index, array) {
+                            var memberName = item.Name + (item.IsUser ? "" : " | Группа");
+                            $("div.hidden li.list-group-item")
+                                .text(memberName)
+                                .clone()
+                                .appendTo($grantList)
+                                .click(function () {
+                                    $grantList.children("li").removeClass("active");
+                                    var $this = $(this);
+                                    $this.addClass("active");
+                                });
+                        });
+                    }
+                });
+            };
+
             var userLink = document.getElementById("userLink");
             var groupLink = document.getElementById("groupLink");
             var roleLink = document.getElementById("roleLink");
 
-            userLink.prepareTabs = function () {
+            userLink.prepareTabs = function() {
                 $("#userGroupsItem a").text("Группы");
                 $("#rolesItem").removeClass("hidden");
+                $("#grantsItem").addClass("hidden");
             };
 
-            groupLink.prepareTabs = function () {
+            groupLink.prepareTabs = function() {
                 $("#userGroupsItem a").text("Пользователи");
                 $("#rolesItem").removeClass("hidden");
+                $("#grantsItem").addClass("hidden");
             };
 
-            roleLink.prepareTabs = function () {
+            roleLink.prepareTabs = function() {
                 $("#userGroupsItem a").text("Участники");
                 $("#rolesItem").addClass("hidden");
+                $("#grantsItem").removeClass("hidden");
             };
 
-            $(userLink).on("show.bs.tab", function () {
+            $(userLink).on("show.bs.tab", function() {
                 memberListLoad($("#userList"), userList, $(this).attr("listname"));
                 userLink.prepareTabs();
+                $("#profile").empty();
+                $("#userGroupList").empty();
+                $("#memberRoleList").empty();
             });
 
-            $(groupLink).on("show.bs.tab", function () {
+            $(groupLink).on("show.bs.tab", function() {
                 memberListLoad($("#groupList"), groupList, $(this).attr("listname"));
                 groupLink.prepareTabs();
+                $("#profile").empty();
+                $("#userGroupList").empty();
+                $("#memberRoleList").empty();
             });
 
-            $(roleLink).on("show.bs.tab", function () {
+            $(roleLink).on("show.bs.tab", function() {
                 memberListLoad($("#roleList"), roleList, $(this).attr("listname"));
                 roleLink.prepareTabs();
+                $("#profile").empty();
+                $("#userGroupList").empty();
+                $("#memberRoleList").empty();
             });
 
             $('#memberTab a:first').tab('show');

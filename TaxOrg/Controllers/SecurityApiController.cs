@@ -24,17 +24,14 @@ namespace TaxOrg.Controllers
         {
             try
             {
-//                if (!ApplicationCustomizer.EnableSecurityAdminPanel && !Security.Instance.IsAccess("SecurityApiGetUserList", HttpContext.Current.User.Identity.Name, SecurityAccessType.Exec))
-//                    throw new ControllerActionAccessDeniedException("SecurityApi", "GetMemberList");
-
                 switch (id.ToLower())
                 {
                     case "users":
-                        return Ok(ApplicationCustomizer.Security.GetUsers().Select(u => new {Id = u.IdMember, u.Name}));
+                        return Ok(ApplicationCustomizer.Security.GetUsers().Select(u => new {Id = u.IdMember, u.Name, u.DisplayName, u.Email, u.Usersid}));
                     case "groups":
-                        return Ok(ApplicationCustomizer.Security.GetGroups().Select(u => new { Id = u.IdMember, u.Name }));
+                        return Ok(ApplicationCustomizer.Security.GetGroups().Select(g => new { Id = g.IdMember, g.Name, g.Description }));
                     case "roles":
-                        return Ok(ApplicationCustomizer.Security.GetRoles().Select(r => new { Id = r.IdRole, Name = r.RoleName }));
+                        return Ok(ApplicationCustomizer.Security.GetRoles().Select(r => new { Id = r.IdRole, Name = r.RoleName, r.Description }));
                 }
 
                 throw new ArgumentException(id);
@@ -44,6 +41,28 @@ namespace TaxOrg.Controllers
                 e.SaveError();
                 throw;
             }
+        }
+
+        public IHttpActionResult GetUserGroups(int id)
+        {
+            return Ok(ApplicationCustomizer.Security.GetUserGroups().Where(ug => ug.IdUser == id).Select(g => new { g.IdGroup, g.GroupName, g.Description }));
+        }
+
+        public IHttpActionResult GetMemberRoles(int id)
+        {
+            return Ok(ApplicationCustomizer.Security.GetUserRoles(id).Select(r => new { r.IdRole, r.RoleName, r.Description }));
+        }
+
+        public IHttpActionResult GetGroupUsers(int id)
+        {
+            return Ok(ApplicationCustomizer.Security.GetUserGroups()
+                        .Where(ug => ug.IdGroup == id)
+                        .Select(u => new {u.Login, u.DisplayName}));
+        }
+
+        public IHttpActionResult GetMembers(int id)
+        {
+            return Ok(ApplicationCustomizer.Security.GetMembersByRole(id).Select(rm => new { rm.IdMember, rm.Name, rm.IsUser }));
         }
     }
 }

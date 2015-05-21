@@ -18,6 +18,7 @@ query.doQuery = function (url, options) {
     var contentType = options.contextType || "application/x-www-form-urlencoded; charset=UTF-8";
     var data = options.data || undefined;
     var method = options.method || options.type || "GET";
+    var beforeSend = options.beforeSend;
     var error = options.error;
     var success = options.success;
     var uri = url || options.url;
@@ -48,9 +49,12 @@ query.doQuery = function (url, options) {
         contentType: contentType,
         data: data,
         method: method,
-        beforeSend: function () {
+        beforeSend: function (jqXhr, settings) {
             downloadBar = $(".downloadModalBase").clone().appendTo($("body")).attr("id", "downloadBar");
             downloadBar.children("#progressbar").progressbar({ value: false });
+
+            if (beforeSend != undefined && typeof (beforeSend) == "function")
+                beforeSend(jqXhr, settings);
         },
         error: function (jqXhr, textStatus, errorThrown) {
             try {
