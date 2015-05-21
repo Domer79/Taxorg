@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Dispatcher;
@@ -53,7 +54,15 @@ namespace TaxOrg
             var exception = Server.GetLastError();
             exception.SaveError();
             Server.ClearError();
-            Session["errorObject"] = exception;
+            try
+            {
+//                Context.Response.Cookies.Add(new HttpCookie("exception", exception.SerializeToString()));
+                Session["errorObject"] = exception;
+            }
+            catch
+            {
+                Context.Response.Cookies.Add(new HttpCookie("exception", exception.SerializeToString()));
+            }
             ApplicationCustomizer.IsError = true;
             Response.RedirectToRoute(new { AdditionalConfiguration.Instance.ErrorPage.Controller, AdditionalConfiguration.Instance.ErrorPage.Action });
         }

@@ -44,7 +44,7 @@
             </ul>
             <div class="navbar-form navbar-left" role="textbox">
                 <div class="input-group" title="Введите команду" style="width: 1200px">
-                    <input id="command" type="text" class="form-control" placeholder="Введите команду" aria-hidden="True" />
+                    <input id="command" type="text" class="form-control" placeholder="Введите команду" aria-hidden="true"/>
                     <div class="input-group-btn">
                         <button id="eraseCommand" class="btn btn-default">x</button>
                         <button id="cmdGo" class="btn btn-default">Отправить</button>
@@ -128,7 +128,6 @@
         });
 
         $("#command").autocomplete({
-            //                source: '@Url.Action("Intellisense", "Security")',
             source: function (request, response) {
                 $.ajax({
                     url: '@Url.Action("Intellisense", "Security")',

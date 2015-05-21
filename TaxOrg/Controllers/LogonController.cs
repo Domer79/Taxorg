@@ -25,7 +25,7 @@ namespace TaxOrg.Controllers
             }
 
             ApplicationCustomizer.Security.CreateCookie(loginView.Login);
-            return RedirectToAction("Index", "Ph");
+            return RedirectToAction("Index", "Org");
         }
     }
 }

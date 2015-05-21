@@ -22,8 +22,8 @@
         Панель администрирования системы безопасности
     </div>
     <div class="panel panel-body">
-        <div id="bodyContainer" class="container" style="height: 700px;overflow: hidden">
-            <div class="row">
+        <div id="bodyContainer" class="container" style="overflow: hidden">
+            <div id="securityContent" class="row" style="height: inherit">
                 <div class="col-md-4">
                     <ul class="nav nav-tabs" role="tablist" id="memberTab">
                         <li role="presentation"><a id="userLink" href="#userTab" aria-controls="userTab" role="tab" data-toggle="tab" listname="users">Пользователи</a></li>
@@ -32,25 +32,19 @@
                     </ul>
 
 
-                    <div class="tab-content">
+                    <div class="tab-content" style="height: inherit; overflow: auto;">
                         <div role="tabpanel" class="tab-pane fade active" id="userTab">
-                            <div class="panel panel-default" style="overflow: auto; height: inherit">
-                                <ul id="userList" class="list-group"></ul>
-                            </div>
+                            <ul id="userList" class="list-group"></ul>
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="groupTab">
-                            <div class="panel panel-default" style="overflow: auto; height: inherit">
-                                <ul id="groupList" class="list-group"></ul>
-                            </div>
+                            <ul id="groupList" class="list-group"></ul>
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="roleTab">
-                            <div class="panel panel-default" style="overflow: auto; height: inherit">
-                                <ul id="roleList" class="list-group"></ul>
-                            </div>
+                            <ul id="roleList" class="list-group"></ul>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-7">
+                <div class="col-md-7" style="height: inherit">
                     <ul class="nav nav-tabs" role="tablist" id="myTab">
                         <li id="profileItem" role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Профиль</a></li>
                         <li id="rolesItem" role="presentation"><a href="#roles" aria-controls="roles" role="tab" data-toggle="tab">Роли</a></li>
@@ -59,7 +53,7 @@
                     </ul>
 
 
-                    <div class="tab-content">
+                    <div class="tab-content" style="overflow: auto; height: inherit">
                         <div role="tabpanel" class="tab-pane fade active" id="profile">
                         </div>
                         <div role="tabpanel" class="tab-pane fade active" id="roles">
@@ -79,7 +73,7 @@
 </div>
 @section FooterScripts {
     <script type="text/javascript">
-        var memberListLoad = function($element, dataList, listName) {
+        var memberListLoad = function ($element, dataList, listName) {
             if (dataList.memberList != undefined)
                 return;
 
@@ -87,10 +81,10 @@
 
             query.doQuery(securityApiUri + 'GetMemberList/' + listName, {
                 async: true,
-                success: function(ajaxData) {
+                success: function (ajaxData) {
                     dataList.memberList = ajaxData;
 
-                    dataList.memberList.forEach(function(item, index, array) {
+                    dataList.memberList.forEach(function (item, index, array) {
                         var memberName = item.Name;
                         $("div.hidden li.list-group-item")
                             .text(memberName)
@@ -98,7 +92,7 @@
                             .attr("itemId", index)
                             .clone()
                             .appendTo($element)
-                            .click(function() {
+                            .click(function () {
                                 $element.children("li").removeClass("active");
                                 var $this = $(this);
                                 $this.addClass("active");
@@ -110,16 +104,17 @@
         };
 
 
-        $(document).ready(function() {
-            var screenHeight = $("body").height() - 200;
+        $(document).ready(function () {
+            var screenHeight = $(window).height() - 280;
             $("#bodyContainer").height(screenHeight);
+            $("#securityContent").height(screenHeight-30);
 
             var userList = {};
             var groupList = {};
             var roleList = {};
 
             //Обработчик списка пользователей
-            userList.onActive = function(index) {
+            userList.onActive = function (index) {
                 var $profile = $("#profile");
                 $profile.empty();
                 $("<div>")
@@ -136,17 +131,17 @@
                 var $userGroupList = $("#userGroupList");
                 query.doQuery(securityApiUri + 'GetUserGroups/' + this.memberList[index].Id, {
                     async: false,
-                    beforeSend: function() {
+                    beforeSend: function () {
                         $userGroupList.empty();
                     },
-                    success: function(data) {
-                        data.forEach(function(item, index, array) {
+                    success: function (data) {
+                        data.forEach(function (item, index, array) {
                             var memberName = item.GroupName + (item.Description == null ? "" : " | " + item.Description);
                             $("div.hidden li.list-group-item")
                                 .text(memberName)
                                 .clone()
                                 .appendTo($userGroupList)
-                                .click(function() {
+                                .click(function () {
                                     $userGroupList.children("li").removeClass("active");
                                     var $this = $(this);
                                     $this.addClass("active");
@@ -159,17 +154,17 @@
                 var $memberRoleList = $("#memberRoleList");
                 query.doQuery(securityApiUri + 'GetMemberRoles/' + this.memberList[index].Id, {
                     async: false,
-                    beforeSend: function() {
+                    beforeSend: function () {
                         $memberRoleList.empty();
                     },
-                    success: function(data) {
-                        data.forEach(function(item, index, array) {
+                    success: function (data) {
+                        data.forEach(function (item, index, array) {
                             var memberName = item.RoleName + " | " + item.Description;
                             $("div.hidden li.list-group-item")
                                 .text(memberName)
                                 .clone()
                                 .appendTo($memberRoleList)
-                                .click(function() {
+                                .click(function () {
                                     $memberRoleList.children("li").removeClass("active");
                                     var $this = $(this);
                                     $this.addClass("active");
@@ -180,7 +175,7 @@
             };
 
             //Обработчик списка групп
-            groupList.onActive = function(index) {
+            groupList.onActive = function (index) {
                 var $profile = $("#profile");
                 $profile.empty();
                 $("<div>")
@@ -240,7 +235,7 @@
             };
 
             //Обработчик списка ролей
-            roleList.onActive = function(index) {
+            roleList.onActive = function (index) {
                 var $profile = $("#profile");
                 $profile.empty();
                 $("<div>")
@@ -284,7 +279,7 @@
                     },
                     success: function (data) {
                         data.forEach(function (item, index, array) {
-                            var memberName = item.Name + (item.IsUser ? "" : " | Группа");
+                            var memberName = item.ObjectName + (item.ObjectDescription == null ? "" : "("+item.ObjectDescription+")") + " -> " + item.AccessName;
                             $("div.hidden li.list-group-item")
                                 .text(memberName)
                                 .clone()
@@ -303,25 +298,25 @@
             var groupLink = document.getElementById("groupLink");
             var roleLink = document.getElementById("roleLink");
 
-            userLink.prepareTabs = function() {
+            userLink.prepareTabs = function () {
                 $("#userGroupsItem a").text("Группы");
                 $("#rolesItem").removeClass("hidden");
                 $("#grantsItem").addClass("hidden");
             };
 
-            groupLink.prepareTabs = function() {
+            groupLink.prepareTabs = function () {
                 $("#userGroupsItem a").text("Пользователи");
                 $("#rolesItem").removeClass("hidden");
                 $("#grantsItem").addClass("hidden");
             };
 
-            roleLink.prepareTabs = function() {
+            roleLink.prepareTabs = function () {
                 $("#userGroupsItem a").text("Участники");
                 $("#rolesItem").addClass("hidden");
                 $("#grantsItem").removeClass("hidden");
             };
 
-            $(userLink).on("show.bs.tab", function() {
+            $(userLink).on("show.bs.tab", function () {
                 memberListLoad($("#userList"), userList, $(this).attr("listname"));
                 userLink.prepareTabs();
                 $("#profile").empty();
@@ -329,7 +324,7 @@
                 $("#memberRoleList").empty();
             });
 
-            $(groupLink).on("show.bs.tab", function() {
+            $(groupLink).on("show.bs.tab", function () {
                 memberListLoad($("#groupList"), groupList, $(this).attr("listname"));
                 groupLink.prepareTabs();
                 $("#profile").empty();
@@ -337,7 +332,7 @@
                 $("#memberRoleList").empty();
             });
 
-            $(roleLink).on("show.bs.tab", function() {
+            $(roleLink).on("show.bs.tab", function () {
                 memberListLoad($("#roleList"), roleList, $(this).attr("listname"));
                 roleLink.prepareTabs();
                 $("#profile").empty();

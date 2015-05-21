@@ -11,10 +11,11 @@ namespace SystemTools.Extensions
     {
         public static string GetString(this byte[] bytes)
         {
-            var charArray = Encoding.Unicode.GetChars(bytes);
-            var stringBuilder = new StringBuilder();
-            stringBuilder.Append(charArray);
-            return stringBuilder.ToString();
+//            var charArray = Encoding.Unicode.GetChars(bytes);
+//            var stringBuilder = new StringBuilder();
+//            stringBuilder.Append(charArray);
+//            return stringBuilder.ToString();
+            return Encoding.Unicode.GetString(bytes);
         }
 
         public static byte[] GetHashBytes(this string value)

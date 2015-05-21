@@ -11,7 +11,14 @@ namespace SystemTools.Extensions
                 throw new ArgumentNullException("e");
 
             if (ApplicationCustomizer.SaveErrorLog != null)
-                ApplicationCustomizer.SaveErrorLog(e);
+                try
+                {
+                    ApplicationCustomizer.SaveErrorLog(e);
+                }
+                catch (Exception exc)
+                {
+                    Debug.WriteLine(exc);
+                }
             else
             {
                 Debug.WriteLine(e);

@@ -64,5 +64,10 @@ namespace TaxOrg.Controllers
         {
             return Ok(ApplicationCustomizer.Security.GetMembersByRole(id).Select(rm => new { rm.IdMember, rm.Name, rm.IsUser }));
         }
+
+        public IHttpActionResult GetGrants(int id)
+        {
+            return Ok(ApplicationCustomizer.Security.GetGrants(id).ToList().OfType<IGrantDetail>().Select(g => new {g.ObjectName, g.ObjectDescription, g.AccessName}));
+        }
     }
 }

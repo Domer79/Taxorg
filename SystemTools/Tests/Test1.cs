@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using SystemTools.ConfigSections;
+using SystemTools.Extensions;
 using SystemTools.WebTools.Infrastructure;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -142,6 +143,18 @@ namespace SystemTools.Tests
 
             Debug.WriteLine(defaultString);
             Debug.WriteLine(defaultInt);
+        }
+
+        [TestMethod]
+        public void ObjectSerializeDeserialize()
+        {
+            var list = new List<int> {1, 2, 3, 4, 5, 6, 7, 8, 9};
+            var serializeString = list.SerializeToString();
+            Debug.WriteLine(serializeString);
+
+            var deserializedList = ObjectHelper.DeserializeFromString<List<int>>(serializeString);
+
+            Assert.AreEqual(list, deserializedList);
         }
     }
 }

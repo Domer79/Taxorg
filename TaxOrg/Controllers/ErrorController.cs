@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Web;
 using System.Web.Mvc;
+using SystemTools.Extensions;
 
 namespace TaxOrg.Controllers
 {
@@ -8,7 +10,19 @@ namespace TaxOrg.Controllers
         // GET: Error
         public ActionResult Index()
         {
-            var error = (Exception)Session["errorObject"];
+            Exception error;
+            if (Session["errorObject"] == null)
+            {
+                var errorCookie = HttpContext.Request.Cookies["exception"];
+
+                if (errorCookie == null || string.IsNullOrEmpty(errorCookie.Value))
+                    error = null;
+                else
+                    error = ObjectHelper.DeserializeFromString<Exception>(errorCookie.Value);
+            }
+            else
+                error = (Exception) Session["errorObject"];
+
             return View(error);
         }
     }
