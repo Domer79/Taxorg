@@ -194,7 +194,7 @@
                 .css("height", "32px");;
 
             $("#t_tOrg").append('<input type="button" id="hideSameRows" class="btn btn-default" value="@IsNotLoadSameLabel()" title="Запрещает/Разрешает загрузку данных с одинаковыми значениями сумм долга за текущий и предыдущий периоды" />');
-            $("#t_tOrg").append('<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Выбрать по КБК</button>');
+            $("#t_tOrg").append('<button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" title="Позволяет выбрать записи для определенных кодов бюджетной классификации (КБК)">Выбрать по КБК</button>');
 
             $("#hideSameRows").click(function() {
                 var result = false;
