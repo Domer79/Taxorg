@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using SystemTools.WebTools.Attributes;
 using DataRepository;
 
 namespace TaxorgRepository.Models

@@ -30,7 +30,7 @@ namespace TaxOrg.Controllers
         {
             var sliceRepository = new SliceRepository(idOrganization);
             var data = ControllerHelper.GetData(grid, sliceRepository, sliceRepository.GetKeyName());
-            return Json(data);
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Edit(SliceTax sliceTax)

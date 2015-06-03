@@ -84,7 +84,7 @@ namespace TaxOrg.Controllers
             {
                 e.SaveError();
                 var statusDescription = e.GetErrorMessage();
-                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, statusDescription.Substring(0, 399));
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, statusDescription.Substring(0, statusDescription.Length > 399 ? 399 : statusDescription.Length));
             }
         }
     }

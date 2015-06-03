@@ -679,6 +679,7 @@
     <Content Include="Документы\Manuals\Security.docx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Views\Uploader\UploadAllFiles.cshtml" />
     <None Include="Документы\test.csv" />
     <Content Include="Views\Settings\Index.cshtml" />
     <Content Include="Views\Org\Maintenance.cshtml" />

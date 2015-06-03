@@ -38,20 +38,21 @@ namespace TaxorgRepository.Repositories
             context.FileSystems.Add(fs);
         }
 
-        public static void FileSave(HttpPostedFileBase file, string fullPath)
+        public static int FileSave(HttpPostedFileBase file, string fullPath)
         {
             var fs = new FileSystem();
             fs.FileName = fullPath;
             fs.ContentType = file.ContentType;
 
-            SystemLogs.SaveLog(string.Format("FileName: [{0}]", fs.FileName));
-            FileSave(file.InputStream, fs);
+//            SystemLogs.SaveLog(string.Format("FileName: [{0}]", fs.FileName));
+            return FileSave(file.InputStream, fs);
         }
 
-        public static void FileSave(Stream stream, FileSystem fileSystem)
+        public static int FileSave(Stream stream, FileSystem fileSystem)
         {
             SaveMetadata(fileSystem);
             SaveFileToDb(stream, fileSystem.IdFileSystem);
+            return fileSystem.IdFileSystem;
         }
 
         public static void Delete(FileSystem item)
@@ -211,9 +212,9 @@ namespace TaxorgRepository.Repositories
         
         #endregion
 
-        public static string FileTableName { get; set; }
+        public static string FileTableName = "FsFile";
 
-        public static string FileDataName { get; set; }
+        public static string FileDataName = "data";
 
         public static byte[] ExtGetOptimalBufferSize(long fileLength)
         {
