@@ -157,6 +157,7 @@
     <Content Include="Content\mvcfileupload\images\loading.gif" />
     <Content Include="Content\mvcfileupload\images\progressbar.gif" />
     <Content Include="Content\mvcfileupload\vendor\bootstrap.min.css" />
+    <Content Include="Content\signin.css" />
     <Content Include="Content\themes\black-tie\images\ui-bg_diagonals-thick_8_333333_40x40.png" />
     <Content Include="Content\themes\black-tie\images\ui-bg_flat_65_ffffff_40x100.png" />
     <Content Include="Content\themes\black-tie\images\ui-bg_glass_40_111111_1x400.png" />
